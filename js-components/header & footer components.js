@@ -1,0 +1,122 @@
+class MainHeader extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <header class="main--header">
+        <div class="container header--container">
+          <nav class="main--nav">
+            <a href="/" class="logo">
+              <img
+                src="/img/icons/shopaholic-icon-logo.png"
+                alt=""
+                id="logo--icon"
+              />
+              <span>Pawa</span>
+            </a>
+            <ul class="nav--links">
+              <li><a href="/index.html">Home</a></li>
+              <li><a href="/pages/shop.html">Shop</a></li>
+              <li><a href="/pages/about.html">About</a></li>
+              <li><a href="/pages/contact.html">Contact</a></li>
+            </ul>
+            <div class="nav--actions">
+            <a href="#" class="cart--link icon--button">
+              <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
+              <span class="cart--count">2</span>
+            </a>
+            <a
+              href="#"
+              class="dark-mode-toggle icon--button"
+              aria-label="Toggle Dark Mode"
+            >
+              <img src="/img/icons/dark-mode.png" alt="darkmode" />
+            </a>
+          </div>
+          </nav>
+        </div>
+      </header>
+    `;
+
+    // Toggle the active class
+    const links = this.querySelectorAll(".nav--links a");
+    const currentPath = window.location.pathname.replace(/^\/+/, "");
+
+    links.forEach((link) => {
+      const linkPath = link.getAttribute("href").replace(/^\/+/, "");
+      const isActive =
+        (linkPath === "" && currentPath === "index.html") ||
+        (linkPath !== "" && currentPath.endsWith(linkPath));
+      link.classList.toggle("active", isActive);
+    });
+  }
+}
+customElements.define("main-header", MainHeader);
+
+//Footer
+class MainFooter extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <footer class="main--footer">
+        <div class="container footer--container">
+          <div class="footer--grid">
+            <div class="footer--column">
+              <a href="/" class="logo footer--logo">
+                <img
+                  src="img/icons/shopaholic-icon-light.png"
+                  alt=""
+                  id="footer--logo--icon"
+                />
+                <span>Pawa</span>
+              </a>
+              <p>
+                Your trusted partner for premium electronics and computers with
+                exceptional service.
+              </p>
+              <div class="footer--socialLinks">
+                <a href="/" aria-label="Twitter">
+                  <img src="/img/icons/twitter-squared.png" alt="Twitter icon" />
+                </a>
+                <a href="/" aria-label="Facebook">
+                  <img src="/img/icons/facebook.png" alt="Facebook icon" />
+                </a>
+                <a href="/" aria-label="Instagram">
+                  <img src="/img/icons/instagram.png" alt="Instagram icon" />
+                </a>
+              </div>
+            </div>
+            <div class="footer--column">
+              <h4>Shop</h4>
+              <ul>
+                <li><a href="#">Laptops</a></li>
+                <li><a href="#">Printers</a></li>
+                <li><a href="#">Projectors</a></li>
+                <li><a href="#">Accessories</a></li>
+              </ul>
+            </div>
+            <div class="footer--column">
+              <h4>Support</h4>
+              <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Returns</a></li>
+                <li><a href="#">Warranty</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+            <div class="footer--column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 Pawa Electronics. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    `;
+  }
+}
+customElements.define("main-footer", MainFooter);

@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9fc;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+.contact-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.contact-header h1 {
+  font-size: 2rem;
+  color: #1a1a40;
+  margin-bottom: 10px;
+}
+.contact header p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #555;
+}
+.contact-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+}
+
+.left-column {
+  flex: 1 1 48%;
+}
+
+.right-column {
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-section h2 {
+  margin-bottom: 20px;
+  color: #1a1a40;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.form-section button {
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.form-section button:hover {
+  background-color: #4338ca;
+}
+
+.info-section {
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  color: #1a1a40;
+  margin-bottom: 15px;
+}
+
+.card p {
+  margin-bottom: 8px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.social-icons span {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #eee;
+  transition: background-color 0.3s ease;
+}
+
+.social-icons span:hover {
+  background-color: #d1d1f7;
+}
+
+.immediate-help {
+  background: #eef1ff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.immediate-help h2 {
+  color: #1a1a40;
+  margin-bottom: 10px;
+}
+
+.immediate-help p {
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.help-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.help-buttons button {
+  background-color: #4f46e5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.help-buttons button:hover {
+  background-color: #4338ca;
+}
+
+@media (max-width: 768px) {
+  .contact-main {
+    flex-direction: column;
+  }
+
+  .form-section,
+  .info-section {
+    flex: 1 1 100%;
+  }
+
+  .help-buttons {
+    flex-direction: column;
+  }
+
+  .help-buttons button {
+    width: 100%;
+  }
+}

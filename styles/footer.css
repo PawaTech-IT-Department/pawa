@@ -1,0 +1,61 @@
+@import url(style.css);
+/* =================================================================
+   FOOTER
+================================================================== */
+.main--footer {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  padding: 4rem 0 2rem;
+  margin: 0;
+}
+.footer--grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: calc(var(--gutter-normal) * 2);
+  margin-bottom: 3rem;
+}
+.footer--column .footer--logo {
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.footer--column p {
+  color: #d1d5db; /* Lighter gray for footer text */
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+.footer--column h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+.footer--column ul li {
+  margin-bottom: 1rem;
+}
+.footer--column ul a {
+  color: #d1d5db;
+}
+.footer--column ul a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+.footer--socialLinks {
+  display: flex;
+  gap: var(--gutter-normal);
+}
+.footer--socialLinks img {
+  height: 2.5rem;
+  transition: all 0.5s ease-in-out;
+}
+.footer--socialLinks img:hover {
+  scale: 1.2;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--text-muted); /* Darker border in footer */
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}

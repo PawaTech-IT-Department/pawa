@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pawa - Premium Electronics</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Importing Header*nav Component -->
+    <main-header></main-header>
+    <!-- Rest of the content -->
+
+    <header class="shop--header">
+      <div class="container">
+        <h1 class="section--title">Shop</h1>
+        <p class="section--subtitle">
+          Discover our collection of premium tech products
+        </p>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+      <div class="shop--section">
+        <div class="shop--controls">
+          <div class="search--bar">
+            <img src="/img/icons/search-icons.png" alt="search icon" />
+            <input type="text" placeholder="Search products..." />
+          </div>
+          <div class="sort--by">
+            <span>Sort By:</span>
+            <select>
+              <option>Popular</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Newest</option>
+            </select>
+            <img src="/img/icons/chevron-down.png" alt="" />
+          </div>
+        </div>
+        <div class="shop--contents">
+          <aside class="sidebar">
+            <h3>Categories</h3>
+            <div class="category--filters">
+              <ul>
+                <li>
+                  <input type="checkbox" id="all-products" checked />
+                  <label for="all-products"
+                    >All Products <span>(24)</span></label
+                  >
+                </li>
+                <li>
+                  <input type="checkbox" id="laptops" checked />
+                  <label for="laptops">Laptops <span>(10)</span></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="printers" />
+                  <label for="printers">Printers <span>(5)</span></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="projectors" />
+                  <label for="projectors">Projectors <span>(3)</span></label>
+                </li>
+                <li>
+                  <input type="checkbox" id="accessories" />
+                  <label for="accessories">Accessories <span>(1)</span></label>
+                </li>
+              </ul>
+            </div>
+            <h3 class="price--range--title">Price Range</h3>
+            <div class="price--range">
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value="0"
+                class="slider"
+                id="minPrice"
+              />
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                value="1000"
+                class="slider"
+                id="maxPrice"
+              />
+              <div class="price--labels">
+                <span>$0</span>
+                <span>$1000</span>
+              </div>
+            </div>
+          </aside>
+          <!-- PRODUCT GRID -->
+          <div class="product--grid">
+            <div class="product--card">
+              <img
+                src="/img/products/gaming-laptop.webp"
+                alt="Gaming Laptop Pro"
+              />
+              <h4 class="product--name">Gaming Laptop Pro</h4>
+              <p class="product--description">
+                High-performance laptop for gaming and creative work
+              </p>
+              <div class="product--rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star-half-alt"></i> <span>(24)</span>
+              </div>
+              <div class="product--price">$1,299</div>
+              <button class="btn btn--primary add-to-cart">
+                <i class="fas fa-shopping--cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- FOOTER COMPONENT -->
+    <main-footer></main-footer>
+    <script src="/script.js"></script>
+    <script src="/js-components/header & footer components.js"></script>
+  </body>
+</html>
