@@ -19,7 +19,7 @@ class MainHeader extends HTMLElement {
               <li><a href="/pages/contact.html">Contact</a></li>
             </ul>
             <div class="nav--actions">
-            <a href="#" class="cart--link icon--button">
+            <a href="/pages/cart.html" class="cart--link icon--button">
               <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
               <span class="cart--count">2</span>
             </a>
