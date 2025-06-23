@@ -300,65 +300,147 @@ ul {
 /* =================================================================
    RESPONSIVE DESIGN (MOBILE & TABLET)
 ================================================================== */
-@media (max-width: 1024px) {
-  .features-grid,
-  .testimonials-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Large screens / Desktops */
+@media (min-width: 1201px) {
+  .container {
+    padding: 0 40px; /* More padding on very large screens */
   }
 }
 
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-  }
-  .hero-headline {
-    font-size: 2.5rem;
-  }
-
-  .hero-container {
-    flex-direction: column;
+/* Tablets and small desktops */
+@media (max-width: 1199px) {
+  .hero--container {
+    flex-direction: column; /* Stack hero content and image */
     text-align: center;
+    gap: var(--gutter-normal) * 2;
   }
 
-  .hero-content {
-    order: 2;
+  .hero--content {
+    order: 2; /* Content after image on mobile */
+    margin-left: 0; /* Remove left margin */
   }
 
-  .hero-image {
-    order: 1;
+  .hero--headline {
+    font-size: 3rem; /* Slightly smaller headline */
+  }
+
+  .hero--image {
+    order: 1; /* Image first on mobile */
     margin-bottom: 2rem;
   }
 
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .features--grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for features */
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
+  .product--grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for products */
   }
 
-  /* Hide nav links, prepare for a mobile menu toggle */
-  .nav-links {
-    display: none;
+  .testimonials--grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for testimonials */
   }
 }
 
-@media (max-width: 576px) {
-  .features-grid,
-  .product-grid,
-  .testimonials-grid {
-    grid-template-columns: 1fr;
+/* Smaller Tablets and larger phones */
+@media (max-width: 768px) {
+  .section--title {
+    font-size: 2rem;
+  }
+  .section--subtitle {
+    font-size: 1rem;
+    margin-bottom: 3rem;
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .hero {
+    padding: 4rem 0; /* Reduced padding for hero */
   }
-  .footer-column p {
-    margin-left: auto;
-    margin-right: auto;
+
+  .hero--headline {
+    font-size: 2.5rem;
   }
-  .social-links {
-    justify-content: center;
+
+  .hero--subheadline {
+    font-size: 1rem;
+  }
+
+  .features--grid,
+  .product--grid,
+  .testimonials--grid {
+    grid-template-columns: 1fr; /* Stack all grids into a single column */
+  }
+
+  .features,
+  .products,
+  .testimonials {
+    padding: 4rem 0; /* Reduced section padding */
+  }
+
+  /* Adjust product card details for smaller screens */
+  .product--card {
+    padding: var(--gutter-normal);
+  }
+  .product--image {
+    max-height: 150px;
+  }
+  .product--name {
+    font-size: 1.2rem;
+  }
+  .product--price {
+    font-size: 1.3rem;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px; /* Even less padding on very small screens */
+  }
+
+  .hero--headline {
+    font-size: 2rem;
+  }
+  .hero--subheadline {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .feature--card,
+  .product--card,
+  .testimonial--card {
+    padding: var(--gutter-normal); /* Consistent padding */
+  }
+
+  .feature--icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+  }
+  .feature--icon img {
+    height: 38px;
+  }
+  .feature--card h3 {
+    font-size: 1.1rem;
+  }
+  .feature--card p {
+    font-size: 0.85rem;
+  }
+
+  .testimonial--rating {
+    font-size: 1rem;
+  }
+  .testimonial--text {
+    font-size: 0.9rem;
+  }
+  .testimonial--author img {
+    width: 40px;
+    height: 40px;
+  }
+  .testimonial--author span {
+    font-size: 0.9rem;
   }
 }

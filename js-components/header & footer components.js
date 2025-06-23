@@ -1,39 +1,40 @@
 class MainHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-      <header class="main--header">
-        <div class=" header--container">
-          <nav class="main--nav">
-            <a href="/" class="logo">
-              <img
-                src="/img/icons/shopaholic-icon-logo.png"
-                alt=""
-                id="logo--icon"
-              />
-              <span>Pawa</span>
-            </a>
-            <ul class="nav--links">
-              <li><a href="/index.html">Home</a></li>
-              <li><a href="/pages/shop.html">Shop</a></li>
-              <li><a href="/pages/about.html">About</a></li>
-              <li><a href="/pages/contact.html">Contact</a></li>
-            </ul>
-            <div class="nav--actions">
-            <a href="/pages/cart.html" class="cart--link icon--button">
-              <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
-              <span class="cart--count">2</span>
-            </a>
-            <a
-              href="#"
-              class="dark-mode-toggle icon--button"
-              aria-label="Toggle Dark Mode"
-            >
-              <img src="/img/icons/dark-mode.png" alt="darkmode" />
-            </a>
-          </div>
-          </nav>
-        </div>
-      </header>
+     <header class="main--header">
+  <div class="header--container">
+    <nav class="main--nav">
+      <a href="/" class="logo">
+        <img src="/img/icons/shopaholic-icon-logo.png" alt="" id="logo--icon" />
+        <span>Pawa</span>
+      </a>
+      <ul class="nav--links" id="navLinks">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/pages/shop.html">Shop</a></li>
+        <li><a href="/pages/about.html">About</a></li>
+        <li><a href="/pages/contact.html">Contact</a></li>
+      </ul>
+      <div class="nav--actions">
+        <a href="/pages/cart.html" class="cart--link icon--button">
+          <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
+          <span class="cart--count">2</span>
+        </a>
+        <a
+          href="#"
+          class="dark-mode-toggle icon--button"
+          aria-label="Toggle Dark Mode"
+        >
+          <img src="/img/icons/dark-mode.png" alt="darkmode" />
+        </a>
+      </div>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </div>
+</header>
     `;
 
     // Toggle the active class

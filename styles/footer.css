@@ -1,4 +1,3 @@
-@import url(style.css);
 /* =================================================================
    FOOTER
 ================================================================== */
@@ -8,21 +7,39 @@
   padding: 4rem 0 2rem;
   margin: 0;
 }
+
+.footer--container {
+  max-width: 1200px; /* Ensure container respects global max-width */
+  margin: 0 auto;
+  padding: 0 var(--padding-normal); /* Use global padding variable */
+}
+
 .footer--grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* Desktop layout */
   gap: calc(var(--gutter-normal) * 2);
   margin-bottom: 3rem;
 }
+
 .footer--column .footer--logo {
   color: var(--text-light);
   margin-bottom: 1rem;
+}
+/* Ensure logo images within footer also respect consistent styling */
+.footer--column .footer--logo img {
+  height: 48px; /* Maintain consistent logo size */
+  margin-right: 8px; /* Consistent spacing with logo text */
+}
+.footer--column .footer--logo span {
+  font-family: var(--font-sans); /* Ensure font is applied */
+  font-weight: 700;
+  font-size: 1.5rem; /* Consistent with header logo size */
 }
 
 .footer--column p {
   color: #d1d5db; /* Lighter gray for footer text */
   margin-bottom: 1.5rem;
-  max-width: 300px;
+  max-width: 300px; /* Control text width for readability */
 }
 .footer--column h4 {
   font-size: 1.1rem;
@@ -34,6 +51,7 @@
 }
 .footer--column ul a {
   color: #d1d5db;
+  transition: var(--transition-fast); /* Add transition for hover */
 }
 .footer--column ul a:hover {
   color: var(--accent-color);
@@ -43,13 +61,14 @@
 .footer--socialLinks {
   display: flex;
   gap: var(--gutter-normal);
+  justify-content: flex-start; /* Align social links to start by default */
 }
 .footer--socialLinks img {
   height: 2.5rem;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out; /* Smoother transition */
 }
 .footer--socialLinks img:hover {
-  scale: 1.2;
+  transform: scale(1.2); /* Use transform for scaling */
 }
 
 .footer-bottom {
@@ -58,4 +77,96 @@
   text-align: center;
   font-size: 0.9rem;
   color: var(--text-muted);
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN FOR FOOTER
+================================================================== */
+
+/* Tablets and medium screens */
+@media (max-width: 992px) {
+  .footer--grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    gap: calc(var(--gutter-normal) * 3); /* Adjust gap */
+  }
+
+  .footer--column:first-child {
+    /* Main info column */
+    grid-column: span 2; /* Span full width on 2-column layout */
+    text-align: center;
+  }
+
+  .footer--column p {
+    margin-left: auto;
+    /* margin-right: auto; */
+  }
+
+  .footer--socialLinks {
+    justify-content: center; /* Center social links when main column is centered */
+    padding: 1rem 0;
+    border-top: 1px solid var(--text-muted);
+    border-bottom: 1px solid var(--text-muted);
+  }
+}
+
+/* Smaller Tablets and larger phones */
+@media (max-width: 768px) {
+  .main--footer {
+    padding: 3rem 0 1.5rem; /* Reduce footer padding */
+  }
+
+  .footer--grid {
+    grid-template-columns: 1fr; /* Stack all columns on small screens */
+    gap: var(--gutter-normal) * 2;
+    margin-bottom: 2rem; /* Reduce bottom margin */
+  }
+
+  .footer--column {
+    grid-column: span 1; /* Reset span for single column */
+    text-align: center; /* Center content in each column */
+  }
+
+  .footer--column h4 {
+    margin-bottom: 1rem; /* Reduce heading margin */
+  }
+
+  .footer--column ul {
+    padding: 0; /* Remove default list padding */
+  }
+  .footer--column ul li {
+    margin-bottom: 0.8rem; /* Reduce list item margin */
+  }
+
+  .footer--socialLinks {
+    justify-content: center; /* Ensure social links are centered */
+    margin-top: 1rem; /* Add some top margin */
+  }
+
+  .footer-bottom {
+    padding-top: 1.5rem; /* Reduce bottom padding */
+    font-size: 0.85rem;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .main--footer {
+    padding: 2rem 0 1rem;
+  }
+
+  .footer--column p {
+    font-size: 0.9rem;
+  }
+
+  .footer--column h4 {
+    font-size: 1rem;
+  }
+
+  .footer--socialLinks img {
+    height: 2rem; /* Slightly smaller social icons */
+  }
+
+  .footer-bottom {
+    font-size: 0.8rem;
+  }
 }
