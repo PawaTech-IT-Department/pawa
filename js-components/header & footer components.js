@@ -2,7 +2,7 @@ class MainHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header class="main--header">
-        <div class="container header--container">
+        <div class=" header--container">
           <nav class="main--nav">
             <a href="/" class="logo">
               <img
@@ -56,12 +56,12 @@ class MainFooter extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <footer class="main--footer">
-        <div class="container footer--container">
+        <div class="footer--container">
           <div class="footer--grid">
             <div class="footer--column">
               <a href="/" class="logo footer--logo">
                 <img
-                  src="img/icons/shopaholic-icon-light.png"
+                  src="/img/icons/shopaholic-icon-light.png"
                   alt=""
                   id="footer--logo--icon"
                 />

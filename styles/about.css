@@ -1,0 +1,434 @@
+@import url(style.css);
+
+/* =================================================================
+   ABOUT SECTION SPECIFIC STYLES
+================================================================== */
+.about--section {
+  padding: 60px 0;
+  background-color: var(--bg-soft); /* Light pastel background */
+}
+
+.mission--section {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--gutter-normal) * 2.5);
+  background-color: var(--bg-light);
+  padding: calc(var(--padding-normal) * 2);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 60px;
+}
+
+.mission--content {
+  flex: 1;
+  text-align: left;
+}
+
+.mission--content h3 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.mission--content p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.mission--image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mission--image img {
+  border-radius: var(--border-radius);
+  max-height: 350px;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.stand-for-title {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.value--highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: calc(var(--gutter-normal) * 1.25);
+  margin-bottom: 60px;
+}
+
+.value--card {
+  background-color: var(--bg-light);
+  padding: calc(var(--padding-normal) * 1.5);
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gutter-normal);
+  transition: var(--transition-fast);
+}
+.value--card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px -2px rgb(0 0 0 / 0.1), 0 3px 6px -3px rgb(0 0 0 / 0.1); /*LIGHT SHADOW*/
+}
+
+.icon--circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+.valueIcon1 {
+  background-color: #ede9fe;
+}
+.valueIcon2 {
+  background-color: #e0f2fe;
+}
+
+.value-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.value-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.journey--title {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+/* =================================================================
+   WHEEL TIMELINE STYLES
+================================================================== */
+.cards--container {
+  --base-rotation: 0deg;
+  --full-circle: 360deg;
+  --radius: 35vw; /* Adjusted for better fit within typical viewports */
+  --duration: 200ms;
+
+  --cards-container-size: calc(var(--radius) * 2);
+  --cards-container-padding: 2.2rem;
+
+  --border-color-timeline: var(--border-color); /* Use Pawa border color */
+
+  --label-offset: calc(var(--radius) * -1 - 1rem);
+  --label-size: 40px; /* Adjusted label size */
+  --label-color: var(--text-muted); /* Use Pawa text muted color */
+  --label-color-hover: var(
+    --primary-color
+  ); /* Use Pawa primary color on hover */
+  --label-line-h: 0;
+  --label-line-h-current: 3rem; /* Adjusted line height */
+  --label-dot-size: 12px; /* Adjusted dot size */
+
+  --title-top: 2rem; /* Adjusted title position */
+  --title-offset-y: 30px;
+
+  --info-top: 5.5rem; /* Adjusted info position */
+  --info-width: min(70%, 500px);
+  --info-offset-y: 30px;
+
+  box-sizing: content-box;
+  position: relative; /* Changed from fixed to relative */
+  margin: 5rem auto;
+  width: var(--cards-container-size);
+  height: var(--cards-container-size);
+  padding: var(--cards-container-padding);
+  border: 1px solid var(--border-color-timeline); /* Added outer border */
+  border-radius: var(--border-radius); /* Added border radius */
+  overflow: hidden; /* Hide overflow from labels/dots */
+  background-color: var(--bg-light); /* Background for the container */
+  box-shadow: var(--shadow-sm); /* Add shadow for depth */
+
+  /* Clip path only for larger screens to give a 'half-wheel' effect if desired, otherwise remove */
+  @media (width > 600px) {
+    /* clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); */
+  }
+  @media (min-width: 800px) {
+    --radius: 25vw; /* Smaller radius on larger screens for better fit */
+    --label-size: 45px;
+    --label-dot-size: 14px;
+    --label-line-h-current: 3.5rem;
+    --title-top: 3rem;
+    --info-top: 6.5rem;
+  }
+  @media (min-width: 1200px) {
+    --label-size: 50px;
+  }
+}
+
+.cards {
+  position: absolute;
+  inset: var(--cards-container-padding);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--border-color-timeline); /* Use Pawa border color */
+  transition: transform 0.3s ease-in-out var(--duration);
+  list-style: none;
+}
+/* Hide radio buttons */
+.cards input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.cards li {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  transform-origin: center;
+  display: grid;
+  place-content: center;
+  transform: rotate(calc(var(--i) * 360deg / var(--items)));
+  pointer-events: none;
+}
+.cards li > label {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transform: translateY(var(--label-offset));
+  width: var(--label-size);
+  height: var(--label-size);
+  cursor: pointer;
+  pointer-events: initial;
+  text-align: center;
+  color: var(--label-color);
+  font-size: clamp(0.8rem, 2.5vw + 0.04rem, 1rem);
+  font-family: var(--font-sans); /*Apply serif font for dates*/
+  font-weight: 600;
+  transition: var(--duration) ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cards li > label::before {
+  content: "";
+  position: absolute;
+  top: var(--cards-container-padding);
+  left: 50%;
+  translate: -50% 0;
+  width: var(--label-dot-size);
+  height: var(--label-dot-size);
+  aspect-ratio: 1; /* Changed from 50% to 1 for perfect circle */
+  border-radius: 50%;
+  background-color: var(--label-color); /* Use label color for dot */
+  transition: background-color var(--duration) ease-in-out;
+  border: 2px solid var(--bg-light); /* Added border to dots */
+}
+.cards li > label::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 5px;
+  width: 2px;
+  height: var(--label-line-h);
+  background-color: var(--accent-color); /* Use accent color for line */
+  transition: height 300ms ease-in-out var(--label-line-delay, 0ms);
+}
+.cards li > label:hover {
+  --label-color: var(--label-color-hover);
+}
+.cards > li > h2,
+.cards > li > p {
+  position: absolute;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 0);
+  transform-origin: center;
+  background-color: var(--bg-light); /* Ensure content has a background */
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm); /* Add shadow to content */
+  width: var(--info-width); /* Apply info width to both */
+}
+.cards > li > h2 {
+  top: var(--title-top);
+  opacity: var(--title-opacity, 0);
+  translate: 0 var(--title-offset-y);
+  transition: var(--duration) ease-in-out var(--title-delay, 0ms);
+  font-family: var(--font-serif); /* Apply serif font for titles */
+  color: var(--primary-color); /* Use primary color for titles */
+  font-size: 1.5rem; /* Larger title font */
+  font-weight: 600;
+}
+.cards > li > p {
+  top: var(--info-top);
+  margin: 0 auto;
+  z-index: 2;
+  font-size: clamp(0.8rem, 2.5vw + 0.05rem, 0.9rem);
+  text-align: center; /* Centered text for paragraphs */
+  text-wrap: pretty;
+  opacity: var(--info-opacity, 0);
+  transition: var(--duration) ease-in-out var(--info-delay, 0ms);
+  color: var(--text-dark); /* Dark text for paragraphs */
+}
+
+/* update custom properties for checked item */
+li:has(input:checked) {
+  --label-opacity: 1;
+  --label-color: var(--label-color-hover);
+  --label-line-h: var(--label-line-h-current);
+  --label-line-delay: calc(var(--duration) * 2);
+
+  --title-opacity: 1;
+  --title-offset-y: 0;
+  --title-delay: calc(var(--duration) * 3);
+
+  --info-opacity: 1;
+  --info-offset-y: 0;
+  --info-delay: calc(var(--duration) * 4);
+}
+
+/* rotate container based on checked radio */
+.cards:has(input:checked) {
+  transform: rotate(
+    calc(
+      var(--base-rotation) - (var(--index) * var(--full-circle) / var(--items))
+    )
+  );
+}
+/*
+this would be so much simpler if we could use counter values as custom property values
+*/
+.cards:has(li:nth-child(1) > input:checked) {
+  --index: 0;
+}
+.cards:has(li:nth-child(2) > input:checked) {
+  --index: 1;
+}
+.cards:has(li:nth-child(3) > input:checked) {
+  --index: 2;
+}
+.cards:has(li:nth-child(4) > input:checked) {
+  --index: 3;
+}
+.cards:has(li:nth-child(5) > input:checked) {
+  --index: 4;
+}
+.cards:has(li:nth-child(6) > input:checked) {
+  --index: 5;
+}
+
+/* CTA SECTION */
+
+.cta--section {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.cta--section .section--subtitle {
+  margin-bottom: 25px; /* Adjust margin for CTA */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 992px) {
+  .mission--section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mission--content,
+  .mission--image {
+    width: 100%;
+  }
+
+  .mission--content {
+    order: 2; /* Put content below image on small screens */
+  }
+
+  .mission--image {
+    order: 1;
+    margin-bottom: 30px;
+  }
+
+  .value--highlights {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .cards--container {
+    --radius: 45vw; /* Adjust radius for mobile to make it larger */
+    height: 60vh; /* Adjust height to prevent overflow on smaller screens */
+    width: 90vw; /* Adjust width */
+    margin: 3rem auto;
+    /* padding: 2rem; */
+  }
+
+  .cards li > label {
+    --label-offset: calc(var(--radius) * -1 - 0.5rem); /* Adjust label offset */
+    font-size: 0.9rem;
+  }
+
+  .cards li > h2 {
+    font-size: 1.2rem;
+    top: 1.5rem;
+  }
+
+  .cards li > p {
+    font-size: 0.85rem;
+    top: 4rem;
+    width: 85%; /* Adjust width for smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .section--title {
+    font-size: 2rem;
+  }
+
+  .section--subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .mission--content h3 {
+    font-size: 1.5rem;
+  }
+
+  .value--card {
+    padding: var(--padding-normal);
+  }
+
+  .icon--circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .cards--container {
+    --radius: 50vw; /* Even larger radius to fill space */
+    height: 70vh;
+    width: 95vw;
+  }
+}

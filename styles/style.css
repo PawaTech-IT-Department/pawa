@@ -5,6 +5,7 @@
 @import url(footer.css);
 @import url(shop.css);
 @import url(contact.css);
+@import url(about.css);
 
 /* =================================================================
    GLOBAL STYLES & CSS VARIABLES
@@ -20,12 +21,12 @@
   --text-light: #f9fafb;
   --text-muted: #6b7280;
   --border-color: #e5e7eb;
-  --border-radius: 6px;
+  --border-radius: 8px;
   --padding-normal: 20px;
   --gutter-normal: 16px;
   --font-serif: "Poppins", serif;
   --font-sans: "Lora", sans-serif;
-  --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --transition-fast: all 0.4s ease-in-out;
 }
 /* body.dark-mode {
@@ -241,46 +242,6 @@ ul {
 .feature--card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-sm);
-}
-
-/* =================================================================
-   PRODUCT PREVIEW
-================================================================== */
-.products {
-  background-color: var(--bg-soft);
-}
-
-.product--grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gutter-normal);
-}
-.product--card {
-  background-color: var(--bg-light);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  text-align: center;
-  padding: var(--padding-normal);
-  transition: var(--transition-fast);
-}
-.product--card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-sm);
-}
-
-.product--image {
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-.product--name {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-.product--price {
-  color: var(--primary-color);
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 0.5rem 0 1rem;
 }
 
 /* =================================================================
