@@ -444,3 +444,16 @@ ul {
     font-size: 0.9rem;
   }
 }
+
+/* Dark mode trial animation 2s */
+body,
+html {
+  transition: var(--transition-fast);
+}
+.main--footer,
+.main--header,
+.section--title,
+.section--subtitle,
+.container {
+  transition: all 2s ease-out;
+}
