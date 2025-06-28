@@ -17,7 +17,7 @@ class MainHeader extends HTMLElement {
       <div class="nav--actions">
         <a href="/pages/cart.html" class="cart--link icon--button">
           <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
-          <span class="cart--count">2</span>
+          <span class="cart--count js-cart-quantity">0</span>
         </a>
         <a
           href="#"

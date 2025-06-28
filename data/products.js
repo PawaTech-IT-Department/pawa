@@ -1,4 +1,4 @@
-const products = [
+export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/laptop-ultrabook-x1.jpg",
@@ -9,8 +9,6 @@ const products = [
     },
     priceCents: 109000,
     keywords: ["laptop", "ultrabook", "computers"],
-    description:
-      "Experience lightning-fast performance with the Ultrabook X1 Pro, perfect for multitasking and heavy-duty applications.",
   },
   {
     id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
@@ -22,8 +20,6 @@ const products = [
     },
     priceCents: 20999,
     keywords: ["printer", "wireless", "office"],
-    description:
-      "Print from anywhere with the JetPro Wireless Inkjet Printer, offering high-quality prints and easy connectivity.",
   },
   {
     id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
@@ -36,8 +32,6 @@ const products = [
     priceCents: 7999,
     keywords: ["accessories", "mouse", "gaming"],
     type: "accessory",
-    description:
-      "Enhance your gaming experience with the RGB Gaming Mouse, featuring customizable lighting and precise controls.",
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
@@ -49,8 +43,6 @@ const products = [
     },
     priceCents: 189999,
     keywords: ["projector", "4k", "home theater"],
-    description:
-      "Transform your living room into a cinema with the HD 4K Home Projector, delivering stunning visuals and immersive sound.",
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -62,8 +54,6 @@ const products = [
     },
     priceCents: 20699,
     keywords: ["keyboard", "accessories", "wireless"],
-    description:
-      "Type in comfort with the Wireless Mechanical Keyboard, offering tactile feedback and seamless wireless connectivity.",
   },
   {
     id: "8c9c52b5-5a19-4bcb-a5d1-158a74287c53",
@@ -75,8 +65,6 @@ const products = [
     },
     priceCents: 3499,
     keywords: ["accessories", "usb-c", "hub"],
-    description:
-      "Expand your connectivity with the USB-C Multiport Hub, supporting multiple devices and high-speed data transfer.",
   },
   {
     id: "dd82ca78-a18b-4e2a-9250-31e67412f98d",
@@ -88,8 +76,6 @@ const products = [
     },
     priceCents: 24000,
     keywords: ["headphones", "audio", "accessories"],
-    description:
-      "Immerse yourself in pure sound with the Noise Cancelling Headphones, blocking out distractions for an unparalleled listening experience.",
   },
   {
     id: "77919bbe-0e56-475b-adde-4f24dfed3a04",
@@ -101,8 +87,6 @@ const products = [
     },
     priceCents: 35999,
     keywords: ["storage", "ssd", "accessories"],
-    description:
-      "Store and transfer large files effortlessly with the Portable SSD 1TB, offering fast speeds and reliable performance.",
   },
   {
     id: "3fdfe8d6-9a15-4979-b459-585b0d0545b9",
@@ -114,8 +98,6 @@ const products = [
     },
     priceCents: 28999,
     keywords: ["network", "router", "wireless"],
-    description:
-      "Enjoy seamless internet connectivity with the Dual-Band Wireless Router, providing strong signals and stable performance.",
   },
   {
     id: "58b4fc92-e98c-42aa-8c55-b6b79996769a",
@@ -127,8 +109,6 @@ const products = [
     },
     priceCents: 33900,
     keywords: ["audio", "speaker", "bluetooth"],
-    description:
-      "Fill your space with rich, clear sound using the Bluetooth Portable Speaker, perfect for both indoor and outdoor use.",
   },
   {
     id: "a1b2c3d4-e5f6-4789-8101-112131415161",
@@ -140,8 +120,6 @@ const products = [
     },
     priceCents: 39999,
     keywords: ["monitor", "gaming", "4k"],
-    description:
-      "Experience gaming like never before with the 27-Inch 4K Gaming Monitor, offering stunning visuals and smooth gameplay.",
   },
   {
     id: "b2c3d4e5-f6a7-489b-8212-223242526272",
@@ -153,8 +131,6 @@ const products = [
     },
     priceCents: 29999,
     keywords: ["chair", "gaming", "ergonomic"],
-    description:
-      "Enhance your gaming setup with the Ergonomic Gaming Chair, designed for comfort and support during long gaming sessions.",
   },
   {
     id: "c3d4e5f6-a7b8-49ac-8323-334353637383",
@@ -166,8 +142,6 @@ const products = [
     },
     priceCents: 49999,
     keywords: ["3d printer", "tech", "creative"],
-    description:
-      "Bring your ideas to life with the High-Precision 3D Printer, capable of producing detailed and accurate 3D models.",
   },
   {
     id: "d4e5f6a7-b8c9-4abd-8434-445464748494",
@@ -179,8 +153,6 @@ const products = [
     },
     priceCents: 14999,
     keywords: ["webcam", "streaming", "hd"],
-    description:
-      "Stream in high definition with the HD Streaming Webcam, ensuring clear and crisp video quality for your online presence.",
   },
   {
     id: "e5f6a7b8-c9da-4bce-8545-556575859605",
@@ -192,8 +164,6 @@ const products = [
     },
     priceCents: 19999,
     keywords: ["power bank", "portable", "charger"],
-    description:
-      "Stay powered on the go with the Portable Power Bank, offering multiple charges for your devices with its high-capacity battery.",
   },
   {
     id: "f6a7b8c9-daea-4cbf-8656-667686970716",
@@ -205,8 +175,6 @@ const products = [
     },
     priceCents: 12999,
     keywords: ["glasses", "blue light", "eye protection"],
-    description:
-      "Protect your eyes from harmful blue light with these Blue Light Blocking Glasses, perfect for long hours in front of screens.",
   },
   {
     id: "a7b8c9da-ebfc-4dce-8767-778798081828",
@@ -218,8 +186,6 @@ const products = [
     },
     priceCents: 49999,
     keywords: ["docking station", "usb-c", "accessories"],
-    description:
-      "Simplify your workspace with the USB-C Docking Station, providing multiple ports for all your peripherals in one convenient location.",
   },
   {
     id: "b8c9daeb-fcda-4edf-8878-889809192939",
@@ -231,8 +197,6 @@ const products = [
     },
     priceCents: 17999,
     keywords: ["mouse", "laser", "precision"],
-    description:
-      "Achieve unmatched accuracy with the High-Precision Laser Mouse, ideal for gaming and graphic design tasks.",
   },
   {
     id: "c9daebfc-dceb-4fef-8989-990910203040",
@@ -244,8 +208,6 @@ const products = [
     },
     priceCents: 10999,
     keywords: ["hdmi adapter", "portable", "accessories"],
-    description:
-      "Easily connect your devices with the Portable HDMI Adapter, supporting high-definition video and audio transmission.",
   },
   {
     id: "daebfcdc-efda-4ff0-8a9a-0a1b2c3d4e5f",
@@ -257,8 +219,6 @@ const products = [
     },
     priceCents: 15999,
     keywords: ["usb-c", "hdmi", "cable"],
-    description:
-      "Connect your USB-C devices to HDMI displays with ease using this high-quality USB-C to HDMI Cable.",
   },
   {
     id: "ebfcdcef-fdab-4001-8bac-1b2c3d4e5f6a",
@@ -270,8 +230,6 @@ const products = [
     },
     priceCents: 18999,
     keywords: ["laptop cooler", "portable", "cooling"],
-    description:
-      "Keep your laptop running smoothly with the Portable Laptop Cooler, ensuring optimal performance and preventing overheating.",
   },
   {
     id: "fcdceffd-abcd-4112-8cbd-2c3d4e5f6a7b",
@@ -283,8 +241,6 @@ const products = [
     },
     priceCents: 9999,
     keywords: ["usb-c", "usb-a", "adapter"],
-    description:
-      "Connect your USB-A devices to USB-C ports with the USB-C to USB-A Adapter, ensuring compatibility and convenience.",
   },
   {
     id: "dceffdab-cdef-4223-8dce-3d4e5f6a7b8c",
@@ -296,8 +252,6 @@ const products = [
     },
     priceCents: 16999,
     keywords: ["laptop stand", "portable", "ergonomic"],
-    description:
-      "Improve your posture and workspace with the Portable Laptop Stand, providing a comfortable and ergonomic viewing angle.",
   },
   {
     id: "effdabcde-fabc-4334-8edf-4e5f6a7b8c9d",
@@ -309,8 +263,6 @@ const products = [
     },
     priceCents: 12999,
     keywords: ["usb-c", "vga", "adapter"],
-    description:
-      "Connect your USB-C devices to VGA displays with the USB-C to VGA Adapter, supporting high-resolution video output.",
   },
   {
     id: "fdabcdef-abcde-4445-8fef-5f6a7b8c9dae",
@@ -322,8 +274,6 @@ const products = [
     },
     priceCents: 24999,
     keywords: ["laptop bag", "portable", "protection"],
-    description:
-      "Carry your laptop in style and safety with the Portable Laptop Bag, designed to protect your device from bumps and scratches.",
   },
   {
     id: "abcdefabc-defab-4556-90ef-6a7b8c9daef1",
@@ -335,8 +285,6 @@ const products = [
     },
     priceCents: 19999,
     keywords: ["usb-c", "displayport", "adapter"],
-    description:
-      "Connect your USB-C devices to DisplayPort monitors with the USB-C to DisplayPort Adapter, ensuring high-quality visuals.",
   },
   {
     id: "bcdefabcd-efabc-4667-91fe-7b8c9daef202",
@@ -348,8 +296,6 @@ const products = [
     },
     priceCents: 22999,
     keywords: ["laptop charger", "portable", "power"],
-    description:
-      "Keep your laptop charged on the go with the Portable Laptop Charger, offering fast charging and high-capacity battery.",
   },
   {
     id: "cdefabcd-efabcd-4778-92fd-8c9daef20303",
@@ -361,8 +307,6 @@ const products = [
     },
     priceCents: 17999,
     keywords: ["usb-c", "ethernet", "adapter"],
-    description:
-      "Connect your USB-C devices to Ethernet networks with the USB-C to Ethernet Adapter, ensuring stable and fast internet connectivity.",
   },
   {
     id: "defabcdef-abcd-4889-93fe-9daef2030404",
@@ -374,18 +318,101 @@ const products = [
     },
     priceCents: 11999,
     keywords: ["screen protector", "laptop", "protection"],
-    description: "Protect your laptop screen from screen damage.",
+  },
+  {
+    id: "efabcdef-abcdef-4990-94fd-aef203040505",
+    image: "images/products/usb-c-to-thunderbolt-adapter.jpg",
+    name: "USB-C to Thunderbolt Adapter",
+    rating: {
+      stars: 4.7,
+      count: 239,
+    },
+    priceCents: 29999,
+    keywords: ["usb-c", "thunderbolt", "adapter"],
+  },
+  {
+    id: "fabcdefab-cdefab-5001-95fe-bef203040606",
+    image: "images/products/portable-laptop-keyboard-cover.jpg",
+    name: "Portable Laptop Keyboard Cover",
+    rating: {
+      stars: 4.2,
+      count: 109,
+    },
+    priceCents: 9999,
+    keywords: ["keyboard cover", "laptop", "protection"],
+  },
+  {
+    id: "abcdefabc-defabc-5112-96fd-cf203040707",
+    image: "images/products/usb-c-to-hdmi-cable-2m.jpg",
+    name: "USB-C to HDMI Cable 2m",
+    rating: {
+      stars: 4.6,
+      count: 198,
+    },
+    priceCents: 18999,
+    keywords: ["usb-c", "hdmi", "cable"],
+  },
+  {
+    id: "bcdefabcd-efabcd-5223-97fe-df203040808",
+    image: "images/products/portable-laptop-cooling-pad.jpg",
+    name: "Portable Laptop Cooling Pad",
+    rating: {
+      stars: 4.5,
+      count: 177,
+    },
+    priceCents: 21999,
+    keywords: ["cooling pad", "laptop", "portable"],
+  },
+  {
+    id: "cdefabcd-efabc-5334-98fe-ef203040909",
+    image: "images/products/usb-c-to-vga-cable.jpg",
+    name: "USB-C to VGA Cable",
+    rating: {
+      stars: 4.3,
+      count: 141,
+    },
+    priceCents: 14999,
+    keywords: ["usb-c", "vga", "cable"],
+  },
+  {
+    id: "defabcdef-abcd-5445-99fe-f0203041010",
+    image: "images/products/portable-laptop-desktop-dock.jpg",
+    name: "Portable Laptop Desktop Dock",
+    rating: {
+      stars: 4.8,
+      count: 267,
+    },
+    priceCents: 34999,
+    keywords: ["desktop dock", "laptop", "portable"],
+  },
+  {
+    id: "efabcdef-abcdef-5556-a0fe-01203041111",
+    image: "images/products/usb-c-to-displayport-cable.jpg",
+    name: "USB-C to DisplayPort Cable",
+    rating: {
+      stars: 4.7,
+      count: 312,
+    },
+    priceCents: 200,
+    keywords: ["usb-c", "cable", "display"],
   },
 ];
 
-const imagesNames = [];
-products.forEach((product) => {
-  imagesNames.push(product.image.slice(16));
-});
+// // If using ES modules, use import statements and resolve directory with import.meta.url
+// import fs from "fs";
+// import path from "path";
+// import { fileURLToPath } from "url";
 
-// Export image names to CSV file (Node.js only)
-const fs = require("fs");
-const path = require("path");
-const csvPath = path.join(__dirname, "../imagesDownloader/imageNames.csv");
-fs.writeFileSync(csvPath, imagesNames.join("\n"), "utf8");
-console.log("Image names saved to", csvPath);
+// function sendImageNamesToDownloader() {
+//   const imagesNames = [];
+//   products.forEach((product) => {
+//     imagesNames.push(product.image.slice(16));
+//   });
+
+//   // Resolve __dirname equivalent in ES modules
+//   const __filename = fileURLToPath(import.meta.url);
+//   const __dirname = path.dirname(__filename);
+//   const csvPath = path.join(__dirname, "../imagesDownloader/imageNames.csv");
+//   fs.writeFileSync(csvPath, imagesNames.join("\n"), "utf8");
+//   console.log("Image names saved to", csvPath);
+// }

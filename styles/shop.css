@@ -235,11 +235,10 @@
 ================================================================== */
 .product--grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(280px, 1fr)
-  ); /* Adjusted minmax for better scaling */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--gutter-normal);
+  padding: var(--padding-normal);
+  align-items: stretch; /* This is crucial! It makes all grid items in a row have the same height */
 }
 .product--card {
   background-color: var(--bg-light);
@@ -252,6 +251,7 @@
   align-items: center;
   text-align: center;
   /* max-width: 300px; Removed fixed max-width, let grid handle it */
+  height: 100%; /* Ensure the card itself stretches to fill available height in its grid/flex container */
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* More specific transitions */
 }
@@ -273,12 +273,19 @@
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--text-dark);
-}
-.product--card .product--description {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-  flex-grow: 1; /* Allows description to take available space */
+  /* --- ADDED/MODIFIED STYLES BELOW --- */
+  min-height: 2.6em; /* Adjust this value based on your font-size and line-height.
+                       This allows for two lines of text (1.3rem * 2 = 2.6em).
+                       If your line-height is 1.2, then 2 lines would be 1.3rem * 1.2 * 2 = 3.12rem.
+                       A simpler approach is to use 'em' units which are relative to the font-size.
+                       2.6em typically accommodates two lines well for this font size. */
+  display: -webkit-box; /* Required for Webkit browsers (Chrome, Safari) for multiline ellipsis */
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  line-clamp: 2; /* Standard property for compatibility */
+  -webkit-box-orient: vertical; /* Required for line-clamp to work */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Add ellipsis (...) if text overflows */
+  /* --- END ADDED/MODIFIED STYLES --- */
 }
 .product--card .product--rating {
   color: #facc15; /* A standard gold for stars */
@@ -289,6 +296,37 @@
   color: var(--text-muted);
   margin-left: 5px; /* Smaller margin for rating count */
 }
+.product--card .product--quantity--container {
+  margin-bottom: 15px; /* Space below the quantity selector */
+  width: 100%; /* Ensure the container takes full width */
+  display: flex; /* Use flexbox to center the select */
+  justify-content: center;
+}
+
+.product--card .product--quantity--container select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-soft);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* Remove default select styling */
+  background-image: url("/img/icons/expand-arrow-icon.png"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  width: 80px; /* Fixed width for the select dropdown */
+  text-align: center; /* Center the selected value */
+}
+
+.product--card .product--quantity--container select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
 .product--card .product--price {
   font-family: var(--font-sans);
   font-size: 1.5rem;
