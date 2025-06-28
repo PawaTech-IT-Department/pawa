@@ -10,21 +10,17 @@
       href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <!-- ICONS LINK to use for the ratings star-->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
 
-    <!-- SCRIPTS -->
     <script type="module" defer src="/scripts/shop.js"></script>
     <script defer src="/script.js"></script>
     <script defer src="/js-components/header & footer components.js"></script>
   </head>
   <body>
-    <!-- Importing Header*nav Component -->
     <main-header></main-header>
-    <!-- Rest of the content -->
 
     <header class="shop--header">
       <div class="container">
@@ -35,21 +31,24 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main>
       <div class="shop--section">
         <div class="shop--controls">
           <div class="search--bar">
             <img src="/img/icons/search-icons.png" alt="search icon" />
-            <input type="text" placeholder="Search products..." />
+            <input
+              type="text"
+              placeholder="Search products..."
+              class="js-search-input"
+            />
           </div>
           <div class="sort--by">
             <span>Sort By:</span>
-            <select>
-              <option>Popular</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest</option>
+            <select class="js-sort-select">
+              <option value="popular">Popular</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest</option>
             </select>
             <img src="/img/icons/chevron-down.png" alt="" />
           </div>
@@ -60,26 +59,85 @@
             <div class="category--filters">
               <ul>
                 <li>
-                  <input type="checkbox" id="all-products" checked />
+                  <input
+                    type="radio"
+                    id="all-products"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="all"
+                    checked
+                  />
                   <label for="all-products"
-                    >All Products <span>(24)</span></label
-                  >
+                    >All Products
+                    <span
+                      class="js-category-count"
+                      data-category-count="all"
+                    ></span>
+                  </label>
                 </li>
                 <li>
-                  <input type="checkbox" id="laptops" checked />
-                  <label for="laptops">Laptops <span>(10)</span></label>
+                  <input
+                    type="radio"
+                    id="laptops"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="laptops"
+                  />
+                  <label for="laptops"
+                    >Laptops
+                    <span
+                      class="js-category-count"
+                      data-category-count="laptops"
+                    ></span>
+                  </label>
                 </li>
                 <li>
-                  <input type="checkbox" id="printers" />
-                  <label for="printers">Printers <span>(5)</span></label>
+                  <input
+                    type="radio"
+                    id="printers"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="printers"
+                  />
+                  <label for="printers"
+                    >Printers
+                    <span
+                      class="js-category-count"
+                      data-category-count="printers"
+                    ></span>
+                  </label>
                 </li>
                 <li>
-                  <input type="checkbox" id="projectors" />
-                  <label for="projectors">Projectors <span>(3)</span></label>
+                  <input
+                    type="radio"
+                    id="projectors"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="projectors"
+                  />
+                  <label for="projectors"
+                    >Projectors
+                    <span
+                      class="js-category-count"
+                      data-category-count="projectors"
+                    ></span>
+                  </label>
                 </li>
                 <li>
-                  <input type="checkbox" id="accessories" />
-                  <label for="accessories">Accessories <span>(1)</span></label>
+                  <input
+                    type="radio"
+                    id="accessories"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="accessories"
+                  />
+                  <label for="accessories"
+                    >Accessories
+                    <span
+                      class="js-category-count"
+                      data-category-count="accessories"
+                    ></span>
+                  </label>
                 </li>
               </ul>
             </div>
@@ -87,129 +145,26 @@
             <div class="price--range">
               <input
                 type="range"
-                min="0"
-                max="1000"
-                value="0"
-                class="slider"
+                class="slider js-price-slider js-min-price-slider"
                 id="minPrice"
               />
               <input
                 type="range"
-                min="0"
-                max="1000"
-                value="1000"
-                class="slider"
+                class="slider js-price-slider js-max-price-slider"
                 id="maxPrice"
               />
               <div class="price--labels">
-                <span>$0</span>
-                <span>$1000</span>
+                <span class="js-min-price-label"></span>
+                <span class="js-max-price-label"></span>
               </div>
             </div>
           </aside>
-          <!-- PRODUCT GRID -->
-          <section class="product--grid js--product--grid">
-            <!-- PRODUCT 1 -->
-            <div class="product--card">
-              <img
-                src="/img/products/gaming-laptop.webp"
-                alt="Gaming Laptop Pro"
-              />
-              <h4 class="product--name">Gaming Laptop Pro</h4>
-              <div class="product--rating">
-                <!-- STAR ICONS -->
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star-half-alt"></i> <span>(24)</span>
-              </div>
-              <div class="product--quantity--container">
-                <select>
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
-              <div class="product--price">$1,299</div>
-              <button class="btn btn--primary add-to-cart">Add to Cart</button>
-            </div>
-            <!-- PRODUCT 2 -->
-            <div class="product--card">
-              <img
-                src="/img/products/Wireless Laser Printer.webp"
-                alt="Wireless Laser Printer"
-              />
-              <h4 class="product--name">Wireless Laser Printer</h4>
-              <div class="product--rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i> <span>(18)</span>
-              </div>
-              <div class="product--quantity--container">
-                <select>
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
-              <div class="product--price">$299</div>
-              <button class="btn btn--primary add-to-cart">Add to Cart</button>
-            </div>
-
-            <!-- PRODUCT 3 -->
-            <div class="product--card">
-              <img
-                src="/img/products/Mini Projector 4K.webp"
-                alt="Mini Projector 4K"
-              />
-              <h4 class="product--name">Mini Projector 4K</h4>
-              <div class="product--rating">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star"></i><i class="fas fa-star"></i
-                ><i class="fas fa-star-half-alt"></i> <span>(31)</span>
-              </div>
-              <div class="product--quantity--container">
-                <select>
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
-              </div>
-              <div class="product--price">$599</div>
-              <button class="btn btn--primary add-to-cart">Add to Cart</button>
-            </div>
-          </section>
+          <section class="product--grid js--product--grid"></section>
         </div>
-        <div class="pagination">
-          <a href="#">&lt;</a>
-          <a href="#" class="active">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">&gt;</a>
-        </div>
+        <div class="pagination js-pagination-container"></div>
       </div>
     </main>
-    <!-- FOOTER COMPONENT -->
+
     <main-footer></main-footer>
   </body>
 </html>
