@@ -1,5 +1,5 @@
-// js/data/cart.js
-export let cart; // Export cart as a variable
+// Initialize cart array from local storage
+export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 loadCartFromLocalStorage(); // Load cart when the module loads
 
@@ -41,24 +41,15 @@ export function calculateTotalCartQuantity() {
   return totalQuantity;
 }
 
-// These are typically used by the cart page, but exported for completeness
-export function updateCartItemQuantity(productId, change) {
-  let itemFound = false;
-  cart.forEach((cartItem) => {
-    if (cartItem.productId === productId) {
-      cartItem.quantity += change;
-      if (cartItem.quantity <= 0) {
-        removeCartItem(productId);
-      }
-      itemFound = true;
+export function removeFromCart(productId) {
+  console.log(`Product ID to be removed ${productId}`);
+  console.log(cart);
+  const newCart = [];
+  cart.forEach((item) => {
+    if (item.productId !== productId) {
+      newCart.push(item);
     }
   });
-  if (itemFound) {
-    saveCartToLocalStorage();
-  }
-}
-
-export function removeCartItem(productId) {
-  cart = cart.filter((cartItem) => cartItem.productId !== productId);
-  saveCartToLocalStorage();
+  cart = newCart;
+  saveCartToLocalStorage(); // Always save after modification
 }

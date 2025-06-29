@@ -43,6 +43,12 @@
   padding: var(--gutter-normal) 0;
   border-bottom: 1px solid var(--border-color); /* Separator for products */
 }
+.delivery-date {
+  color: rgb(0, 118, 0);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
 .cart--product--card:last-child {
   border-bottom: none; /* No border for the last item */
 }
