@@ -15,7 +15,8 @@ cart.forEach((cartItem) => {
   console.log();
 
   cartSummaryHTML += `
-    <div class="cart--product--card">
+    <div class="cart--product--card 
+    js-cart-item-container-${matchingProduct.id}">
       <div class="cart--product--image">
         <img
           src="/img/${matchingProduct.image.slice(7)}"
@@ -55,6 +56,9 @@ allDeleteLinks.forEach((delLink) => {
     const productId = delLink.dataset.productId;
     console.log(productId);
     removeFromCart(productId);
-    console.log(cart);
+    const itemToBeRemoved = document.querySelector(
+      `.js-cart-item-container-${productId}`
+    );
+    itemToBeRemoved.remove();
   });
 });
