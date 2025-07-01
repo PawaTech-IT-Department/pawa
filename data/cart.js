@@ -3,6 +3,17 @@ export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 loadCartFromLocalStorage(); // Load cart when the module loads
 
+export function showQuantity() {
+  const cartQuantityElement = document.querySelector(".js-cart-quantity");
+  const quantityOfCart = calculateTotalCartQuantity();
+  if (!cartQuantityElement) return;
+  if (quantityOfCart === 0) {
+    cartQuantityElement.style.opacity = 0;
+  } else {
+    cartQuantityElement.style.opacity = 1;
+  }
+}
+
 function loadCartFromLocalStorage() {
   cart = JSON.parse(localStorage.getItem("cart")) || [];
   console.log("Cart module loaded. Initial cart:", cart);
@@ -30,7 +41,6 @@ export function addToCart(productId, quantityToAdd = 1) {
     });
   }
   saveCartToLocalStorage(); // Always save after modification
-  console.log("Cart module: Cart after adding:", cart);
 }
 
 export function calculateTotalCartQuantity() {
@@ -42,8 +52,6 @@ export function calculateTotalCartQuantity() {
 }
 
 export function removeFromCart(productId) {
-  console.log(`Product ID to be removed ${productId}`);
-  console.log(cart);
   const newCart = [];
   cart.forEach((item) => {
     if (item.productId !== productId) {
@@ -52,4 +60,21 @@ export function removeFromCart(productId) {
   });
   cart = newCart;
   saveCartToLocalStorage(); // Always save after modification
+}
+export function updateCartQuantity() {
+  const cartQuantityElement = document.querySelector(".js-cart-quantity");
+
+  let totalQuantity = 0;
+  cart.forEach((cartItem) => {
+    totalQuantity += cartItem?.quantity;
+  });
+  if (cartQuantityElement) {
+    cartQuantityElement.textContent = totalQuantity;
+  }
+  showQuantity();
+}
+
+function emptyCart() {
+  cart = [];
+  saveCartToLocalStorage();
 }
