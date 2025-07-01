@@ -63,7 +63,8 @@ const addHTML = function () {
         >
       </div>
       <div class="cart--product--price">$${(
-        matchingProduct.priceCents / 100
+        (matchingProduct.priceCents / 100) *
+        cartItem.quantity
       ).toFixed(2)}</div>
     </div>
   `;
@@ -90,10 +91,13 @@ const initializeDeleteLinks = function () {
 
 // --- INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", function () {
+  renderOrderSummary();
+});
+
+function renderOrderSummary() {
   updateCartQuantity();
   addHTML();
   initializeDeleteLinks();
-
   // Add event listeners to all quantity control buttons
   const allUpdateButtons = document.querySelectorAll(
     ".cart--quantity--controls"
@@ -113,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
         quantitySpan.textContent = updatedCartItem.quantity;
       }
       updateCartQuantity();
+      renderOrderSummary();
     });
     minusBtn.addEventListener("click", function (e) {
       e.preventDefault();
@@ -138,8 +143,9 @@ document.addEventListener("DOMContentLoaded", function () {
           quantitySpan.textContent = updateCartItem.quantity;
         }
         updateCartQuantity();
+        renderOrderSummary();
         saveCartToLocalStorage();
       }
     });
   });
-});
+}
