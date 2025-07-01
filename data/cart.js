@@ -38,6 +38,7 @@ export function addToCart(productId, quantityToAdd = 1) {
     cart.push({
       productId: productId,
       quantity: quantityToAdd,
+      deliveryOptionsId: "1",
     });
   }
   saveCartToLocalStorage(); // Always save after modification

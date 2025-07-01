@@ -6,9 +6,24 @@ import {
   saveCartToLocalStorage,
 } from "../data/cart.js"; // Ensure this path is correct
 import { products } from "../data/products.js"; // Ensure this path is correct
+import { deliveryOptions } from "../data/deliveryOptions.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
+
+function deliveryOptionsHTML() {
+  let html = "";
+  deliveryOptions.forEach((deliveryOption) => {
+    const today = dayjs();
+    const deliveryDate = today.add(deliveryOption.deliveryDays, "day");
+    const dateString = deliveryDate.format("dddd, MMMM D");
+    html += `
+    <div class="delivery-date">Delivery date: ${dateString}</div>
+    `;
+  });
+  return html;
+}
 
 const cartList = document.querySelector(".cart--product--list");
-const addHTML = function (e) {
+const addHTML = function () {
   let cartSummaryHTML = "";
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
@@ -29,7 +44,7 @@ const addHTML = function (e) {
         />
       </div>
       <div class="cart--product--details">
-        <div class="delivery-date">Delivery date: Wednesday, June 15</div>
+        ${deliveryOptionsHTML()}
         <h3 class="cart--product--name">${matchingProduct.name}</h3>
         <p class="cart--product--description">
           Product description. To be added in the products information
@@ -74,7 +89,7 @@ const initializeDeleteLinks = function () {
 };
 
 // --- INITIALIZATION ---
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener("DOMContentLoaded", function () {
   updateCartQuantity();
   addHTML();
   initializeDeleteLinks();
@@ -88,9 +103,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const plusBtn = controls.querySelectorAll(".cart--quantity--button")[1];
     const productId = controls.dataset.productId;
     const quantitySpan = controls.querySelector(".cart--quantity");
-    // const cartItem = cart[index];
 
-    console.log(quantitySpan);
     plusBtn.addEventListener("click", function (e) {
       e.preventDefault();
       addToCart(productId, 1);
