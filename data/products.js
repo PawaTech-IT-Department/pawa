@@ -398,6 +398,15 @@ export const products = [
   },
 ];
 
+export function getProduct(productId) {
+  let matchingProduct;
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
+  return matchingProduct;
+}
 // // If using ES modules, use import statements and resolve directory with import.meta.url
 // import fs from "fs";
 // import path from "path";

@@ -16,12 +16,10 @@ export function showQuantity() {
 
 function loadCartFromLocalStorage() {
   cart = JSON.parse(localStorage.getItem("cart")) || [];
-  console.log("Cart module loaded. Initial cart:", cart);
 }
 
 export function saveCartToLocalStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
-  console.log("Cart module: Cart saved to localStorage:", cart);
 }
 
 export function addToCart(productId, quantityToAdd = 1) {
