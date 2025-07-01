@@ -7,6 +7,7 @@ import {
 } from "../../data/cart.js"; // Ensure this path is correct
 import { getProduct } from "../../data/products.js"; // Ensure this path is correct
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 import formatCurrency from "../utils/moneyFormatter.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
@@ -82,7 +83,7 @@ export function renderOrderSummary() {
           itemToBeRemoved.remove();
         }
         updateCartQuantity();
-        renderOrderSummary();
+        renderPaymentSummary();
       });
     });
 
@@ -107,6 +108,7 @@ export function renderOrderSummary() {
         }
         updateCartQuantity();
         renderOrderSummary();
+        renderPaymentSummary();
       });
       minusBtn.addEventListener("click", function (e) {
         e.preventDefault();
@@ -123,6 +125,7 @@ export function renderOrderSummary() {
           }
           updateCartQuantity();
           renderOrderSummary();
+          renderPaymentSummary();
         } else if (itemToBeRemoved) {
           cart.map((cartItem) => {
             if (cartItem.productId === itemToBeRemoved.productId) {
@@ -138,6 +141,7 @@ export function renderOrderSummary() {
           }
           updateCartQuantity();
           renderOrderSummary();
+          renderPaymentSummary();
           saveCartToLocalStorage();
         }
       });

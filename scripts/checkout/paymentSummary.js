@@ -2,20 +2,21 @@ import { cart } from "../../data/cart.js"; // Ensure this path is correct
 import { getProduct } from "../../data/products.js"; // Ensure this path is correct
 import formatCurrency from "../utils/moneyFormatter.js";
 
-const cartContainer = document.querySelector(".cart--content");
-
 export function renderPaymentSummary() {
+  const cartContainer = document.querySelector(".cart--summary");
+
   let subTotalCents = 0;
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
     const matchingProduct = getProduct(productId);
-    subTotalCents += matchingProduct.priceCents * cartItem.quantity;
+    if (matchingProduct) {
+      subTotalCents += matchingProduct.priceCents * cartItem.quantity;
+    }
   });
   const taxCent = (16 * subTotalCents) / 100;
   const totalCents = subTotalCents + taxCent;
 
   const paymentSummaryHTML = `
-  <div class="cart--summary">
     <h3>Order Summary</h3>
     <div class="summary--item">
       <span>Subtotal</span>
@@ -43,8 +44,7 @@ export function renderPaymentSummary() {
     <p class="shipping--info">
       <i class="fas fa-truck"></i> Free shipping on orders over $100
     </p>
-  </div>
   `;
 
-  cartContainer.insertAdjacentHTML("beforeend", paymentSummaryHTML);
+  cartContainer.innerHTML = paymentSummaryHTML;
 }
