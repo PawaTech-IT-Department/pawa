@@ -5,8 +5,13 @@ class MainHeader extends HTMLElement {
   <div class="header--container">
     <nav class="main--nav">
       <a href="/" class="logo">
+<<<<<<< HEAD
         <img src="/img/icons/shopaholic-icon-logo.png" alt="" id="logo--icon" />
         <span>Pawa</span>
+=======
+        <img src="/img/icons/Neszi logo.png" />
+        <span>Neszi Supply Hub</span>
+>>>>>>> w3an2-master
       </a>
       <ul class="nav--links" id="navLinks">
         <li><a href="/index.html">Home</a></li>
@@ -62,11 +67,19 @@ class MainFooter extends HTMLElement {
             <div class="footer--column">
               <a href="/" class="logo footer--logo">
                 <img
+<<<<<<< HEAD
                   src="/img/icons/shopaholic-icon-light.png"
                   alt=""
                   id="footer--logo--icon"
                 />
                 <span>Pawa</span>
+=======
+                  src="/img/icons/Neszi logo.png"
+                  alt=""
+                  id="footer--logo--icon"
+                />
+                <span>Neszi</span>
+>>>>>>> w3an2-master
               </a>
               <p>
                 Your trusted partner for premium electronics and computers with
@@ -87,10 +100,18 @@ class MainFooter extends HTMLElement {
             <div class="footer--column">
               <h4>Shop</h4>
               <ul>
+<<<<<<< HEAD
                 <li><a href="#">Laptops</a></li>
                 <li><a href="#">Printers</a></li>
                 <li><a href="#">Projectors</a></li>
                 <li><a href="#">Accessories</a></li>
+=======
+                <li><a href="#">Computers</a></li>
+                <li><a href="#">Printers</a></li>
+                <li><a href="#">Projectors</a></li>
+                <li><a href="#">Tablets</a></li>
+                <li><a href="#">Refurbished</a></li>
+>>>>>>> w3an2-master
               </ul>
             </div>
             <div class="footer--column">
@@ -113,7 +134,11 @@ class MainFooter extends HTMLElement {
             </div>
           </div>
           <div class="footer-bottom">
+<<<<<<< HEAD
             <p>&copy; 2025 Pawa Electronics. All rights reserved.</p>
+=======
+            <p>&copy; 2025 Neszi Electronics. All rights reserved.</p>
+>>>>>>> w3an2-master
           </div>
         </div>
       </footer>

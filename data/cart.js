@@ -3,6 +3,7 @@ export let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 loadCartFromLocalStorage(); // Load cart when the module loads
 
+<<<<<<< HEAD
 export function showQuantity() {
   const cartQuantityElement = document.querySelector(".js-cart-quantity");
   const quantityOfCart = calculateTotalCartQuantity();
@@ -16,10 +17,19 @@ export function showQuantity() {
 
 function loadCartFromLocalStorage() {
   cart = JSON.parse(localStorage.getItem("cart")) || [];
+=======
+function loadCartFromLocalStorage() {
+  cart = JSON.parse(localStorage.getItem("cart")) || [];
+  console.log("Cart module loaded. Initial cart:", cart);
+>>>>>>> w3an2-master
 }
 
 export function saveCartToLocalStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
+<<<<<<< HEAD
+=======
+  console.log("Cart module: Cart saved to localStorage:", cart);
+>>>>>>> w3an2-master
 }
 
 export function addToCart(productId, quantityToAdd = 1) {
@@ -36,10 +46,17 @@ export function addToCart(productId, quantityToAdd = 1) {
     cart.push({
       productId: productId,
       quantity: quantityToAdd,
+<<<<<<< HEAD
       deliveryOptionsId: "1",
     });
   }
   saveCartToLocalStorage(); // Always save after modification
+=======
+    });
+  }
+  saveCartToLocalStorage(); // Always save after modification
+  console.log("Cart module: Cart after adding:", cart);
+>>>>>>> w3an2-master
 }
 
 export function calculateTotalCartQuantity() {
@@ -51,6 +68,11 @@ export function calculateTotalCartQuantity() {
 }
 
 export function removeFromCart(productId) {
+<<<<<<< HEAD
+=======
+  console.log(`Product ID to be removed ${productId}`);
+  console.log(cart);
+>>>>>>> w3an2-master
   const newCart = [];
   cart.forEach((item) => {
     if (item.productId !== productId) {
@@ -60,6 +82,7 @@ export function removeFromCart(productId) {
   cart = newCart;
   saveCartToLocalStorage(); // Always save after modification
 }
+<<<<<<< HEAD
 export function updateCartQuantity() {
   const cartQuantityElement = document.querySelector(".js-cart-quantity");
 
@@ -77,3 +100,5 @@ function emptyCart() {
   cart = [];
   saveCartToLocalStorage();
 }
+=======
+>>>>>>> w3an2-master

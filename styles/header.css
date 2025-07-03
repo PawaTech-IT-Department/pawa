@@ -5,7 +5,11 @@
 .main--header {
   background: var(--bg-light);
   background-color: rgba(255, 255, 255, 0.8);
+<<<<<<< HEAD
   padding: 1rem 0;
+=======
+  padding: 0.4rem 0;
+>>>>>>> w3an2-master
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -36,7 +40,11 @@
 }
 .logo img {
   margin-right: 8px;
+<<<<<<< HEAD
   height: 48px;
+=======
+  height: 120px;
+>>>>>>> w3an2-master
 }
 .logo:hover {
   scale: 1.1;
