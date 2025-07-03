@@ -29,7 +29,7 @@
     var(--gutter-normal) * 2
   ); /* Spacing between shop controls and shop content */
   padding: 4rem var(--padding-normal); /* Add horizontal padding for the whole section */
-  max-width: 1200px; /* Max width for the entire shop section content */
+  max-width: 1500px; /* Max width for the entire shop section content */
   margin: 0 auto; /* Center the shop section */
 }
 
