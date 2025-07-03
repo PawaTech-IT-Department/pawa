@@ -1,0 +1,565 @@
+/* =================================================================
+   SHOP SECTION SPECIFIC STYLES
+================================================================== */
+.shop--header {
+  padding: 4rem var(--padding-normal) 2rem; /* Add horizontal padding */
+  background-color: var(--bg-light); /*Ensure header has a light background*/
+  border-bottom: 1px solid var(--border-color);
+  text-align: center; /* Center header text */
+}
+
+.shop--header .container {
+  max-width: 1200px; /* Align with your global container if applicable */
+  margin: 0 auto;
+}
+
+.shop--header .section--title {
+  margin-bottom: 0.5rem;
+}
+
+.shop--header .section--subtitle {
+  color: var(--text-muted);
+}
+
+/* ======================= SHOP MAIN SECTION LAYOUT ======================= */
+.shop--section {
+  display: flex;
+  flex-direction: column;
+  gap: calc(
+    var(--gutter-normal) * 2
+  ); /* Spacing between shop controls and shop content */
+  padding: 4rem var(--padding-normal); /* Add horizontal padding for the whole section */
+  max-width: 1200px; /* Max width for the entire shop section content */
+  margin: 0 auto; /* Center the shop section */
+}
+
+/* ======================= SHOP CONTROLS LAYOUT ======================= */
+.shop--controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  gap: 15px; /* Gap between search bar and sort by on wrap */
+}
+.search--bar {
+  position: relative;
+  flex-grow: 1;
+  /* margin-right: 20px; Removed as gap will handle it */
+  max-width: 400px; /* Keep a max-width for desktop */
+  min-width: 200px;
+}
+.search--bar input {
+  width: 100%;
+  padding: 10px 10px 10px 50px; /*Left padding for icon*/
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+  background-color: var(
+    --bg-content
+  ); /* Ensure background adapts to dark mode */
+}
+.search--bar input:focus {
+  outline: none;
+  border-color: var(
+    --primary-color
+  ); /* Updated accent-color to primary-color for consistency */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* A better focus ring */
+}
+.search--bar input::placeholder {
+  color: var(--text-muted);
+}
+.search--bar img {
+  height: 1.7rem;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  filter: var(--icon-filter-dark); /* Add filter for dark mode compatibility */
+}
+
+.sort--by {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* max-width: 400px; Removed max-width to allow it to shrink */
+  color: var(--text-muted);
+}
+.sort--by select {
+  padding: 10px 30px 10px 15px; /*Right padding for custom arrow*/
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(
+    --bg-content
+  ); /* Use bg-content for select background */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; /*Remove default select arrow*/
+  font-size: 1rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  min-width: 150px; /* Ensure select has a minimum width */
+}
+.sort--by select:focus {
+  border-color: var(--primary-color); /* Updated to primary-color */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Consistent focus ring */
+  outline: 0 none;
+}
+.sort--by img {
+  height: 1.7rem;
+  position: absolute;
+  right: 10px; /* Adjusted to be inside padding */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /*Make icon unclickable*/
+  filter: var(--icon-filter-dark); /* Add filter for dark mode compatibility */
+}
+
+/* ======================= SHOP CONTENT (SIDEBAR + PRODUCT GRID) ======================= */
+.shop--contents {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Desktop: Sidebar width and product grid */
+  gap: calc(var(--gutter-normal) * 2); /* Increased gap for better separation */
+}
+
+.sidebar {
+  background-color: var(--bg-light);
+  padding: var(--padding-normal);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  max-height: 400px; /*Removed fixed max-height unless it's genuinely needed for aesthetics*/
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+.sidebar h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.category--filters ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+}
+
+.category--filters li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gutter-normal);
+}
+.category--filters label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text-dark);
+}
+.category--filters input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color); /* Custom checkbox color */
+  flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+.category--filters label span {
+  color: var(--text-muted);
+  margin-left: auto;
+  font-size: 0.9rem; /* Slightly smaller count */
+}
+
+.price--range--title {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+.price--range {
+  position: relative;
+  width: 100%;
+  height: 40px; /* Space for sliders and labels */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.price--range input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px; /* Thicker track for better usability */
+  background: var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  position: absolute;
+  pointer-events: none; /*Allow events on thumb*/
+}
+.price--range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  cursor: grab; /* Indicates draggable */
+  pointer-events: auto; /* Make thumb clickable */
+  box-shadow: var(--shadow-sm);
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+.price--range input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing; /* Indicates active drag */
+  transform: scale(1.1); /* Slight enlarge on active */
+}
+.price--range input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--secondary-color);
+}
+
+.price--range .price--labels {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  top: 30px; /* Position below sliders */
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* =================================================================
+   PRODUCT GRID
+================================================================== */
+.product--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--gutter-normal);
+  padding: var(--padding-normal);
+  align-items: stretch; /* This is crucial! It makes all grid items in a row have the same height */
+}
+.product--card {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--padding-normal);
+  transition: var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* max-width: 300px; Removed fixed max-width, let grid handle it */
+  height: 100%; /* Ensure the card itself stretches to fill available height in its grid/flex container */
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* More specific transitions */
+}
+.product--card:hover {
+  transform: translateY(-5px); /* Lift effect */
+  box-shadow: var(--shadow-md); /* More pronounced shadow */
+}
+
+.product--card img {
+  width: 100%;
+  max-height: 180px; /* Fixed height for consistent image display */
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  margin-bottom: 15px;
+}
+.product--card .product--name {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+  /* --- ADDED/MODIFIED STYLES BELOW --- */
+  min-height: 2.6em; /* Adjust this value based on your font-size and line-height.
+                       This allows for two lines of text (1.3rem * 2 = 2.6em).
+                       If your line-height is 1.2, then 2 lines would be 1.3rem * 1.2 * 2 = 3.12rem.
+                       A simpler approach is to use 'em' units which are relative to the font-size.
+                       2.6em typically accommodates two lines well for this font size. */
+  display: -webkit-box; /* Required for Webkit browsers (Chrome, Safari) for multiline ellipsis */
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  line-clamp: 2; /* Standard property for compatibility */
+  -webkit-box-orient: vertical; /* Required for line-clamp to work */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Add ellipsis (...) if text overflows */
+  /* --- END ADDED/MODIFIED STYLES --- */
+}
+.product--card .product--rating {
+  color: #facc15; /* A standard gold for stars */
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+.product--card .product--rating span {
+  color: var(--text-muted);
+  margin-left: 5px; /* Smaller margin for rating count */
+}
+.product--card .product--quantity--container {
+  margin-bottom: 15px; /* Space below the quantity selector */
+  width: 100%; /* Ensure the container takes full width */
+  display: flex; /* Use flexbox to center the select */
+  justify-content: center;
+}
+
+.product--card .product--quantity--container select {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-soft);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* Remove default select styling */
+  background-image: url("/img/icons/expand-arrow-icon.png"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  width: 80px; /* Fixed width for the select dropdown */
+  text-align: center; /* Center the selected value */
+}
+
+.product--card .product--quantity--container select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.product--card .product--price {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+.product--card .add-to-cart {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  padding-left: 45px; /* Make space for the icon */
+  position: relative;
+  display: inline-flex; /* Use flex to align text and pseudo-element */
+  align-items: center;
+  justify-content: center; /* Center the text within the button */
+}
+.product--card .add-to-cart::before {
+  content: "";
+  display: block; /* Changed to block for easier positioning */
+  width: 24px; /* Smaller icon size */
+  height: 24px; /* Smaller icon size */
+  background-image: url("/img/icons/add-to-cart-icons.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 15px; /* Position icon accurately */
+  top: 50%;
+  transform: translateY(-50%);
+  filter: invert(100%); /* Invert color for visibility on primary button */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 10px;
+}
+.pagination a {
+  /* Use 'a' directly as the link state will be handled by :link, :hover etc. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+  text-decoration: none; /* Ensure no underline */
+  transition: var(--transition-fast);
+}
+.pagination a.active {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  border-color: var(--primary-color);
+}
+.pagination a:not(.active):hover {
+  background-color: var(--bg-soft);
+  border-color: var(--primary-color);
+}
+
+/* =================================================================
+   MEDIA QUERIES FOR RESPONSIVENESS
+================================================================== */
+
+/* Tablets and medium screens (e.g., 992px and below) */
+@media (max-width: 992px) {
+  .shop--contents {
+    grid-template-columns: 1fr; /* Sidebar stacks above products */
+    gap: calc(var(--gutter-normal) * 3); /* More space when stacked */
+  }
+
+  .sidebar {
+    max-height: none; /* Remove max-height when stacked */
+    width: 100%; /* Sidebar takes full width */
+  }
+
+  .product--grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(220px, 1fr)
+    ); /* Allow more columns if space permits, but min size smaller */
+  }
+}
+
+/* Smaller Tablets and larger phones (e.g., 768px and below) */
+@media (max-width: 768px) {
+  .shop--header {
+    padding: 3rem var(--padding-normal) 1.5rem; /* Reduce header padding */
+  }
+  .shop--header .section--title {
+    font-size: 2rem; /* Smaller title */
+  }
+  .shop--header .section--subtitle {
+    font-size: 0.9rem; /* Smaller subtitle */
+  }
+
+  .shop--section {
+    padding: 2rem var(--padding-normal); /* Reduce overall section padding */
+  }
+
+  .shop--controls {
+    flex-direction: column; /* Stack search and sort vertically */
+    align-items: stretch; /* Make items take full width */
+    padding: var(--padding-small); /* Smaller padding */
+  }
+
+  .search--bar {
+    width: 100%; /* Full width for search bar */
+    max-width: none; /* Remove max width constraint */
+    margin-right: 0; /* No margin on right */
+  }
+
+  .sort--by {
+    width: 100%; /* Full width for sort by */
+    justify-content: space-between; /* Space out "Sort By" text and select */
+  }
+  .sort--by select {
+    flex-grow: 1; /* Allow select to take available space */
+  }
+
+  .product--grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(180px, 1fr)
+    ); /* Smaller min-width for products */
+    gap: var(--gutter-small); /* Smaller gap between products */
+  }
+
+  .product--card {
+    padding: var(--padding-small); /* Smaller padding for cards */
+  }
+  .product--card img {
+    max-height: 150px; /* Reduce image height */
+  }
+  .product--card .product--name {
+    font-size: 1.1rem;
+  }
+  .product--card .product--description {
+    font-size: 0.8rem;
+  }
+  .product--card .product--price {
+    font-size: 1.3rem;
+  }
+  .product--card .add-to-cart {
+    font-size: 0.9rem;
+    padding-left: 40px; /* Adjust padding for smaller icon */
+  }
+  .product--card .add-to-cart::before {
+    width: 20px; /* Smaller icon */
+    height: 20px; /* Smaller icon */
+    left: 10px;
+  }
+
+  .pagination {
+    margin-top: 30px;
+    gap: 8px; /* Smaller gap in pagination */
+  }
+  .pagination a {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile devices (e.g., 480px and below) */
+@media (max-width: 480px) {
+  .shop--header {
+    padding: 2rem var(--padding-small) 1rem;
+  }
+  .shop--header .section--title {
+    font-size: 1.8rem;
+  }
+
+  .shop--section {
+    padding: 1.5rem var(--padding-small);
+  }
+
+  .shop--controls {
+    padding: var(--padding-extra-small); /* Even smaller padding */
+  }
+
+  .search--bar input {
+    padding: 8px 8px 8px 45px; /* Adjust padding for search icon */
+  }
+  .search--bar img {
+    height: 1.5rem; /* Smaller search icon */
+    left: 10px;
+  }
+
+  .sort--by select {
+    padding: 8px 25px 8px 10px; /* Adjust padding for sort select */
+    font-size: 0.9rem;
+  }
+  .sort--by img {
+    height: 1.5rem; /* Smaller sort icon */
+    right: 8px;
+  }
+
+  .product--grid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(150px, 1fr)
+    ); /* Smallest min-width for products */
+    gap: var(--gutter-extra-small); /* Very small gap */
+  }
+
+  .product--card img {
+    max-height: 120px;
+  }
+  .product--card .product--name {
+    font-size: 1rem;
+  }
+  .product--card .product--description {
+    font-size: 0.75rem;
+  }
+  .product--card .product--price {
+    font-size: 1.1rem;
+  }
+  .product--card .add-to-cart {
+    font-size: 0.85rem;
+    padding-left: 35px;
+  }
+  .product--card .add-to-cart::before {
+    width: 18px;
+    height: 18px;
+    left: 8px;
+  }
+
+  .pagination a {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+}

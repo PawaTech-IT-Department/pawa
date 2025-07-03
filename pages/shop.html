@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pawa - Premium Electronics</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script type="module" defer src="/scripts/shop.js"></script>
+    <script defer src="/script.js"></script>
+    <script defer src="/js-components/header & footer components.js"></script>
+  </head>
+  <body>
+    <main-header></main-header>
+
+    <header class="shop--header">
+      <div class="container">
+        <h1 class="section--title">Shop</h1>
+        <p class="section--subtitle">
+          Discover our collection of premium tech products
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="shop--section">
+        <div class="shop--controls">
+          <div class="search--bar">
+            <img src="/img/icons/search-icons.png" alt="search icon" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              class="js-search-input"
+            />
+          </div>
+          <div class="sort--by">
+            <span>Sort By:</span>
+            <select class="js-sort-select">
+              <option value="popular">Popular</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="newest">Newest</option>
+            </select>
+            <img src="/img/icons/chevron-down.png" alt="" />
+          </div>
+        </div>
+        <div class="shop--contents">
+          <aside class="sidebar">
+            <h3>Categories</h3>
+            <div class="category--filters">
+              <ul>
+                <li>
+                  <input
+                    type="radio"
+                    id="all-products"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="all"
+                    checked
+                  />
+                  <label for="all-products"
+                    >All Products
+                    <span
+                      class="js-category-count"
+                      data-category-count="all"
+                    ></span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="laptops"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="laptops"
+                  />
+                  <label for="laptops"
+                    >Laptops
+                    <span
+                      class="js-category-count"
+                      data-category-count="laptops"
+                    ></span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="printers"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="printers"
+                  />
+                  <label for="printers"
+                    >Printers
+                    <span
+                      class="js-category-count"
+                      data-category-count="printers"
+                    ></span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="projectors"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="projectors"
+                  />
+                  <label for="projectors"
+                    >Projectors
+                    <span
+                      class="js-category-count"
+                      data-category-count="projectors"
+                    ></span>
+                  </label>
+                </li>
+                <li>
+                  <input
+                    type="radio"
+                    id="accessories"
+                    name="categoryFilter"
+                    class="js-category-radio"
+                    data-category="accessories"
+                  />
+                  <label for="accessories"
+                    >Accessories
+                    <span
+                      class="js-category-count"
+                      data-category-count="accessories"
+                    ></span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <h3 class="price--range--title">Price Range</h3>
+            <div class="price--range">
+              <input
+                type="range"
+                class="slider js-price-slider js-min-price-slider"
+                id="minPrice"
+              />
+              <input
+                type="range"
+                class="slider js-price-slider js-max-price-slider"
+                id="maxPrice"
+              />
+              <div class="price--labels">
+                <span class="js-min-price-label"></span>
+                <span class="js-max-price-label"></span>
+              </div>
+            </div>
+          </aside>
+          <section class="product--grid js--product--grid"></section>
+        </div>
+        <div class="pagination js-pagination-container"></div>
+      </div>
+    </main>
+
+    <main-footer></main-footer>
+  </body>
+</html>
