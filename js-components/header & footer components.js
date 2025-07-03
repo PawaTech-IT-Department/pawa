@@ -91,7 +91,7 @@ class MainFooter extends HTMLElement {
                 <li><a href="#">Printers</a></li>
                 <li><a href="#">Projectors</a></li>
                 <li><a href="#">Tablets</a></li>
-                <li><a href="#">Refurbished</a></li>
+                <li><a href="#">Refuribished</a></li>
               </ul>
             </div>
             <div class="footer--column">
