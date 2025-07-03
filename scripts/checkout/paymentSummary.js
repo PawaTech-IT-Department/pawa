@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js"; // Ensure this path is correct
+import { cart, calculateTotalCartQuantity } from "../../data/cart.js"; // Ensure this path is correct
 import { getProduct } from "../../data/products.js"; // Ensure this path is correct
 import formatCurrency from "../utils/moneyFormatter.js";
 
@@ -19,7 +19,7 @@ export function renderPaymentSummary() {
   const paymentSummaryHTML = `
     <h3>Order Summary</h3>
     <div class="summary--item">
-      <span>Subtotal</span>
+      <span>Items (${calculateTotalCartQuantity()})</span>
       <span>$${formatCurrency(subTotalCents)}</span>
     </div>
     <div class="summary--item">

@@ -15,12 +15,15 @@ export function renderOrderSummary() {
   function deliveryOptionsHTML() {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, "day");
+      let deliveryDate = dayjs().add(deliveryOption.deliveryDays, "day");
+      // Skip weekends
+      while (deliveryDate.day() === 0 || deliveryDate.day() === 6) {
+        deliveryDate = deliveryDate.add(1, "day");
+      }
       const dateString = deliveryDate.format("dddd, MMMM D");
       html += `
-    <div class="delivery-date">Delivery date: ${dateString}</div>
-    `;
+      <div class="delivery-date">Delivery date: ${dateString}</div>
+      `;
     });
     return html;
   }
