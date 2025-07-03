@@ -82,6 +82,9 @@ class MainFooter extends HTMLElement {
                 <a href="/" aria-label="Instagram">
                   <img src="/img/icons/instagram.png" alt="Instagram icon" />
                 </a>
+                <a href="/" aria-label="LinkedIn">
+                  <img src="/img/icons/linkiedin.png" alt="LinkedIn icon"/>
+                </a>
               </div>
             </div>
             <div class="footer--column">
