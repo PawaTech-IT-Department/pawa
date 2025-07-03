@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class Product {
   id;
   image;
@@ -27,8 +26,6 @@ export function getProduct(productId) {
   return matchingProduct;
 }
 
-=======
->>>>>>> w3an2-master
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -429,15 +426,12 @@ export const products = [
   },
 ];
 
-<<<<<<< HEAD
 products.map((productDetails) => {
   new Product(productDetails);
 });
 
 console.log(products);
 
-=======
->>>>>>> w3an2-master
 // // If using ES modules, use import statements and resolve directory with import.meta.url
 // import fs from "fs";
 // import path from "path";

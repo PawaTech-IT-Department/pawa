@@ -27,14 +27,10 @@
 }
 /* Ensure logo images within footer also respect consistent styling */
 .footer--column .footer--logo img {
-<<<<<<< HEAD
-  height: 48px; /* Maintain consistent logo size */
-=======
   height: 60px; /* Maintain consistent logo size */
   width: 60px;
   border-radius: 50%;
   object-fit: cover;
->>>>>>> w3an2-master
   margin-right: 8px; /* Consistent spacing with logo text */
 }
 .footer--column .footer--logo span {

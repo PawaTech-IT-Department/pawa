@@ -1,9 +1,5 @@
 import { products } from "../data/products.js"; // Ensure this path is correct
-<<<<<<< HEAD
 import { cart, addToCart, updateCartQuantity } from "../data/cart.js"; // Ensure this path is correct
-=======
-import { cart, addToCart } from "../data/cart.js"; // Ensure this path is correct
->>>>>>> w3an2-master
 
 // GLOBAL VARIABLES
 // Global variables for min/max product prices, to be calculated
@@ -36,18 +32,6 @@ const minPriceLabel = document.querySelector(".js-min-price-label");
 const maxPriceLabel = document.querySelector(".js-max-price-label");
 
 // --- Helper Functions (Cart Management) ---
-<<<<<<< HEAD
-=======
-function updateCartQuantity() {
-  const cartQuantityElement = document.querySelector(".js-cart-quantity");
-
-  let totalQuantity = 0;
-  cart.forEach((cartItem) => {
-    totalQuantity += cartItem.quantity;
-  });
-  cartQuantityElement.textContent = totalQuantity;
-}
->>>>>>> w3an2-master
 
 // --- Pagination Rendering ---
 const renderPagination = function () {
