@@ -73,8 +73,8 @@ class MainFooter extends HTMLElement {
                 exceptional service.
               </p>
               <div class="footer--socialLinks">
-                <a href="/" aria-label="Twitter">
-                  <img src="/img/icons/twitter-squared.png" alt="Twitter icon" />
+                <a href="/" aria-label="X">
+                  <img src="/img/icons/x-square.png" alt="X icon" />
                 </a>
                 <a href="/" aria-label="Facebook">
                   <img src="/img/icons/facebook.png" alt="Facebook icon" />
