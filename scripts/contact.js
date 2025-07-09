@@ -48,11 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
           case "Instagram":
             destination = "https://www.instagram.com";
             break;
-          case "LinkedIn":
-            destination = "https://www.linkedin.com";
-            break;
-          case "Twitter":
-            destination = "https://www.twitter.com";
+          case "X":
+            destination = "https://www.x.com";
             break;
           case "Facebook":
             destination = "https://www.facebook.com";
