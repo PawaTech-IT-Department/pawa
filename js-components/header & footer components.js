@@ -73,8 +73,8 @@ class MainFooter extends HTMLElement {
                 exceptional service.
               </p>
               <div class="footer--socialLinks">
-                <a href="/" aria-label="Twitter">
-                  <img src="/img/icons/twitter-squared.png" alt="Twitter icon" />
+                <a href="/" aria-label="X">
+                  <img src="/img/icons/x-square.png" alt="X icon" />
                 </a>
                 <a href="/" aria-label="Facebook">
                   <img src="/img/icons/facebook.png" alt="Facebook icon" />
@@ -117,8 +117,44 @@ class MainFooter extends HTMLElement {
             <p>&copy; 2025 Neszi Electronics. All rights reserved.</p>
           </div>
         </div>
+        <button id="backToTopBtn" title="Go to top">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up">
+                <line x1="12" y1="19" x2="12" y2="5"></line>
+                <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+            <span class="sr-only"></span>
+        </button>
       </footer>
     `;
+
+    this.setupBackToTopButton();
+  }
+
+  setupBackToTopButton() {
+    const backToTopBtn = this.querySelector("#backToTopBtn");
+
+    // Show/hide the button based on scroll position
+    const handleScroll = () => {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTopBtn.style.display = "flex"; // Use flex to center SVG and text if you keep the span
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Initial check in case the user loads the page already scrolled down
+    handleScroll();
+
+    // Scroll to top on button click
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
   }
 }
+
 customElements.define("main-footer", MainFooter);
