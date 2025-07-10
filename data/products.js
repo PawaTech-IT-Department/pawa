@@ -1,3 +1,5 @@
+import formatCurrency from "../scripts/utils/moneyFormatter.js";
+
 class Product {
   id;
   image;
@@ -13,6 +15,27 @@ class Product {
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
     this.keywords = productDetails.keywords;
+  }
+
+  getStars() {
+    const fullStars = Math.floor(this.rating.stars);
+    const halfStar = this.rating.stars % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+    let starsHTML = "";
+    for (let i = 0; i < fullStars; i++) {
+      starsHTML += '<i class="fas fa-star"></i>';
+    }
+    if (halfStar) {
+      starsHTML += '<i class="fas fa-star-half-alt"></i>';
+    }
+    for (let i = 0; i < emptyStars; i++) {
+      starsHTML += '<i class="far fa-star"></i>';
+    }
+    return starsHTML;
+  }
+
+  getPrice(quantity = 1) {
+    return `$${formatCurrency(this.priceCents * quantity)}`;
   }
 }
 
@@ -59,7 +82,6 @@ export const products = [
     },
     priceCents: 7999,
     keywords: ["accessories", "mouse", "gaming"],
-    type: "accessory",
   },
   {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
@@ -424,13 +446,9 @@ export const products = [
     priceCents: 200,
     keywords: ["usb-c", "cable", "display"],
   },
-];
-
-products.map((productDetails) => {
-  new Product(productDetails);
+].map((productDetails) => {
+  return new Product(productDetails);
 });
-
-console.log(products);
 
 // // If using ES modules, use import statements and resolve directory with import.meta.url
 // import fs from "fs";

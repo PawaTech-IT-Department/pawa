@@ -4,7 +4,7 @@ class MainHeader extends HTMLElement {
      <header class="main--header">
   <div class="header--container">
     <nav class="main--nav">
-      <a href="/" class="logo">
+      <a href="/pages/shop.html" class="logo">
         <img src="/img/icons/Neszi logo.png" />
         <span>Neszi Supply Hub</span>
       </a>
