@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="styles/login.css" />
     <link
       href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css"
+      rel="stylesheet"/>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" 
       rel="stylesheet"
     />
   </head>
   <body>
     <div class="wrapper">
       <form action="">
-        <h1>Login</h1>
+        <h1>Welcome Back!</h1>
         <div class="input-box">
           <input type="text" placeholder="Email or Username" required />
           <i class="bx bxs-user"></i>
@@ -30,10 +33,50 @@
         </div>
 
         <button type="submit" class="btn">Login</button>
-        <div class="register-link">
-          <p>Don't have an account? <a href="#">Register</a></p>
-        </div>
       </form>
+       <div class="register-link">
+          <p>Don't have an account? <span class="switch-link" data-target="signup">Register Here</span></p>
+        </div>
+      <div class="card-face card-face-back" id="signupFace">
+                <!-- Initial Sign Up Options (Social + Create Account Button) -->
+                <div class="signup-options-container" id="signupOptionsContainer">
+                    <h2 class="form-title">Join Us!</h2>
+                    <div class="social-login-options">
+                        <button type="button" class="social-btn google-btn" id="googleSignupBtn">
+                            <img src="https://www.google.com/favicon.ico" onerror="this.onerror=null;this.src='https://placehold.co/20x20/cccccc/333333?text=G'" alt="Google icon" class="social-icon"> Sign up with Google
+                        </button>
+                        <button type="button" class="social-btn apple-btn" id="appleSignupBtn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Apple_logo_black.svg" onerror="this.onerror=null;this.src='https://placehold.co/20x20/cccccc/333333?text=A'" alt="Apple icon" class="social-icon"> Sign up with Apple
+                        </button>
+                    </div>
+
+                    <div class="divider"><span>OR</span></div>
+
+                    <button type="button" class="social-btn" id="createAccountBtn">Create Account</button>
+                    <p class="switch-form-text">Already have an account? <span class="switch-link" data-target="login">Login</span></p>
+                </div>
+
+                <!-- Manual Sign Up Form (Initially Hidden) -->
+                <div class="manual-signup-form-container" id="manualSignupFormContainer">
+                    <h2 class="form-title">Create Your Account</h2>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="signupEmail">Email Address</label>
+                            <input type="email" id="signupEmail" name="email" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupUsername">Username</label>
+                            <input type="text" id="signupUsername" name="username" placeholder="Choose a username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Sign Up</button>
+                    </form>
+                    <p class="back-link" id="backToOptionsLink">Back to Options</p>
+                </div>
+      </div>
     </div>
   </body>
 </html>
