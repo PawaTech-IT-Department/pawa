@@ -5,7 +5,7 @@ class MainHeader extends HTMLElement {
   <div class="header--container">
     <nav class="main--nav">
       <a href="/pages/shop.html" class="logo">
-        <img src="/img/icons/Neszi logo.png" />
+        <img src="/img/icons/logo.jpg" />
         <span>Neszi Supply Hub</span>
       </a>
       <ul class="nav--links" id="navLinks">
@@ -62,7 +62,7 @@ class MainFooter extends HTMLElement {
             <div class="footer--column">
               <a href="/" class="logo footer--logo">
                 <img
-                  src="/img/icons/Neszi logo.png"
+                  src="/img/icons/logo.jpg"
                   alt=""
                   id="footer--logo--icon"
                 />
@@ -74,7 +74,7 @@ class MainFooter extends HTMLElement {
               </p>
               <div class="footer--socialLinks">
                 <a href="/" aria-label="X">
-                  <img src="/img/icons/x-square.png" alt="X icon" />
+                  <img src="/img/icons/x-square.png" alt="X icon" class="x-icon"/>
                 </a>
                 <a href="/" aria-label="Facebook">
                   <img src="/img/icons/facebook.png" alt="Facebook icon" />
@@ -135,7 +135,10 @@ class MainFooter extends HTMLElement {
 
     // Show/hide the button based on scroll position
     const handleScroll = () => {
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      if (
+        document.body.scrollTop > 200 ||
+        document.documentElement.scrollTop > 200
+      ) {
         backToTopBtn.style.display = "flex"; // Use flex to center SVG and text if you keep the span
       } else {
         backToTopBtn.style.display = "none";
@@ -151,7 +154,7 @@ class MainFooter extends HTMLElement {
     backToTopBtn.addEventListener("click", () => {
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     });
   }
