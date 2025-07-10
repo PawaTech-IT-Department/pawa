@@ -63,9 +63,9 @@ export function renderOrderSummary() {
           ><i class="fas fa-trash-alt"></i> Remove</a
         >
       </div>
-      <div class="cart--product--price">$${formatCurrency(
-        matchingProduct.priceCents * cartItem.quantity
-      )}</div>
+      <div class="cart--product--price">
+        ${matchingProduct.getPrice(cartItem.quantity)}
+      </div>
     </div>
   `;
     });

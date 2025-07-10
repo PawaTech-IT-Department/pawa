@@ -122,20 +122,6 @@ const renderProductsForPage = function (page) {
       '<p style="text-align: center; margin-top: 50px; font-size: 1.2rem; color: var(--text-muted);">No products found matching your criteria.</p>';
   } else {
     productsToDisplay.forEach((product) => {
-      const fullStars = Math.floor(product.rating.stars);
-      const halfStar = product.rating.stars % 1 >= 0.5 ? 1 : 0;
-      const emptyStars = 5 - fullStars - halfStar;
-      let starsHTML = "";
-      for (let i = 0; i < fullStars; i++) {
-        starsHTML += '<i class="fas fa-star"></i>';
-      }
-      if (halfStar) {
-        starsHTML += '<i class="fas fa-star-half-alt"></i>';
-      }
-      for (let i = 0; i < emptyStars; i++) {
-        starsHTML += '<i class="far fa-star"></i>';
-      }
-
       productHTML += `
           <div class="product--card">
             <img
@@ -144,7 +130,7 @@ const renderProductsForPage = function (page) {
             />
             <h4 class="product--name">${product.name}</h4>
             <div class="product--rating">
-              ${starsHTML} <span>(${product.rating.count})</span>
+              ${product.getStars()} <span>(${product.rating.count})</span>
             </div>
             <div class="product--quantity--container">
               <select class="js-quantity-selector" data-product-id="${
@@ -162,9 +148,9 @@ const renderProductsForPage = function (page) {
                 <option value="10">10</option>
               </select>
             </div>
-            <div class="product--price">$${(product.priceCents / 100).toFixed(
-              2
-            )}</div>
+            <div class="product--price">
+              ${product.getPrice()}
+            </div>
             <button class="btn btn--primary add-to-cart js-add-to-cart" data-product-id="${
               product.id
             }">Add to Cart</button>
