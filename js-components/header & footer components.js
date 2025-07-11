@@ -62,7 +62,7 @@ class MainFooter extends HTMLElement {
             <div class="footer--column">
               <a href="/" class="logo footer--logo">
                 <img
-                  src="/img/icons/logo.png"
+                  src="/img/icons/logofooter.png"
                   alt=""
                   id="footer--logo--icon"
                 />
