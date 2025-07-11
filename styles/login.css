@@ -99,15 +99,8 @@
 
         /* Form styling */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-
-        .form-group i{
-         position: absolute;
-         right: 25px;
-         top: 40%;
-         font-size: 20px;
-         }
 
         .form-group input {
             width: 100%;
