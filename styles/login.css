@@ -99,17 +99,27 @@
 
         /* Form styling */
         .form-group {
-            margin-bottom: 10px;
+            position: relative;
+            margin-bottom: 20px; /* This will be the gap between inputs */
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffff;
+            font-size: 20px;
         }
 
         .form-group input {
             width: 100%;
             height: 100%;
-            margin: 20px 0;
+            margin: 0; /* Remove margin from input, control spacing with form-group */
             background: transparent;
-            padding: 20px 40px 20px 20px;
+            padding: 20px 20px 10px 10px; /* Adjust left padding for icon */
             border: 1px solid #ddd;
-            border-radius: 10px; /* More rounded inputs */
+            border-radius: 20px; /* More rounded inputs */
             font-size: 16px;
             color: #ffff;
             box-sizing: border-box;
@@ -130,12 +140,10 @@
             font-weight: 700;
         }
 
-        .form-subtitle {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #555;
-            font-size: 18px;
-            font-weight: 600;
+        /* Styling for input placeholders */
+        .form-group input::placeholder {
+            color: rgb(218, 215, 215);
+            font-weight: 400;
         }
 
         .submit-btn {
@@ -276,8 +284,8 @@
             transform: translateY(20px);
             pointer-events: none;
             position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
+            width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
         }
 
         .manual-signup-form-container {
@@ -287,10 +295,58 @@
             opacity: 0;
             transform: translateY(-20px);
             pointer-events: none;
-            position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
+            position: relative;
+            margin-bottom: 25px; /* Increased gap */width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
         }
+
+        .manual-signup-form-container.active {
+            width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
+        }
+/* Validation Message Styling */
+        .validation-message {
+            font-size: 13px;
+            margin-top: 5px;
+            padding-left: 10px;
+            height: 15px; /* Reserve space to prevent layout shifts */
+            transition: color 0.3s ease;
+        }
+
+        .validation-message.invalid,
+        .validation-message.weak {
+            color: #ff6b6b; /* Red for invalid/weak */
+        }
+
+        .validation-message.valid,
+        .validation-message.strong {
+            color: #51cf66; /* Green for valid/strong */
+        }
+
+        .validation-message.medium {
+            color: #fcc419; /* Yellow for medium */
+        }
+
+        /* Password Strength Bar */
+        .password-strength-container {
+            width: 100%;
+            height: 5px;
+            background-color: #dddada; /* Dark background for the bar container */
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-bar.weak { width: 33%; background-color: #ff6b6b; }
+        .strength-bar.medium { width: 66%; background-color: #fcc419; }
+        .strength-bar.strong { width: 100%; background-color: #51cf66; }
 
         .manual-signup-form-container.active {
             opacity: 1;
