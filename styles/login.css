@@ -13,6 +13,31 @@
             box-sizing: border-box;
             overflow: hidden; /* Prevent scrollbar due to card shadow */
         }
+        .options-container {
+            display: flex; /* Use flexbox for alignment */
+            justify-content: space-between; /* Space out elements */
+            align-items: center; /* Vertically align them */
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin-right: 5px; /* Space between checkbox and text */
+        }
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
 
         /* Card Container */
         .card-container {
