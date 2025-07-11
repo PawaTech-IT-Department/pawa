@@ -7,7 +7,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: url('img/icons/download (1).jpg');
+            background: purple;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
@@ -42,6 +42,7 @@
         /* Card Container */
         .card-container {
             width: 100%;
+            background-image: url('img/icons/download (1).jpg');
             max-width: 400px; /* Max width for larger screens */
             position: relative;
             z-index: 1;
