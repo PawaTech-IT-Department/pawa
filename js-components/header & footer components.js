@@ -5,7 +5,7 @@ class MainHeader extends HTMLElement {
   <div class="header--container">
     <nav class="main--nav">
       <a href="/pages/shop.html" class="logo">
-        <img src="/img/icons/logo.jpg" />
+        <img src="/img/icons/logo.png" />
         <span>Neszi Supply Hub</span>
       </a>
       <ul class="nav--links" id="navLinks">
@@ -62,7 +62,7 @@ class MainFooter extends HTMLElement {
             <div class="footer--column">
               <a href="/" class="logo footer--logo">
                 <img
-                  src="/img/icons/logo.jpg"
+                  src="/img/icons/logofooter.png"
                   alt=""
                   id="footer--logo--icon"
                 />

@@ -7,16 +7,43 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #d502fa; 
+            background: purple;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
             overflow: hidden; /* Prevent scrollbar due to card shadow */
         }
+        .options-container {
+            display: flex; /* Use flexbox for alignment */
+            justify-content: space-between; /* Space out elements */
+            align-items: center; /* Vertically align them */
+            margin-bottom: 20px;
+            color: #ffff;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin-right: 5px; /* Space between checkbox and text */
+        }
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
 
         /* Card Container */
         .card-container {
             width: 100%;
+            background-image: url('img/icons/download (1).jpg');
             max-width: 400px; /* Max width for larger screens */
             position: relative;
             z-index: 1;
@@ -39,7 +66,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            background-color: #d502fa; 
+            background-image: url('img/icons/download (1).jpg');
             border-radius: 20px; /* Inherit border-radius */
             padding: 30px;
             box-sizing: border-box;
@@ -72,23 +99,29 @@
 
         /* Form styling */
         .form-group {
-            margin-bottom: 20px;
+            position: relative;
+            margin-bottom: 20px; /* This will be the gap between inputs */
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
+        .form-group i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffff;
+            font-size: 20px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px 15px;
+            height: 100%;
+            margin: 0; /* Remove margin from input, control spacing with form-group */
+            background: transparent;
+            padding: 20px 20px 10px 10px; /* Adjust left padding for icon */
             border: 1px solid #ddd;
-            border-radius: 10px; /* More rounded inputs */
+            border-radius: 20px; /* More rounded inputs */
             font-size: 16px;
-            color: #333;
+            color: #ffff;
             box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -102,17 +135,15 @@
         .form-title {
             text-align: center;
             margin-bottom: 25px;
-            color: #333;
+            color: #fff;
             font-size: 28px;
             font-weight: 700;
         }
 
-        .form-subtitle {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #555;
-            font-size: 18px;
-            font-weight: 600;
+        /* Styling for input placeholders */
+        .form-group input::placeholder {
+            color: rgb(218, 215, 215);
+            font-weight: 400;
         }
 
         .submit-btn {
@@ -144,7 +175,7 @@
         .switch-form-text {
             text-align: center;
             margin-top: 20px;
-            color: #555;
+            color: #ffff;
             font-size: 15px;
         }
 
@@ -253,8 +284,8 @@
             transform: translateY(20px);
             pointer-events: none;
             position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
+            width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
         }
 
         .manual-signup-form-container {
@@ -264,10 +295,58 @@
             opacity: 0;
             transform: translateY(-20px);
             pointer-events: none;
-            position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
+            position: relative;
+            margin-bottom: 25px; /* Increased gap */width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
         }
+
+        .manual-signup-form-container.active {
+            width: 100% ; /* Adjust for padding */
+            height: 100%; /* Adjust for padding */
+        }
+/* Validation Message Styling */
+        .validation-message {
+            font-size: 13px;
+            margin-top: 5px;
+            padding-left: 10px;
+            height: 15px; /* Reserve space to prevent layout shifts */
+            transition: color 0.3s ease;
+        }
+
+        .validation-message.invalid,
+        .validation-message.weak {
+            color: #ff6b6b; /* Red for invalid/weak */
+        }
+
+        .validation-message.valid,
+        .validation-message.strong {
+            color: #51cf66; /* Green for valid/strong */
+        }
+
+        .validation-message.medium {
+            color: #fcc419; /* Yellow for medium */
+        }
+
+        /* Password Strength Bar */
+        .password-strength-container {
+            width: 100%;
+            height: 5px;
+            background-color: #dddada; /* Dark background for the bar container */
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-bar.weak { width: 33%; background-color: #ff6b6b; }
+        .strength-bar.medium { width: 66%; background-color: #fcc419; }
+        .strength-bar.strong { width: 100%; background-color: #51cf66; }
 
         .manual-signup-form-container.active {
             opacity: 1;
