@@ -86,12 +86,3 @@ class Cart {
 //Initializing new carts
 const cart = new Cart("cart-oop");
 const businessCart = new Cart("cart-business");
-
-cart.addToCart("efabcdef-abcdef-5556-a0fe-01203041111");
-cart.addToCart("efabcdef-abcdef-5556-a0fe-01203041111");
-
-console.log("cart\n");
-console.log(cart);
-
-console.log("businessCart\n");
-console.log(businessCart);

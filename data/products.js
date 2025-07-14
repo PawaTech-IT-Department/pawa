@@ -1,3 +1,4 @@
+import supabase from "../backend/supabase/client.js";
 import formatCurrency from "../scripts/utils/moneyFormatter.js";
 
 class Product {
