@@ -1,9 +1,7 @@
 import formatCurrency from "../scripts/utils/moneyFormatter.js";
 
-// The URL of your backend endpoint
 const API_URL = "http://localhost:5000/api/products";
 
-// The Product class remains the same - it's still very useful!
 class Product {
   id;
   image;
@@ -22,7 +20,6 @@ class Product {
   }
 
   getStars() {
-    // Your getStars logic remains the same
     const fullStars = Math.floor(this.rating.stars);
     const halfStar = this.rating.stars % 1 >= 0.5 ? 1 : 0;
     const emptyStars = 5 - fullStars - halfStar;
@@ -44,29 +41,47 @@ class Product {
   }
 }
 
-/**
- * Fetches all products from the backend API.
- * @returns {Promise<Product[]>} A promise that resolves to an array of Product instances.
- */
 export async function loadProducts() {
   try {
     const response = await fetch(API_URL);
-
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const productsData = await response.json();
+    console.log("Raw API response:", productsData);
 
-    // Transform the raw JSON data into instances of our Product class
-    const products = productsData.products.map((productDetails) => {
-      return new Product(productDetails);
+    // Handle both array and object responses
+    const rawProducts = Array.isArray(productsData)
+      ? productsData
+      : productsData.products || [];
+
+    if (!rawProducts || rawProducts.length === 0) {
+      console.warn("No products found in API response");
+      return [];
+    }
+
+    // Transform and validate product data
+    const products = rawProducts.map((productDetails) => {
+      const validatedDetails = {
+        id: productDetails.id || crypto.randomUUID(),
+        image: productDetails.image || "default.jpg",
+        name: productDetails.name || "Unnamed Product",
+        rating: {
+          stars: productDetails.rating_stars || 0,
+          count: productDetails.rating_count || 0,
+        },
+        priceCents: Number(productDetails.pricecents) || 0,
+        keywords: Array.isArray(productDetails.keywords)
+          ? productDetails.keywords
+          : [],
+      };
+      return new Product(validatedDetails);
     });
 
+    console.log("Transformed products:", products);
     return products;
   } catch (error) {
     console.error("Failed to load products:", error);
-    // Return an empty array or handle the error as needed
     return [];
   }
 }

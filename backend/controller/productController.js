@@ -9,10 +9,11 @@ function parseSort(sort) {
 
 export const getProducts = async (req, res) => {
   try {
-    let query = supabase.from("products").select("*", { count: "exact" });
-    const { data, error, count } = await query;
-    if (error) throw error;
-    res.json({ products: data });
+    const { data, error } = await supabase.from("products").select("*");
+    if (error) {
+      throw error;
+    }
+    res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

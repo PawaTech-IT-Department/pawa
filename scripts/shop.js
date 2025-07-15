@@ -391,46 +391,54 @@ function renderProductGrid() {
 
   // --- INITIALIZATION ---
   document.addEventListener("DOMContentLoaded", async function () {
-    const products = await loadProducts();
-    // CHECK: Ensuring the product array isn't empty
-    if (!products || products.length === 0) {
-      console.error("ERROR: Products could not be loaded from the API.");
-      // ... your error handling logic ...
-      return;
-    }
+    console.log("💡 Page loaded. Fetching products from the API...");
+    try {
+      const productsFromAPI = await loadProducts();
+      if (!productsFromAPI || productsFromAPI.length === 0) {
+        console.error("ERROR: No products were returned from the API.");
+        productGrid.innerHTML = `<p>Could not load products at this time.</p>`;
+        return;
+      }
+      console.log("✅ Products received:", productsFromAPI);
 
-    // Products array has products
-    displayedProducts = [...products]; // Initialize displayedProducts here after successful load
-    // Calculate min/max product prices dynamically from the 'products' array
+      // Assign to global products and displayedProducts
+      window.products = productsFromAPI; // Ensure global access
+      displayedProducts = productsFromAPI;
 
-    minProductPriceCents = Math.min(
-      ...products.map((product) => product.priceCents)
-    );
-    maxProductPriceCents = Math.max(
-      ...products.map((product) => product.priceCents)
-    );
-
-    // Set initial filter values based on calculated product prices
-    minPriceFilter = minProductPriceCents;
-    maxPriceFilter = maxProductPriceCents;
-
-    if (minPriceSlider && maxPriceSlider) {
-      minPriceSlider.min = minProductPriceCents;
-      minPriceSlider.max = maxProductPriceCents;
-      minPriceSlider.value = minProductPriceCents; // Set initial value to actual min
-
-      maxPriceSlider.min = minProductPriceCents;
-      maxPriceSlider.max = maxProductPriceCents;
-      maxPriceSlider.value = maxProductPriceCents; // Set initial value to actual max
-    } else {
-      console.warn(
-        "WARNING: Price slider elements not found during initialization. Check .js-min-price-slider and .js-max-price-slider classes in HTML."
+      // Calculate min/max prices
+      minProductPriceCents = Math.min(
+        ...productsFromAPI.map((product) => product.priceCents)
       );
-    }
+      maxProductPriceCents = Math.max(
+        ...productsFromAPI.map((product) => product.priceCents)
+      );
 
-    updateCartQuantity();
-    setupControlListeners(); // This will now correctly initialize price filters based on dynamic slider values
-    applyFiltersAndSort();
-    updateCategoryCounts(); // Call this here to set category counts on load
+      // Initialize filters
+      minPriceFilter = minProductPriceCents;
+      maxPriceFilter = maxProductPriceCents;
+
+      // Set slider values
+      if (minPriceSlider && maxPriceSlider && minPriceLabel && maxPriceLabel) {
+        minPriceSlider.min = minProductPriceCents;
+        minPriceSlider.max = maxProductPriceCents;
+        minPriceSlider.value = minProductPriceCents;
+        maxPriceSlider.min = minProductPriceCents;
+        maxPriceSlider.max = maxProductPriceCents;
+        maxPriceSlider.value = maxProductPriceCents;
+        minPriceLabel.textContent = `$${(minPriceFilter / 100).toFixed(0)}`;
+        maxPriceLabel.textContent = `$${(maxPriceFilter / 100).toFixed(0)}`;
+      } else {
+        console.warn("Price slider elements not found.");
+      }
+
+      // Render and set up
+      applyFiltersAndSort(); // Calls renderProductsForPage and renderPagination
+      updateCartQuantity();
+      updateCategoryCounts();
+      setupControlListeners();
+    } catch (error) {
+      console.error("Initialization error:", error);
+      productGrid.innerHTML = `<p style="text-align: center; color: red;">Error fetching products. Please try again later.</p>`;
+    }
   });
 }
