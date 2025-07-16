@@ -135,7 +135,41 @@
 .menu-toggle.open span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
+.modal-content {
+  position: relative;
+  background: white;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+#auth-iframe {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
+.close-modal {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  color: red;
+  font-size: 50px;
+  cursor: pointer;
+}
 /* =================================================================
    RESPONSIVE DESIGN FOR HEADER
 ================================================================== */
