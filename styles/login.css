@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: purple;
+  background: #8b5cf6;
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
@@ -32,7 +32,7 @@ body {
 }
 
 .forgot-password a {
-  color: #007bff;
+  color: #1100ff;
   text-decoration: none;
 }
 
@@ -128,7 +128,7 @@ body {
 
 .form-group input:focus {
   outline: none;
-  border-color: #2193b0;
+  border-color: #001aff;
   box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.2);
 }
 
@@ -180,7 +180,7 @@ body {
 }
 
 .switch-link {
-  color: #2193b0;
+  color: #001aff;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none; /* Remove underline */
@@ -188,7 +188,7 @@ body {
 }
 
 .switch-link:hover {
-  color: #1a7a90; /* Slightly darker on hover */
+  color: #1100ff; /* Slightly darker on hover */
   text-decoration: underline; /* Add underline on hover */
 }
 
@@ -317,7 +317,7 @@ body {
 
 .validation-message.invalid,
 .validation-message.weak {
-  color: #ff6b6b; /* Red for invalid/weak */
+  color: #fa0000; /* Red for invalid/weak */
 }
 
 .validation-message.valid,
@@ -370,7 +370,7 @@ body {
   text-align: center;
   margin-top: 20px;
   font-size: 15px;
-  color: #2193b0;
+  color: #0004ff;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -378,7 +378,7 @@ body {
 }
 
 .back-link:hover {
-  color: #1a7a90;
+  color: #0011ff;
   text-decoration: underline;
 }
 /* Welcome message */
