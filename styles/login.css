@@ -1,338 +1,338 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
- /* Global styles */
-        body {
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #d502fa; 
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow: hidden; /* Prevent scrollbar due to card shadow */
-        }
-        .options-container {
-            display: flex; /* Use flexbox for alignment */
-            justify-content: space-between; /* Space out elements */
-            align-items: center; /* Vertically align them */
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+/* Global styles */
+body {
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #d502fa;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrollbar due to card shadow */
+}
+.options-container {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Space out elements */
+  align-items: center; /* Vertically align them */
+  margin-bottom: 20px;
+  font-size: 14px;
+}
 
-        .remember-me {
-            display: flex;
-            align-items: center;
-        }
+.remember-me {
+  display: flex;
+  align-items: center;
+}
 
-        .remember-me input[type="checkbox"] {
-            margin-right: 5px; /* Space between checkbox and text */
-        }
+.remember-me input[type="checkbox"] {
+  margin-right: 5px; /* Space between checkbox and text */
+}
 
-        .forgot-password a {
-            color: #007bff;
-            text-decoration: none;
-        }
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
 
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
+.forgot-password a:hover {
+  text-decoration: underline;
+}
 
-        /* Card Container */
-        .card-container {
-            width: 100%;
-            max-width: 400px; /* Max width for larger screens */
-            position: relative;
-            z-index: 1;
-        }
+/* Card Container */
+.card-container {
+  width: 100%;
+  max-width: 400px; /* Max width for larger screens */
+  position: relative;
+  z-index: 1;
+}
 
-        /* Card itself */
-        .card {
-            width: 100%;
-            height: 500px; /* Fixed height for consistency */
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Stronger shadow */
-            border-radius: 20px; /* Rounded corners */
-            overflow: hidden; /* Hide content that overflows */
-        }
+/* Card itself */
+.card {
+  width: 100%;
+  height: 500px; /* Fixed height for consistency */
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+  border-radius: 20px; /* Rounded corners */
+  overflow: hidden; /* Hide content that overflows */
+}
 
-        /* Front and back faces of the card */
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background-color: #d502fa; 
-            border-radius: 20px; /* Inherit border-radius */
-            padding: 30px;
-            box-sizing: border-box;
-            justify-content: space-between; /* Distribute content */
-            transition: opacity 0.6s ease, transform 0.6s ease; /* Smooth transition for opacity and transform */
-            opacity: 0; /* Hidden by default */
-            transform: translateX(100%); /* Start off-screen to the right */
-            pointer-events: none; /* Disable interactions when hidden */
-        }
+/* Front and back faces of the card */
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #d502fa;
+  border-radius: 20px; /* Inherit border-radius */
+  padding: 30px;
+  box-sizing: border-box;
+  justify-content: space-between; /* Distribute content */
+  transition: opacity 0.6s ease, transform 0.6s ease; /* Smooth transition for opacity and transform */
+  opacity: 0; /* Hidden by default */
+  transform: translateX(100%); /* Start off-screen to the right */
+  pointer-events: none; /* Disable interactions when hidden */
+}
 
-        .card-face-front {
-            opacity: 1; /* Front face visible by default */
-            transform: translateX(0); /* Position on screen */
-            pointer-events: auto; /* Enable interactions */
-        }
+.card-face-front {
+  opacity: 1; /* Front face visible by default */
+  transform: translateX(0); /* Position on screen */
+  pointer-events: auto; /* Enable interactions */
+}
 
-        /* When the card is "flipped" (showing back), front face slides out to left */
-        .card.is-flipped .card-face-front {
-            opacity: 0;
-            transform: translateX(-100%); /* Slide out to the left */
-            pointer-events: none;
-        }
+/* When the card is "flipped" (showing back), front face slides out to left */
+.card.is-flipped .card-face-front {
+  opacity: 0;
+  transform: translateX(-100%); /* Slide out to the left */
+  pointer-events: none;
+}
 
-        /* When the card is "flipped" (showing back), back face slides in from right */
-        .card.is-flipped .card-face-back {
-            opacity: 1;
-            transform: translateX(0); /* Slide in to the center */
-            pointer-events: auto;
-        }
+/* When the card is "flipped" (showing back), back face slides in from right */
+.card.is-flipped .card-face-back {
+  opacity: 1;
+  transform: translateX(0); /* Slide in to the center */
+  pointer-events: auto;
+}
 
-        /* Form styling */
-        .form-group {
-            margin-bottom: 20px;
-        }
+/* Form styling */
+.form-group {
+  margin-bottom: 20px;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-        }
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
 
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px; /* More rounded inputs */
-            font-size: 16px;
-            color: #333;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px; /* More rounded inputs */
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #2193b0;
-            box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.2);
-        }
+.form-group input:focus {
+  outline: none;
+  border-color: #2193b0;
+  box-shadow: 0 0 0 3px rgba(33, 147, 176, 0.2);
+}
 
-        .form-title {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
-            font-size: 28px;
-            font-weight: 700;
-        }
+.form-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+}
 
-        .form-subtitle {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #555;
-            font-size: 18px;
-            font-weight: 600;
-        }
+.form-subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 18px;
+  font-weight: 600;
+}
 
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #2193b0, #6dd5ed); /* Gradient button */
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            margin-top: 10px; /* Space above button */
-        }
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #2193b0, #6dd5ed); /* Gradient button */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin-top: 10px; /* Space above button */
+}
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-        }
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
 
-        .submit-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        }
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
 
-        /* New styles for switch links */
-        .switch-form-text {
-            text-align: center;
-            margin-top: 20px;
-            color: #555;
-            font-size: 15px;
-        }
+/* New styles for switch links */
+.switch-form-text {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+  font-size: 15px;
+}
 
-        .switch-link {
-            color: #2193b0;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none; /* Remove underline */
-            transition: color 0.3s ease;
-        }
+.switch-link {
+  color: #2193b0;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease;
+}
 
-        .switch-link:hover {
-            color: #1a7a90; /* Slightly darker on hover */
-            text-decoration: underline; /* Add underline on hover */
-        }
+.switch-link:hover {
+  color: #1a7a90; /* Slightly darker on hover */
+  text-decoration: underline; /* Add underline on hover */
+}
 
-        /* Social Login Buttons */
-        .social-login-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Space between social buttons */
-            margin-bottom: 25px;
-        }
+/* Social Login Buttons */
+.social-login-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between social buttons */
+  margin-bottom: 25px;
+}
 
-        .social-btn {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            color: #333;
-            background-color: #f8f8f8;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+.social-btn {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  color: #333;
+  background-color: #f8f8f8;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-        .social-btn:hover {
-            background-color: #e8e8e8;
-            border-color: #ccc;
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
-        }
+.social-btn:hover {
+  background-color: #e8e8e8;
+  border-color: #ccc;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+}
 
-        .social-btn .social-icon {
-            width: 20px;
-            height: 20px;
-        }
+.social-btn .social-icon {
+  width: 20px;
+  height: 20px;
+}
 
-        /* Specific social button colors (optional, for branding) */
-        .google-btn {
-            color: #4285F4;
-            border-color: #4285F4;
-        }
-        .google-btn:hover {
-            background-color: #e6f0ff;
-        }
+/* Specific social button colors (optional, for branding) */
+.google-btn {
+  color: #4285f4;
+  border-color: #4285f4;
+}
+.google-btn:hover {
+  background-color: #e6f0ff;
+}
 
-        .apple-btn {
-            color: #000;
-            border-color: #000;
-        }
-        .apple-btn:hover {
-            background-color: #f0f0f0;
-        }
+.apple-btn {
+  color: #000;
+  border-color: #000;
+}
+.apple-btn:hover {
+  background-color: #f0f0f0;
+}
 
-        /* Divider for "OR" */
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 25px 0;
-            color: #aaa;
-        }
+/* Divider for "OR" */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 25px 0;
+  color: #aaa;
+}
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #eee;
-        }
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #eee;
+}
 
-        .divider:not(:empty)::before {
-            margin-right: .25em;
-        }
+.divider:not(:empty)::before {
+  margin-right: 0.25em;
+}
 
-        .divider:not(:empty)::after {
-            margin-left: .25em;
-        }
+.divider:not(:empty)::after {
+  margin-left: 0.25em;
+}
 
-        /* New styles for toggling manual signup form */
-        .signup-options-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%; /* Ensure it takes full height for centering */
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+/* New styles for toggling manual signup form */
+.signup-options-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%; /* Ensure it takes full height for centering */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
 
-        .signup-options-container.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-            position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
-        }
+.signup-options-container.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  position: absolute; /* To allow the other form to take its place */
+  width: calc(100% - 60px); /* Adjust for padding */
+  height: calc(100% - 60px); /* Adjust for padding */
+}
 
-        .manual-signup-form-container {
-            display: flex;
-            flex-direction: column;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            opacity: 0;
-            transform: translateY(-20px);
-            pointer-events: none;
-            position: absolute; /* To allow the other form to take its place */
-            width: calc(100% - 60px); /* Adjust for padding */
-            height: calc(100% - 60px); /* Adjust for padding */
-        }
+.manual-signup-form-container {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  position: absolute; /* To allow the other form to take its place */
+  width: calc(100% - 60px); /* Adjust for padding */
+  height: calc(100% - 60px); /* Adjust for padding */
+}
 
-        .manual-signup-form-container.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-            position: static; /* Take up space when active */
-        }
+.manual-signup-form-container.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: static; /* Take up space when active */
+}
 
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 15px;
-            color: #2193b0;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+.back-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #2193b0;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
 
-        .back-link:hover {
-            color: #1a7a90;
-            text-decoration: underline;
-        }
+.back-link:hover {
+  color: #1a7a90;
+  text-decoration: underline;
+}
 
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .card {
-                height: auto; /* Allow height to adjust on small screens */
-                min-height: 480px; /* Ensure minimum height */
-            }
-            .card-face {
-                padding: 20px;
-            }
-            .form-title {
-                font-size: 24px;
-            }
-            .signup-options-container,
-            .manual-signup-form-container {
-                width: calc(100% - 40px); /* Adjust for smaller padding */
-                height: calc(100% - 40px); /* Adjust for smaller padding */
-            }
-        }
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .card {
+    height: auto; /* Allow height to adjust on small screens */
+    min-height: 480px; /* Ensure minimum height */
+  }
+  .card-face {
+    padding: 20px;
+  }
+  .form-title {
+    font-size: 24px;
+  }
+  .signup-options-container,
+  .manual-signup-form-container {
+    width: calc(100% - 40px); /* Adjust for smaller padding */
+    height: calc(100% - 40px); /* Adjust for smaller padding */
+  }
+}

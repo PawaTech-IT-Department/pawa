@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neszi Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/styles/admin.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+    </div>
+
+    <div class="dark-mode-toggle" id="darkToggle">🌙</div>
+
+    <div class="sidebar">
+      <div class="sidebar-brand">
+        <h1><span class="las la-chart-bar"></span> Dashboard</h1>
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li class="active">
+            <a href="#"
+              ><span class="las la-igloo"></span> <span>Dashboard</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-users"></span> <span>Customers</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-clipboard-list"></span>
+              <span>Products</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-shopping-bag"></span> <span>Orders</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-receipt"></span> <span>Inventory</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-user-circle"></span> <span>Accounts</span></a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><span class="las la-tasks"></span> <span>Tasks</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <header>
+        <h1>
+          <label for=""><span class="las la-bars"></span></label> Dashboard
+        </h1>
+        <div class="search-wrapper">
+          <span class="las la-search"></span>
+          <input type="search" placeholder="Search here" />
+        </div>
+        <div class="user-wrapper">
+          <img
+            src="https://i.imgur.com/7vQ8d2b.png"
+            width="40"
+            height="40"
+            alt="User"
+          />
+          <div>
+            <h4>Admin</h4>
+            <small>Super Admin</small>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="cards">
+          <div class="card-single">
+            <div>
+              <h1>54</h1>
+              <span>Customers</span>
+            </div>
+            <div>
+              <span class="las la-users"></span>
+            </div>
+          </div>
+          <div class="card-single">
+            <div>
+              <h1>35</h1>
+              <span>Products</span>
+            </div>
+            <div>
+              <span class="las la-box-open"></span>
+            </div>
+          </div>
+          <div class="card-single">
+            <div>
+              <h1>124</h1>
+              <span>Orders</span>
+            </div>
+            <div>
+              <span class="las la-shopping-bag"></span>
+            </div>
+          </div>
+          <div class="card-single income-card">
+            <div>
+              <h1>$6k</h1>
+              <span>Income</span>
+            </div>
+            <div>
+              <span class="las la-wallet"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="recent-grid">
+          <div class="orders">
+            <div class="card">
+              <div class="card-header">
+                <h3>Recent Orders</h3>
+                <button>
+                  See all <span class="las la-arrow-right"></span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table width="100%">
+                    <thead>
+                      <tr>
+                        <td>Order ID</td>
+                        <td>Product</td>
+                        <td>Status</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>#NE01</td>
+                        <td>Refurbished HP Laptop</td>
+                        <td><span class="status purple"></span> Shipped</td>
+                      </tr>
+                      <tr>
+                        <td>#NE02</td>
+                        <td>Epson Projector X500</td>
+                        <td><span class="status pink"></span> Processing</td>
+                      </tr>
+                      <tr>
+                        <td>#NE03</td>
+                        <td>Lenovo ThinkPad</td>
+                        <td><span class="status orange"></span> Pending</td>
+                      </tr>
+                      <tr>
+                        <td>#NE04</td>
+                        <td>Dell Ultrasharp Monitor</td>
+                        <td><span class="status purple"></span> Shipped</td>
+                      </tr>
+                      <tr>
+                        <td>#NE05</td>
+                        <td>Canon All-in-One Printer</td>
+                        <td><span class="status pink"></span> Processing</td>
+                      </tr>
+                      <tr>
+                        <td>#NE06</td>
+                        <td>Apple MacBook Air M1</td>
+                        <td><span class="status orange"></span> Pending</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="customers">
+            <div class="card">
+              <div class="card-header">
+                <h3>New Customers</h3>
+                <button>
+                  See all <span class="las la-arrow-right"></span>
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="customer">
+                  <div class="info">
+                    <img
+                      src="https://i.imgur.com/7vQ8d2b.png"
+                      width="40"
+                      height="40"
+                      alt=""
+                    />
+                    <div>
+                      <h4>Liam Hemingway</h4>
+                      <!-- <small>CEO Excerpt</small> -->
+                    </div>
+                  </div>
+                  <div class="contact">
+                    <span class="las la-user-circle"></span>
+                    <span class="las la-comment"></span>
+                    <span class="las la-phone"></span>
+                  </div>
+                </div>
+
+                <div class="customer">
+                  <div class="info">
+                    <img
+                      src="https://i.imgur.com/7vQ8d2b.png"
+                      width="40"
+                      height="40"
+                      alt=""
+                    />
+                    <div>
+                      <h4>Elizabeth Keen</h4>
+                      <!-- <small>CEO Excerpt</small> -->
+                    </div>
+                  </div>
+                  <div class="contact">
+                    <span class="las la-user-circle"></span>
+                    <span class="las la-comment"></span>
+                    <span class="las la-phone"></span>
+                  </div>
+                </div>
+
+                <div class="customer">
+                  <div class="info">
+                    <img
+                      src="https://i.imgur.com/7vQ8d2b.png"
+                      width="40"
+                      height="40"
+                      alt=""
+                    />
+                    <div>
+                      <h4>Tom Keen</h4>
+                      <!-- <small>CEO Excerpt</small> -->
+                    </div>
+                  </div>
+                  <div class="contact">
+                    <span class="las la-user-circle"></span>
+                    <span class="las la-comment"></span>
+                    <span class="las la-phone"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+
+  <script src="/scripts/admin.js"></script>
+</html>
