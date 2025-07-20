@@ -466,3 +466,123 @@ button {
 .container {
   transition: all 2s ease-out;
 }
+
+/* Progress Bar Styles */
+.tracking-progress-bar {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 1.5rem 0;
+  justify-content: center;
+}
+.progress-step {
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  background: #eee;
+  color: #888;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.progress-step.active {
+  background: #2d8cff;
+  color: #fff;
+}
+.progress-arrow {
+  margin: 0 0.5rem;
+  color: #bbb;
+  font-size: 1.2rem;
+}
+
+/* Order Card Styles */
+.order-product-card, .order-summary-product, .tracking-product-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin: 1rem 0;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+.order-product-img, .order-summary-product-img, .tracking-product-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f6f6f6;
+}
+.order-product-info, .order-summary-product-info, .tracking-product-details {
+  flex: 1;
+}
+.order-product-info h4, .tracking-product-details h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.order-product-info p, .order-summary-product-info span, .tracking-product-details p {
+  margin: 0.2rem 0;
+  font-size: 0.98rem;
+}
+.buy-again-btn, .track-package-btn {
+  margin-right: 0.7rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: 2rem;
+  border: none;
+  background: #2d8cff;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.buy-again-btn:hover, .track-package-btn:hover {
+  background: #1a6ed8;
+}
+
+.order-summary-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin: 2rem 0;
+  padding: 1.5rem;
+}
+.order-summary-products {
+  margin-top: 1rem;
+}
+.order-summary-product {
+  margin-bottom: 0.7rem;
+}
+
+.tracking-section .container {
+  max-width: 600px;
+}
+.tracking-search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.view-all-orders-link, .back-to-shop-link {
+  display: inline-block;
+  margin: 1rem 0 1.5rem 0;
+  color: #2d8cff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.order-placed-section, .all-orders-section, .tracking-section {
+  background: #f5f8fa;
+  min-height: 100vh;
+  padding: 2rem 0 4rem 0;
+}
+
+.order-placed-title, .all-orders-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}

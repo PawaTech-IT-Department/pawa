@@ -1,8 +1,7 @@
-import { products } from "../data/products.js"; // Ensure this path is correct
-import { cart, addToCart, updateCartQuantity } from "../data/cart.js"; // Ensure this path is correct
+import { getProducts, getProduct, Product } from "../data/products.js";
+import { cart, addToCart, updateCartQuantity } from "../data/cart.js";
 
 // GLOBAL VARIABLES
-// Global variables for min/max product prices, to be calculated
 let minProductPriceCents;
 let maxProductPriceCents;
 
@@ -19,6 +18,7 @@ let maxPriceFilter; // Will be set dynamically from products data
 
 // This array will hold the products after applying all filters and sorting
 let displayedProducts = []; // Initialize as empty, populated after products check
+let allProducts = []; // Array to hold all products after loading
 
 // GLOBAL ELEMENTS
 const productGrid = document.querySelector(".js--product--grid");
@@ -245,7 +245,7 @@ function updateCategoryCounts() {
     accessories: 0,
   };
 
-  products.forEach((product) => {
+  allProducts.forEach((product) => {
     categoryCounts.all++; // Every product counts for 'all'
 
     if (isProductInCategory(product, "laptops")) {
@@ -325,7 +325,7 @@ const isProductInCategory = function (product, category) {
 };
 // --- Main Filter and Sort Logic ---
 const applyFiltersAndSort = function () {
-  let tempProducts = [...products]; // Start with all original products
+  let tempProducts = [...allProducts]; // Use loaded products
 
   // 1. Apply Search Filter
   if (currentSearchTerm) {
@@ -363,9 +363,6 @@ const applyFiltersAndSort = function () {
       tempProducts.sort((a, b) => b.priceCents - a.priceCents);
       break;
     case "newest":
-      // If we had a 'dateAdded' property, we'd sort by it here.
-      // For now, it maintains the default order for 'newest' if no specific date property.
-      //or in reverse
       tempProducts.reverse();
       break;
     case "popular":
@@ -381,51 +378,33 @@ const applyFiltersAndSort = function () {
 };
 
 // --- INITIALIZATION ---
-document.addEventListener("DOMContentLoaded", function () {
-  // CHECK: Ensuring the product array isn't empty
-  if (!products || products.length === 0) {
-    console.error(
-      "ERROR: The 'products' array is either not loaded or is empty. Please check 'products.js' path and content. Script execution halted."
-    );
-    // Display a message directly on the page to the user
-    if (productGrid) {
-      productGrid.innerHTML =
-        '<p style="text-align: center; margin-top: 50px; font-size: 1.2rem; color: #cc0000;">Error: Products could not be loaded. Please check your browser console for details.</p>';
+document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    allProducts = await getProducts();
+    if (!allProducts || allProducts.length === 0) {
+      throw new Error("No products loaded from backend.");
     }
-    return; // Stop further script execution if products are unavailable
+    displayedProducts = [...allProducts];
+    minProductPriceCents = Math.min(...allProducts.map((p) => p.priceCents));
+    maxProductPriceCents = Math.max(...allProducts.map((p) => p.priceCents));
+    minPriceFilter = minProductPriceCents;
+    maxPriceFilter = maxProductPriceCents;
+    if (minPriceSlider && maxPriceSlider) {
+      minPriceSlider.min = minProductPriceCents;
+      minPriceSlider.max = maxProductPriceCents;
+      minPriceSlider.value = minProductPriceCents;
+      maxPriceSlider.min = minProductPriceCents;
+      maxPriceSlider.max = maxProductPriceCents;
+      maxPriceSlider.value = maxProductPriceCents;
+    }
+    updateCartQuantity();
+    setupControlListeners();
+    applyFiltersAndSort();
+    updateCategoryCounts();
+  } catch (err) {
+    console.error("ERROR: ", err.message);
+    if (productGrid) {
+      productGrid.innerHTML = `<p style="text-align: center; margin-top: 50px; font-size: 1.2rem; color: #cc0000;">Error: Products could not be loaded. Please check your backend server and browser console for details.</p>`;
+    }
   }
-
-  // Products array has products
-  displayedProducts = [...products]; // Initialize displayedProducts here after successful load
-  // Calculate min/max product prices dynamically from the 'products' array
-
-  minProductPriceCents = Math.min(
-    ...products.map((product) => product.priceCents)
-  );
-  maxProductPriceCents = Math.max(
-    ...products.map((product) => product.priceCents)
-  );
-
-  // Set initial filter values based on calculated product prices
-  minPriceFilter = minProductPriceCents;
-  maxPriceFilter = maxProductPriceCents;
-
-  if (minPriceSlider && maxPriceSlider) {
-    minPriceSlider.min = minProductPriceCents;
-    minPriceSlider.max = maxProductPriceCents;
-    minPriceSlider.value = minProductPriceCents; // Set initial value to actual min
-
-    maxPriceSlider.min = minProductPriceCents;
-    maxPriceSlider.max = maxProductPriceCents;
-    maxPriceSlider.value = maxProductPriceCents; // Set initial value to actual max
-  } else {
-    console.warn(
-      "WARNING: Price slider elements not found during initialization. Check .js-min-price-slider and .js-max-price-slider classes in HTML."
-    );
-  }
-
-  updateCartQuantity();
-  setupControlListeners(); // This will now correctly initialize price filters based on dynamic slider values
-  applyFiltersAndSort();
-  updateCategoryCounts(); // Call this here to set category counts on load
 });

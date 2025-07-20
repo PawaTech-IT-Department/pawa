@@ -1,18 +1,27 @@
-import { cart, calculateTotalCartQuantity } from "../../data/cart.js"; // Ensure this path is correct
+import { cart, calculateTotalCartQuantity, emptyCart } from "../../data/cart.js"; // Ensure this path is correct
 import { getProduct } from "../../data/products.js"; // Ensure this path is correct
+import { addOrder } from "../../data/order.js";
 import formatCurrency from "../utils/moneyFormatter.js";
 
-export function renderPaymentSummary() {
+export async function renderPaymentSummary() {
   const cartContainer = document.querySelector(".cart--summary");
 
   let subTotalCents = 0;
-  cart.forEach((cartItem) => {
-    const productId = cartItem.productId;
-    const matchingProduct = getProduct(productId);
-    if (matchingProduct) {
-      subTotalCents += matchingProduct.priceCents * cartItem.quantity;
+  
+  // Fetch all products for cart items
+  for (const cartItem of cart) {
+    try {
+      const productId = cartItem.productId;
+      const matchingProduct = await getProduct(productId);
+      if (matchingProduct) {
+        subTotalCents += matchingProduct.priceCents * cartItem.quantity;
+      }
+    } catch (error) {
+      console.error(`Error fetching product ${cartItem.productId} for payment summary:`, error);
+      // Skip this product in total calculation if it can't be fetched
     }
-  });
+  }
+  
   const taxCent = (16 * subTotalCents) / 100;
   const totalCents = subTotalCents + taxCent;
 
@@ -47,4 +56,34 @@ export function renderPaymentSummary() {
   `;
 
   cartContainer.innerHTML = paymentSummaryHTML;
+
+  // Proceed to Checkout logic
+  const checkoutButton = document.querySelector(".proceed-checkout-btn");
+  if (checkoutButton) {
+    checkoutButton.addEventListener("click", async () => {
+      if (!cart || cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+      try {
+        const response = await fetch("http://localhost:5000/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cart }),
+        });
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.error || "Failed to place order");
+        }
+        const order = await response.json();
+        addOrder(order);
+        emptyCart(); // <-- clear the cart after placing order
+        window.location.href = "/pages/orders.html";
+      } catch (error) {
+        alert("Error placing order: " + error.message);
+      }
+    });
+  }
 }
