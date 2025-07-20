@@ -48,7 +48,7 @@ export async function loadProducts() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const productsData = await response.json();
-    console.log("Raw API response:", productsData);
+    // console.log("Raw API response:", productsData);
 
     // Handle both array and object responses
     const rawProducts = Array.isArray(productsData)
@@ -78,7 +78,7 @@ export async function loadProducts() {
       return new Product(validatedDetails);
     });
 
-    console.log("Transformed products:", products);
+    // console.log("Transformed products:", products);
     return products;
   } catch (error) {
     console.error("Failed to load products:", error);

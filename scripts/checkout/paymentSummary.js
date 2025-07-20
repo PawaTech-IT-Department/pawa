@@ -73,8 +73,8 @@ export async function renderPaymentSummary() {
         <span>Total</span>
         <span>$${formatCurrency(totalCents)}</span>
       </div>
-      <button class="btn btn--primary proceed-checkout-btn">
-        Proceed to Checkout
+      <button class="btn btn--primary proceed-checkout-btn js-place-order">
+        Place Order
       </button>
       <button class="btn btn--secondary continue-shopping-btn">
         Continue Shopping
@@ -89,9 +89,19 @@ export async function renderPaymentSummary() {
     // Attach event listeners for buttons
     const checkoutButton = document.querySelector(".proceed-checkout-btn");
     if (checkoutButton) {
-      checkoutButton.addEventListener("click", () => {
-        console.log("Proceed to checkout clicked");
-        // Add checkout logic here (e.g., redirect to checkout page)
+      checkoutButton.addEventListener("click", async () => {
+        console.log("Place order");
+        const response = await fetch("https://localhost:5000/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cart: cart,
+          }),
+        });
+        const order = await response.json;
+        addOrder(order);
       });
     }
 
@@ -102,7 +112,7 @@ export async function renderPaymentSummary() {
       continueShoppingButton.addEventListener("click", () => {
         console.log("Continue shopping clicked");
         // Add navigation logic (e.g., redirect to products page)
-        window.location.href = "/products.html"; // Adjust URL as needed
+        window.location.href = "/pages/shop.html"; // Adjust URL as needed
       });
     }
   } catch (error) {
