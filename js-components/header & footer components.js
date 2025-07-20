@@ -19,6 +19,16 @@ class MainHeader extends HTMLElement {
           <img src="/img/icons/shopping-cart.png" alt="Shopping cart" />
           <span class="cart--count js-cart-quantity" style='opacity:0;'>0</span>
         </a>
+     <div class="account-icon">
+  <a href="login.html" id="account-icon-link">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </a>
+</div>
+
+
         <a
           href="#"
           class="dark-mode-toggle icon--button"
@@ -34,9 +44,14 @@ class MainHeader extends HTMLElement {
       </div>
     </nav>
   </div>
-</header>
+</header><!-- Modal Container -->
+<div id="auth-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <iframe id="auth-iframe" src="" frameborder="0"></iframe>
+  </div>
+</div>
     `;
-
     // Toggle the active class
     const links = this.querySelectorAll(".nav--links a");
     const currentPath = window.location.pathname.replace(/^\/+/, "");
@@ -161,3 +176,4 @@ class MainFooter extends HTMLElement {
 }
 
 customElements.define("main-footer", MainFooter);
+

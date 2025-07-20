@@ -251,17 +251,76 @@
       }
 
       // Optional: Handle form submissions (for demonstration, just log data)
-      loginForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
         const emailUsername =
           document.getElementById("loginEmailUsername").value;
         const password = document.getElementById("loginPassword").value;
-        console.log("Login Attempt:");
-        console.log("Email/Username:", emailUsername);
-        console.log("Password:", password);
-        alert("Login form submitted! (Check console for data)");
-        // In a real application, you would send this data to a server
+        const rememberMe = document.getElementById("remember-me").checked;
+
+        try {
+          // Show loading state
+          const submitBtn = loginForm.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="bx bx-loader-alt bx-spin"></i> Logging in...';
+
+          // Simulate API call (replace with actual fetch)
+          const response = await simulateLoginAPI(emailUsername, password);
+
+          if (response.success) {
+            // Store session
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
+
+            // Handle "Remember me"
+            if (rememberMe) {
+              localStorage.setItem("rememberMe", "true");
+            } else {
+              sessionStorage.setItem("authToken", response.token);
+            }
+
+            // Notify parent
+            if (window !== window.top) {
+              window.top.postMessage(
+                {
+                  type: "auth_success",
+                  user: response.user,
+                  token: response.token,
+                },
+                "*"
+              );
+            } else {
+              window.location.href = "/account";
+            }
+          } else {
+            throw new Error(response.message || "Login failed");
+          }
+        } catch (error) {
+          alert(error.message);
+          const submitBtn = loginForm.querySelector('button[type="submit"]');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
       });
+
+      function simulateLoginAPI(emailUsername, password) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              token: "simulated-jwt-token",
+              user: {
+                email: emailUsername,
+                username: emailUsername.split("@")[0],
+                lastLogin: new Date().toISOString(),
+              },
+            });
+          }, 1500);
+        });
+      }
 
       // --- Real-time Validation Logic ---
 
@@ -326,13 +385,13 @@
         passwordStrengthText.className = `validation-message ${strengthClass}`;
       });
 
-      signupForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
+      signupForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
         const email = document.getElementById("signupEmail").value;
         const username = document.getElementById("signupUsername").value;
         const password = document.getElementById("signupPassword").value;
 
-        // Final validation check before submission
+        // Final validation checks
         const isUsernameTaken = takenUsernames.includes(username.toLowerCase());
         const isPasswordStrong = passwordStrengthText.textContent === "Strong";
 
@@ -348,28 +407,87 @@
           return;
         }
 
-        console.log("Sign Up Attempt (Create Account):");
-        console.log("Email:", email);
-        console.log("Username:", username);
-        console.log("Password:", password);
-        alert("Account created successfully! Redirecting to Login...");
+        try {
+          // Show loading state
+          const submitBtn = signupForm.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="bx bx-loader-alt bx-spin"></i> Creating account...';
 
-        // After successful sign-up, automatically switch back to the login page
-        card.classList.remove("is-flipped"); // This will trigger the transition back to login
-        signupForm.reset(); // Clear the sign-up form fields
+          // Simulate API call (replace with actual fetch to your backend)
+          const response = await simulateSignupAPI(email, username, password);
 
-        // Also reset the view on the signup page itself to show initial options
-        manualSignupFormContainer.classList.remove("active");
-        signupOptionsContainer.classList.remove("hidden");
+          if (response.success) {
+            // Store user session (replace with your actual session handling)
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
 
-        // Clear validation messages after successful submission
-        usernameValidationMsg.textContent = "";
-        usernameValidationMsg.className = "validation-message";
-        passwordStrengthText.textContent = "";
-        passwordStrengthText.className = "validation-message";
-        passwordStrengthBar.className = "strength-bar";
+            // Notify parent window (if in modal)
+            if (window !== window.top) {
+              window.top.postMessage(
+                {
+                  type: "auth_success",
+                  user: response.user,
+                  token: response.token,
+                },
+                "*"
+              );
+            } else {
+              // Redirect to account page if not in modal
+              window.location.href = "/account";
+            }
+
+            // Show success message
+            alert("Account created successfully! You're now logged in.");
+          } else {
+            throw new Error(response.message || "Signup failed");
+          }
+        } catch (error) {
+          alert(error.message);
+          // Reset button state
+          const submitBtn = signupForm.querySelector('button[type="submit"]');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
       });
 
+      // Simulate API call (replace with actual fetch)
+      function simulateSignupAPI(email, username, password) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              token: "simulated-jwt-token",
+              user: {
+                email,
+                username,
+                createdAt: new Date().toISOString(),
+              },
+            });
+          }, 1500);
+        });
+      }
+      function onLoginSuccess() {
+        // Notify parent window to close the modal
+        if (window !== window.top) {
+          // Check if we're in an iframe
+          window.top.postMessage("auth_success", "*");
+        } else {
+          window.location.href = "/"; // Redirect if not in modal
+        }
+      }
+
+      // Example: Attach to form submission (adjust to match your actual form handling)
+      document
+        .getElementById("login-form")
+        ?.addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Your existing login logic...
+
+          // On success:
+          onLoginSuccess();
+        });
       // Custom alert function to replace window.alert
       function alert(message) {
         const existingAlert = document.getElementById("customAlert");
@@ -419,3 +537,4 @@
     </script>
   </body>
 </html>
+
