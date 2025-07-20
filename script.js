@@ -18,6 +18,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('auth-modal');
+  const iframe = document.getElementById('auth-iframe');
+  const accountIcon = document.getElementById('account-icon-link');
+  
+  accountIcon.addEventListener('click', function(e) {
+    e.preventDefault();
+    iframe.src = 'login.html'; // Load your existing login page
+    modal.style.display = 'block';
+  });
+  
+  // Close modal when clicking X
+  document.querySelector('.close-modal').addEventListener('click', function() {
+    modal.style.display = 'none';
+    iframe.src = ''; // Unload the iframe
+  });
+  
+  // Close when clicking outside
+  window.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      iframe.src = '';
+    }
+  });
+  
+  // Optional: Handle successful login (postMessage API)
+  window.addEventListener('message', function(e) {
+  if (e.data.type === 'auth_success') {
+    const authModal = document.getElementById('auth-modal');
+    const authIframe = document.getElementById('auth-iframe');
+    
+    // Close the modal
+    authModal.style.display = 'none';
+    authIframe.src = '';
+    
+    // Store the session in parent window too
+    localStorage.setItem('authToken', e.data.token);
+    localStorage.setItem('user', JSON.stringify(e.data.user));
+    
+    // Update the UI
+    updateAuthUI(e.data.user);
+  }
+});
+
+function updateAuthUI(user) {
+  const accountIcon = document.getElementById('account-icon-link');
+  if (accountIcon) {
+    // Change icon and link to profile
+    accountIcon.innerHTML = '<i class="fas fa-user-check"></i>';
+    accountIcon.href = '/account';
+    
+    // Optional: Show welcome message
+    const welcomeMsg = document.createElement('div');
+    welcomeMsg.className = 'welcome-message';
+    welcomeMsg.textContent = `Welcome, ${user.username}!`;
+    accountIcon.parentNode.appendChild(welcomeMsg);
+  }
+}
+});
 // HEADER END
 
 // DARK MODE FUNCTIONALITY

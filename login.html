@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="styles/login.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="card-container">
+      <div class="card" id="card">
+        <!-- Login Face (Front) -->
+        <div class="card-face card-face-front" id="loginFace">
+          <div>
+            <h2 class="form-title">Welcome Back!</h2>
+            <form id="loginForm">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="loginEmailUsername"
+                  name="emailUsername"
+                  placeholder="Email or Username"
+                  required
+                />
+                <i class="bx bxs-user"></i>
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  id="loginPassword"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+                <i class="bx bxs-lock-alt"></i>
+              </div>
+              <div class="options-container">
+                <div class="remember-me">
+                  <input type="checkbox" id="remember-me" name="remember-me" />
+                  <label for="remember-me">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                  <a href="forgot-password.html">Forgot password?</a>
+                </div>
+              </div>
+              <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <p class="switch-form-text">
+              Don't have an account?
+              <span class="switch-link" data-target="signup">Sign Up</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sign Up Face (Back) -->
+        <div class="card-face card-face-back" id="signupFace">
+          <!-- Initial Sign Up Options (Social + Create Account Button) -->
+          <div class="signup-options-container" id="signupOptionsContainer">
+            <h2 class="form-title">Join Us!</h2>
+            <div class="social-login-options">
+              <button
+                type="button"
+                class="social-btn google-btn"
+                id="googleSignupBtn"
+              >
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  onerror="this.onerror=null;this.src='https://placehold.co/20x20/cccccc/333333?text=G'"
+                  alt="Google icon"
+                  class="social-icon"
+                />
+                Sign up with Google
+              </button>
+              <button
+                type="button"
+                class="social-btn apple-btn"
+                id="appleSignupBtn"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Apple_logo_black.svg"
+                  onerror="this.onerror=null;this.src='https://placehold.co/20x20/cccccc/333333?text=A'"
+                  alt="Apple icon"
+                  class="social-icon"
+                />
+                Sign up with Apple
+              </button>
+            </div>
+
+            <div class="divider"><span>OR</span></div>
+
+            <button type="button" class="social-btn" id="createAccountBtn">
+              Create Account
+            </button>
+            <p class="switch-form-text">
+              Already have an account?
+              <span class="switch-link" data-target="login">Login</span>
+            </p>
+          </div>
+
+          <!-- Manual Sign Up Form (Initially Hidden) -->
+          <div
+            class="manual-signup-form-container"
+            id="manualSignupFormContainer"
+          >
+            <h2 class="form-title">Create Your Account</h2>
+            <form id="signupForm">
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="signupEmail"
+                  name="email"
+                  placeholder="Enter your email address"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="signupUsername"
+                  name="username"
+                  placeholder="Choose a username"
+                  required
+                />
+                <p class="validation-message" id="usernameValidationMsg"></p>
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  id="signupPassword"
+                  name="password"
+                  placeholder="Create a password"
+                  required
+                />
+                <div class="password-strength-container">
+                  <div id="passwordStrengthBar" class="strength-bar"></div>
+                </div>
+                <p class="validation-message" id="passwordStrengthText"></p>
+              </div>
+              <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+            <p class="back-link" id="backToOptionsLink">Back to Options</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Get references to elements
+      const card = document.getElementById("card");
+      const loginFace = document.getElementById("loginFace");
+      const signupFace = document.getElementById("signupFace");
+      const switchLinks = document.querySelectorAll(".switch-link");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const googleSignupBtn = document.getElementById("googleSignupBtn");
+      const appleSignupBtn = document.getElementById("appleSignupBtn");
+      const createAccountBtn = document.getElementById("createAccountBtn"); // New button
+      const signupOptionsContainer = document.getElementById(
+        "signupOptionsContainer"
+      ); // Container for initial options
+      const manualSignupFormContainer = document.getElementById(
+        "manualSignupFormContainer"
+      ); // Container for manual form
+      const backToOptionsLink = document.getElementById("backToOptionsLink"); // New back link
+      const signupUsernameInput = document.getElementById("signupUsername");
+      const usernameValidationMsg = document.getElementById(
+        "usernameValidationMsg"
+      );
+      const signupPasswordInput = document.getElementById("signupPassword");
+      const passwordStrengthBar = document.getElementById(
+        "passwordStrengthBar"
+      );
+      const passwordStrengthText = document.getElementById(
+        "passwordStrengthText"
+      );
+
+      // Function to handle link clicks for switching forms (Login/Sign Up card faces)
+      function handleSwitchLinkClick(event) {
+        const clickedLink = event.target;
+        const targetForm = clickedLink.dataset.target; // 'login' or 'signup'
+
+        // Toggle the 'is-flipped' class on the card based on the target form
+        if (targetForm === "signup") {
+          card.classList.add("is-flipped");
+          // Ensure initial signup options are visible when first going to signup page
+          signupOptionsContainer.classList.remove("hidden");
+          manualSignupFormContainer.classList.remove("active"); // Hide manual form
+        } else {
+          card.classList.remove("is-flipped");
+        }
+      }
+
+      // Add event listeners to each switch link
+      switchLinks.forEach((link) => {
+        link.addEventListener("click", handleSwitchLinkClick);
+      });
+
+      // Handle Google Sign Up button click
+      if (googleSignupBtn) {
+        googleSignupBtn.addEventListener("click", function () {
+          alert(
+            "Simulating Google Sign Up: User credentials would autofill here."
+          );
+          console.log(
+            "Google Sign Up clicked. In a real app, this would initiate Google OAuth."
+          );
+          // In a real application, you would typically redirect to Google's OAuth consent screen
+          // or use a Firebase/Auth0 SDK for social login.
+        });
+      }
+
+      // Handle Apple Sign Up button click
+      if (appleSignupBtn) {
+        appleSignupBtn.addEventListener("click", function () {
+          alert(
+            "Simulating Apple Sign Up: User credentials would autofill here."
+          );
+          console.log(
+            "Apple Sign Up clicked. In a real app, this would initiate Apple OAuth."
+          );
+          // Similar to Google, this would involve Apple's authentication flow.
+        });
+      }
+
+      // Handle "Create Account" button click
+      if (createAccountBtn) {
+        createAccountBtn.addEventListener("click", function () {
+          signupOptionsContainer.classList.add("hidden"); // Hide social buttons and create account button
+          manualSignupFormContainer.classList.add("active"); // Show manual signup form
+        });
+      }
+
+      // Handle "Back to Options" link click
+      if (backToOptionsLink) {
+        backToOptionsLink.addEventListener("click", function () {
+          manualSignupFormContainer.classList.remove("active"); // Hide manual signup form
+          signupOptionsContainer.classList.remove("hidden"); // Show social buttons and create account button
+          signupForm.reset(); // Optionally clear the manual signup form fields
+          // Clear validation messages on back
+          usernameValidationMsg.textContent = "";
+          passwordStrengthText.textContent = "";
+          passwordStrengthBar.className = "strength-bar";
+        });
+      }
+
+      // Optional: Handle form submissions (for demonstration, just log data)
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const emailUsername =
+          document.getElementById("loginEmailUsername").value;
+        const password = document.getElementById("loginPassword").value;
+        const rememberMe = document.getElementById("remember-me").checked;
+
+        try {
+          // Show loading state
+          const submitBtn = loginForm.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="bx bx-loader-alt bx-spin"></i> Logging in...';
+
+          // Simulate API call (replace with actual fetch)
+          const response = await simulateLoginAPI(emailUsername, password);
+
+          if (response.success) {
+            // Store session
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
+
+            // Handle "Remember me"
+            if (rememberMe) {
+              localStorage.setItem("rememberMe", "true");
+            } else {
+              sessionStorage.setItem("authToken", response.token);
+            }
+
+            // Notify parent
+            if (window !== window.top) {
+              window.top.postMessage(
+                {
+                  type: "auth_success",
+                  user: response.user,
+                  token: response.token,
+                },
+                "*"
+              );
+            } else {
+              window.location.href = "/account";
+            }
+          } else {
+            throw new Error(response.message || "Login failed");
+          }
+        } catch (error) {
+          alert(error.message);
+          const submitBtn = loginForm.querySelector('button[type="submit"]');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      });
+
+      function simulateLoginAPI(emailUsername, password) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              token: "simulated-jwt-token",
+              user: {
+                email: emailUsername,
+                username: emailUsername.split("@")[0],
+                lastLogin: new Date().toISOString(),
+              },
+            });
+          }, 1500);
+        });
+      }
+
+      // --- Real-time Validation Logic ---
+
+      // 1. Username Availability Check
+      const takenUsernames = ["admin", "root", "user"]; // Mock database
+
+      signupUsernameInput.addEventListener("input", function () {
+        const username = signupUsernameInput.value.trim();
+
+        if (username === "") {
+          usernameValidationMsg.textContent = "";
+          usernameValidationMsg.className = "validation-message";
+          return;
+        }
+
+        if (takenUsernames.includes(username.toLowerCase())) {
+          usernameValidationMsg.textContent = "Username is already taken.";
+          usernameValidationMsg.className = "validation-message invalid";
+        } else {
+          usernameValidationMsg.textContent = "Username is available!";
+          usernameValidationMsg.className = "validation-message valid";
+        }
+      });
+
+      // 2. Password Strength Meter
+      signupPasswordInput.addEventListener("input", function () {
+        const password = signupPasswordInput.value;
+        let strength = 0;
+        let strengthText = "";
+        let strengthClass = "";
+
+        // Conditions for a strong password
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /[0-9]/.test(password);
+        const hasSymbols = /[^A-Za-z0-9]/.test(password);
+        const isLongEnough = password.length >= 8;
+
+        if (password.length > 0) strength++;
+        if (isLongEnough) strength++;
+        if (hasUpperCase && hasLowerCase) strength++;
+        if (hasNumbers) strength++;
+        if (hasSymbols) strength++;
+
+        if (password.length === 0) {
+          strength = 0;
+          strengthText = "";
+          strengthClass = "";
+        } else if (strength <= 2) {
+          strengthText = "Weak";
+          strengthClass = "weak";
+        } else if (strength <= 4) {
+          strengthText = "Medium";
+          strengthClass = "medium";
+        } else {
+          strengthText = "Strong";
+          strengthClass = "strong";
+        }
+
+        passwordStrengthBar.className = `strength-bar ${strengthClass}`;
+        passwordStrengthText.textContent = strengthText;
+        passwordStrengthText.className = `validation-message ${strengthClass}`;
+      });
+
+      signupForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const email = document.getElementById("signupEmail").value;
+        const username = document.getElementById("signupUsername").value;
+        const password = document.getElementById("signupPassword").value;
+
+        // Final validation checks
+        const isUsernameTaken = takenUsernames.includes(username.toLowerCase());
+        const isPasswordStrong = passwordStrengthText.textContent === "Strong";
+
+        if (isUsernameTaken) {
+          alert("Please choose a different username.");
+          return;
+        }
+
+        if (!isPasswordStrong) {
+          alert(
+            "Password is not strong enough. Please follow the requirements."
+          );
+          return;
+        }
+
+        try {
+          // Show loading state
+          const submitBtn = signupForm.querySelector('button[type="submit"]');
+          const originalBtnText = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="bx bx-loader-alt bx-spin"></i> Creating account...';
+
+          // Simulate API call (replace with actual fetch to your backend)
+          const response = await simulateSignupAPI(email, username, password);
+
+          if (response.success) {
+            // Store user session (replace with your actual session handling)
+            localStorage.setItem("authToken", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
+
+            // Notify parent window (if in modal)
+            if (window !== window.top) {
+              window.top.postMessage(
+                {
+                  type: "auth_success",
+                  user: response.user,
+                  token: response.token,
+                },
+                "*"
+              );
+            } else {
+              // Redirect to account page if not in modal
+              window.location.href = "/account";
+            }
+
+            // Show success message
+            alert("Account created successfully! You're now logged in.");
+          } else {
+            throw new Error(response.message || "Signup failed");
+          }
+        } catch (error) {
+          alert(error.message);
+          // Reset button state
+          const submitBtn = signupForm.querySelector('button[type="submit"]');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+      });
+
+      // Simulate API call (replace with actual fetch)
+      function simulateSignupAPI(email, username, password) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              token: "simulated-jwt-token",
+              user: {
+                email,
+                username,
+                createdAt: new Date().toISOString(),
+              },
+            });
+          }, 1500);
+        });
+      }
+      function onLoginSuccess() {
+        // Notify parent window to close the modal
+        if (window !== window.top) {
+          // Check if we're in an iframe
+          window.top.postMessage("auth_success", "*");
+        } else {
+          window.location.href = "/"; // Redirect if not in modal
+        }
+      }
+
+      // Example: Attach to form submission (adjust to match your actual form handling)
+      document
+        .getElementById("login-form")
+        ?.addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Your existing login logic...
+
+          // On success:
+          onLoginSuccess();
+        });
+      // Custom alert function to replace window.alert
+      function alert(message) {
+        const existingAlert = document.getElementById("customAlert");
+        if (existingAlert) {
+          existingAlert.remove();
+        }
+
+        const alertBox = document.createElement("div");
+        alertBox.id = "customAlert";
+        alertBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #333;
+                color: white;
+                padding: 20px 30px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                font-size: 18px;
+                text-align: center;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            `;
+        alertBox.textContent = message;
+
+        document.body.appendChild(alertBox);
+
+        // Fade in
+        setTimeout(() => {
+          alertBox.style.opacity = "1";
+        }, 10);
+
+        // Fade out and remove after 3 seconds
+        setTimeout(() => {
+          alertBox.style.opacity = "0";
+          alertBox.addEventListener(
+            "transitionend",
+            () => {
+              alertBox.remove();
+            },
+            { once: true }
+          );
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
+
