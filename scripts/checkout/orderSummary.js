@@ -1,4 +1,4 @@
-import { cartInstance, saveCartToLocalStorage } from "../../data/cart.js";
+import { cartInstance } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
@@ -23,10 +23,25 @@ export async function renderOrderSummary() {
 
   const addHTML = async function () {
     let cartSummaryHTML = "";
-    for (const cartItem of cartInstance.cart) {
+    // Fetch all products concurrently for speed
+    const productPromises = cartInstance.cart.map(async (cartItem) => {
       try {
         const productId = cartItem.productId;
         const matchingProduct = await getProduct(productId);
+        return {
+          cartItem,
+          matchingProduct
+        };
+      } catch (error) {
+        return {
+          cartItem,
+          matchingProduct: null
+        };
+      }
+    });
+    const productResults = await Promise.all(productPromises);
+    for (const { cartItem, matchingProduct } of productResults) {
+      if (matchingProduct) {
         cartSummaryHTML += `
       <div class="cart--product--card 
       js-cart-item-container-${matchingProduct.id}">
@@ -43,18 +58,18 @@ export async function renderOrderSummary() {
             Product description. To be added in the products information
           </p>
           <div class="cart--quantity--controls" data-product-id="${matchingProduct.id}">
-            <button class="cart--quantity--button">-</button>
+            <button class="cart--quantity--button js-minus-button">-</button>
             <span class="cart--quantity">${cartItem.quantity}</span>
-            <button class="cart--quantity--button">+</button>
+            <button class="cart--quantity--button js-plus-button">+</button>
           </div>
           <a href="#" class="cart--remove--item js--delete-link" data-product-id="${matchingProduct.id}"><i class="fas fa-trash-alt"></i> Remove</a>
         </div>
         <div class="cart--product--price js-product-price" data-product-id="${matchingProduct.id}">
-          ${matchingProduct.getPrice(cartItem.quantity)}
+          ${formatCurrency(matchingProduct.priceCents * cartItem.quantity)}
         </div>
       </div>
     `;
-      } catch (error) {
+      } else {
         cartSummaryHTML += `
           <div class="cart--product--card js-cart-item-container-${cartItem.productId}">
             <div class="cart--product--details">
@@ -77,7 +92,6 @@ export async function renderOrderSummary() {
         e.preventDefault();
         const productId = delLink.dataset.productId;
         cartInstance.removeFromCart(productId);
-        cartInstance.updateCartQuantity();
         await renderOrderSummary();
         await renderPaymentSummary();
       });
@@ -87,44 +101,25 @@ export async function renderOrderSummary() {
       ".cart--quantity--controls"
     );
     allUpdateButtons.forEach((controls) => {
-      const minusBtn = controls.querySelectorAll(".cart--quantity--button")[0];
-      const plusBtn = controls.querySelectorAll(".cart--quantity--button")[1];
+      const minusBtn = controls.querySelector(".js-minus-button");
+      const plusBtn = controls.querySelector(".js-plus-button");
       const productId = controls.dataset.productId;
-      const quantitySpan = controls.querySelector(".cart--quantity");
 
       plusBtn.addEventListener("click", async function (e) {
         e.preventDefault();
-        cartInstance.addToCart(productId, 1);
-        cartInstance.updateCartQuantity();
+        cartInstance.updateItemQuantity(productId, (cartInstance.cart.find(item => item.productId === productId)?.quantity || 0) + 1);
         await renderOrderSummary();
         await renderPaymentSummary();
       });
       
       minusBtn.addEventListener("click", async function (e) {
         e.preventDefault();
-        const itemToBeRemoved = cartInstance.cart.find(
-          (item) => item.productId === productId
-        );
-        if (itemToBeRemoved && itemToBeRemoved.quantity === 1) {
-          cartInstance.removeFromCart(productId);
-          cartInstance.updateCartQuantity();
-          await renderOrderSummary();
-          await renderPaymentSummary();
-        } else if (itemToBeRemoved) {
-          cartInstance.cart.map((cartItem) => {
-            if (cartItem.productId === itemToBeRemoved.productId) {
-              cartItem.quantity--;
-            }
-          });
-          cartInstance.updateCartQuantity();
-          await renderOrderSummary();
-          await renderPaymentSummary();
-          saveCartToLocalStorage();
-        }
+        cartInstance.updateItemQuantity(productId, (cartInstance.cart.find(item => item.productId === productId)?.quantity || 1) - 1);
+        await renderOrderSummary();
+        await renderPaymentSummary();
       });
     });
   };
 
-  cartInstance.updateCartQuantity();
   await addHTML();
 }

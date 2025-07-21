@@ -135,7 +135,7 @@
   border-radius: var(--border-radius);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  max-height: 400px; /*Removed fixed max-height unless it's genuinely needed for aesthetics*/
+  max-height: 420px; /*Removed fixed max-height unless it's genuinely needed for aesthetics*/
   overflow-y: auto; /* Allow scrolling if content overflows */
 }
 .sidebar h3 {
