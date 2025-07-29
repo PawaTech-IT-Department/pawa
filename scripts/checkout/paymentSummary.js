@@ -88,30 +88,13 @@ export async function renderPaymentSummary() {
   // Proceed to Checkout logic
   const checkoutButton = document.querySelector(".proceed-checkout-btn");
   if (checkoutButton) {
-    checkoutButton.addEventListener("click", async () => {
+    checkoutButton.addEventListener("click", () => {
       if (!cartInstance.cart || cartInstance.cart.length === 0) {
-        alert("Your cart is empty.");
+        alert("Your cart is empty."); // Or use a custom message box
         return;
       }
-      try {
-        const response = await fetch("http://localhost:5000/api/orders", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ cart: cartInstance.cart }),
-        });
-        if (!response.ok) {
-          const err = await response.json();
-          throw new Error(err.error || "Failed to place order");
-        }
-        const order = await response.json();
-        addOrder(order);
-        emptyCart();
-        window.location.href = "/pages/orders.html";
-      } catch (error) {
-        alert("Error placing order: " + error.message);
-      }
+      // Redirect to the new order finalization page
+      window.location.href = "/pages/orders.html";
     });
   }
 

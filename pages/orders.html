@@ -3,30 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Placed - Neszi</title>
+  <title>Finalize Your Order - Neszi</title>
   <link rel="stylesheet" href="/styles/style.css" />
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="module" defer src="/scripts/orders.js"></script>
 </head>
 <body>
   <main-header></main-header>
   <section class="order-placed-section">
     <div class="container">
-      <h2 class="order-placed-title">Order Placed!</h2>
-      <p class="order-placed-date js-order-date"></p>
-      <p class="order-placed-id js-order-id"></p>
-      <p class="order-placed-total js-order-total"></p>
-      <a href="/pages/all-orders.html" class="view-all-orders-link">View All Orders</a>
+      <h2 class="order-placed-title">Finalize Your Order</h2>
+      <a href="/pages/shop.html" class="back-to-shop-link">&larr; Back to Shop</a>
+      <div class="order-summary-container">
+        <!-- Delivery Address Section -->
+        <div id="delivery-address-section">
+          <h3>Where should we deliver?</h3>
+          <textarea id="delivery-address-input" placeholder="Enter full delivery address" rows="4" class="form-input"></textarea>
+          <button id="confirm-address-btn" class="btn btn--primary">Confirm Address</button>
+        </div>
+        <!-- M-Pesa Payment Section (hidden by default) -->
+        <div id="mpesa-payment-section" style="display:none;">
+          <h3>Confirm Payment</h3>
+          <div class="mpesa-input-container">
+            <span class="mpesa-prefix">+254</span>
+            <input type="tel" id="mpesa-phone-input" placeholder="7XXXXXXXX" class="form-input">
+          </div>
+          <button id="pay-now-btn" class="btn btn--primary">Pay Now</button>
+          <div id="payment-status-message" class="status-message"></div>
+          <button id="check-payment-status-btn" class="btn btn--secondary" style="display:none;">Check Payment Status</button>
+        </div>
+        <!-- Final Confirmation Section (hidden by default) -->
+        <div id="final-confirmation-section" style="display:none;">
+          <h3>Order Ready!</h3>
+          <p>Your order is ready to be placed. Total amount: <span id="final-order-total">$0.00</span></p>
+          <button id="confirm-order-btn" class="btn btn--primary">Confirm Order</button>
+        </div>
+      </div>
       <div class="order-products-list js-order-products-list"></div>
-      <button class="btn btn--primary order-track-btn" style="margin-top:2rem;"><i class="fas fa-box"></i> Track Package</button>
     </div>
   </section>
-  <!-- Order Tracking Modal -->
-  <div id="order-tracking-modal" class="order-tracking-modal" style="display:none;">
-    <div class="order-tracking-modal-content">
-      <span class="close-modal-btn">&times;</span>
-      <div class="modal-order-details"></div>
-    </div>
-  </div>
   <main-footer></main-footer>
 </body>
 </html> 

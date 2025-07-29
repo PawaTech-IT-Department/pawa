@@ -1,86 +1,473 @@
-import { orders } from "../data/order.js";
-import { getProduct } from "../data/products.js";
-import { addToCart, emptyCart } from "../data/cart.js";
+import { cartInstance } from '../data/cart.js';
+import { getProduct } from '../data/products.js';
+import formatCurrency from './utils/moneyFormatter.js';
 
-async function renderLatestOrder() {
-  if (!orders.length) {
-    document.querySelector(".order-placed-title").textContent = "No recent order found.";
+document.addEventListener('DOMContentLoaded', async () => {
+  // --- DOM Elements ---
+  const deliverySection = document.getElementById('delivery-address-section');
+  const paymentSection = document.getElementById('mpesa-payment-section');
+  const confirmationSection = document.getElementById('final-confirmation-section');
+  const addressInput = document.getElementById('delivery-address-input');
+  const confirmAddressBtn = document.getElementById('confirm-address-btn');
+  const phoneInput = document.getElementById('mpesa-phone-input');
+  const payNowBtn = document.getElementById('pay-now-btn');
+  const paymentStatusMsg = document.getElementById('payment-status-message');
+  const checkPaymentBtn = document.getElementById('check-payment-status-btn');
+  const finalTotalSpan = document.getElementById('final-order-total');
+  const confirmOrderBtn = document.getElementById('confirm-order-btn');
+
+  // --- State Variables ---
+  let confirmedDeliveryAddress = '';
+  let checkoutRequestID = '';
+  let isPaymentSuccessful = false;
+  let totalCents = 0;
+  let pollingInterval;
+
+  // --- Initial Load ---
+  if (!cartInstance.cart || cartInstance.cart.length === 0) {
+    deliverySection.innerHTML = '<h2>Your cart is empty.</h2><a href="/pages/shop.html" class="btn btn--primary">Go to Shop</a>';
     return;
   }
-  const order = orders[orders.length - 1];
-  document.querySelector(".js-order-date").textContent = `Order Date: ${new Date(order.order_time).toLocaleString()}`;
-  document.querySelector(".js-order-id").textContent = `Order ID: ${order.id}`;
-  document.querySelector(".js-order-total").textContent = `Total: $${(order.total_cost_cents / 100).toFixed(2)}`;
-
-  const productsList = document.querySelector(".js-order-products-list");
-  let html = "";
-  for (const p of order.products) {
-    let product = null;
-    try {
-      product = await getProduct(p.productId);
-    } catch (e) {}
-    html += `<div class="order-product-card">
-      <img src="/img/${product ? product.image.slice(7) : ''}" alt="${product ? product.name : ''}" class="order-product-img" />
-      <div class="order-product-info">
-        <h4>${product ? product.name : p.productId}</h4>
-        <p>Arriving on: ${new Date(p.estimatedDeliveryTime).toLocaleDateString()}</p>
-        <p>Quantity: ${p.quantity}</p>
-        <button class="btn buy-again-btn" data-product-id="${p.productId}" data-quantity="${p.quantity}">Buy it again</button>
-      </div>
-    </div>`;
-  }
-  productsList.innerHTML = html;
-
-  // Buy again button logic (add to cart and redirect to shop)
-  document.querySelectorAll('.buy-again-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const productId = btn.getAttribute('data-product-id');
-      const quantity = parseInt(btn.getAttribute('data-quantity')) || 1;
-      addToCart(productId, quantity);
-      emptyCart();
-      window.location.href = '/shop.html';
-    });
-  });
-
-  // Modal logic for order-level tracking
-  const modal = document.getElementById("order-tracking-modal");
-  const modalContent = modal.querySelector(".modal-order-details");
-  const closeModalBtn = modal.querySelector(".close-modal-btn");
-  const trackBtn = document.querySelector(".order-track-btn");
-  if (trackBtn) {
-    trackBtn.addEventListener("click", async () => {
-      // Build modal content
-      let modalHTML = `<h3>Order Tracking</h3>
-        <p><strong>Order ID:</strong> ${order.id}</p>
-        <p><strong>Date:</strong> ${new Date(order.order_time).toLocaleString()}</p>
-        <p><strong>Total:</strong> $${(order.total_cost_cents / 100).toFixed(2)}</p>
-        <h4>Items in this Order:</h4>
-        <ul class="modal-product-list">`;
-      for (const p of order.products) {
-        let product = null;
-        try {
-          product = await getProduct(p.productId);
-        } catch (e) {}
-        modalHTML += `<li>
-          <span>${product ? product.name : p.productId}</span> &times; ${p.quantity}
-          <span class="modal-delivery-date">Estimated Delivery: ${p.estimatedDeliveryTime ? new Date(p.estimatedDeliveryTime).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'N/A'}</span>
-        </li>`;
-      }
-      modalHTML += `</ul>`;
-      modalContent.innerHTML = modalHTML;
-      modal.style.display = "block";
-    });
-  }
-  closeModalBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    modalContent.innerHTML = "";
-  });
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      modalContent.innerHTML = "";
+  
+  const productPromises = cartInstance.cart.map(cartItem => getProduct(cartItem.productId).catch(() => null));
+  const products = await Promise.all(productPromises);
+  
+  cartInstance.cart.forEach((cartItem, i) => {
+    if (products[i]) {
+      totalCents += products[i].priceCents * cartItem.quantity;
     }
   });
-}
+  
+  deliverySection.style.display = 'block';
+  paymentSection.style.display = 'none';
+  confirmationSection.style.display = 'none';
 
-document.addEventListener("DOMContentLoaded", renderLatestOrder); 
+  // --- Event Listeners ---
+  confirmAddressBtn.addEventListener('click', () => {
+    const address = addressInput.value.trim();
+    if (!address) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Address',
+        text: 'Please enter a delivery address.',
+      });
+      return;
+    }
+    confirmedDeliveryAddress = address;
+    deliverySection.style.display = 'none';
+    paymentSection.style.display = 'block';
+  });
+
+  payNowBtn.addEventListener('click', async () => {
+    const phoneSuffix = phoneInput.value.trim();
+    if (!/^\d{9}$/.test(phoneSuffix)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Invalid Phone Number',
+        text: 'Please enter a valid 9-digit phone number (e.g., 708032060).',
+      });
+      return;
+    }
+    const phoneNumber = `254${phoneSuffix}`;
+    const amount = 1; // Using fixed 1 KES amount
+    paymentStatusMsg.textContent = 'Initiating payment...';
+    payNowBtn.disabled = true;
+    try {
+      const res = await fetch('http://localhost:5000/api/mpesa/stkpush', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber, amount }),
+      });
+      const data = await res.json();
+      console.log('STK Push Response:', data);
+      if (!res.ok) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Error',
+          text: data.error || 'Failed to initiate STK push.',
+        });
+        payNowBtn.disabled = false;
+        return;
+      }
+      const checkoutRequestID = data.CheckoutRequestID || data.checkoutRequestID || 
+                              (data.data && (data.data.CheckoutRequestID || data.data.checkoutRequestID));
+      if (!checkoutRequestID) {
+        console.error('No CheckoutRequestID found in response:', data);
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Error',
+          text: 'Failed to get payment reference. Please try again.',
+        });
+        payNowBtn.disabled = false;
+        return;
+      }
+      console.log('Starting payment polling with CheckoutRequestID:', checkoutRequestID);
+      paymentStatusMsg.textContent = 'Please enter your M-Pesa PIN on your phone.';
+      startPaymentPolling(checkoutRequestID);
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Error',
+        text: err.message,
+      });
+      paymentStatusMsg.textContent = err.message;
+      payNowBtn.disabled = false;
+    }
+  });
+
+  confirmOrderBtn.addEventListener('click', async () => {
+    if (!isPaymentSuccessful) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Payment Not Confirmed',
+        text: 'Payment not confirmed. Please complete payment first.',
+      });
+      return;
+    }
+    confirmOrderBtn.disabled = true;
+    try {
+      Swal.fire({
+        title: 'Placing your order...',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+      });
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cart: cartInstance.cart,
+          deliveryAddress: confirmedDeliveryAddress,
+          paymentStatus: 'paid',
+        }),
+      });
+      Swal.close();
+      if (!res.ok) throw new Error('Failed to finalize order.');
+      cartInstance.emptyCart();
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Placed!',
+        text: 'Your order was placed successfully.',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      setTimeout(() => {
+        window.location.href = '/pages/all-orders.html';
+      }, 2000);
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Order Error',
+        text: err.message,
+      });
+      confirmOrderBtn.disabled = false;
+    }
+  });
+
+  // --- Functions ---
+  function updatePaymentStatusUI(message, isError = false, isLoading = false) {
+    const statusClass = isError ? 'error' : (isLoading ? 'loading' : 'success');
+    paymentStatusMsg.innerHTML = `
+      <div class="payment-status ${statusClass}">
+        ${isLoading ? '<i class="fas fa-sync-alt fa-spin"></i>' : ''}
+        ${isError ? '<i class="fas fa-exclamation-circle"></i>' : ''}
+        ${!isLoading && !isError ? '<i class="fas fa-check-circle"></i>' : ''}
+        <span>${message}</span>
+      </div>
+    `;
+  }
+  
+  async function createOrder(checkoutID, mpesaReceiptNumber, transactionDate) {
+    try {
+      updatePaymentStatusUI('Creating your order...', false, true);
+      
+      // Fetch all product details first
+      const products = await Promise.all(
+        cartInstance.cart.map(item => getProduct(item.productId).catch(() => null))
+      );
+
+      // Calculate totals and prepare order items
+      let subTotalCents = 0;
+      const orderItems = [];
+      
+      cartInstance.cart.forEach((cartItem, index) => {
+        const product = products[index];
+        if (!product) {
+          throw new Error(`Product not found for ID: ${cartItem.productId}`);
+        }
+        
+        const itemTotal = product.priceCents * cartItem.quantity;
+        subTotalCents += itemTotal;
+        
+        orderItems.push({
+          productId: product.id,
+          quantity: cartItem.quantity,
+          priceAtTimeOfOrder: product.priceCents,
+          name: product.name,
+          estimatedDeliveryTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days from now
+        });
+      });
+      
+      // Calculate tax and total
+      const taxCents = Math.round(subTotalCents * 0.16);
+      const totalCents = subTotalCents + taxCents;
+      
+      // Prepare order data
+      const orderData = {
+        cart: orderItems,
+        deliveryAddress: confirmedDeliveryAddress,
+        paymentStatus: 'paid',
+        mpesaCheckoutId: checkoutID,
+        paymentMethod: 'M-Pesa',
+        amount: totalCents,
+        mpesaReceiptNumber: mpesaReceiptNumber,
+        transactionDate: transactionDate,
+        subtotalCents: subTotalCents,
+        taxCents: taxCents
+      };
+      
+      console.log('Submitting order:', orderData);
+      
+      // Use the full backend URL for API requests
+      const orderResponse = await fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(orderData)
+      });
+      
+      const responseData = await orderResponse.json();
+      
+      if (!orderResponse.ok) {
+        throw new Error(responseData.error || 'Failed to finalize order');
+      }
+      
+      console.log('Order created successfully:', responseData);
+      
+      // Show success message and redirect
+      updatePaymentStatusUI('Order placed successfully! Redirecting to your orders...');
+      cartInstance.emptyCart();
+      
+      // Redirect to orders page after a short delay
+      setTimeout(() => {
+        window.location.href = '/pages/all-orders.html';
+      }, 2000);
+      
+      return true;
+    } catch (err) {
+      console.error('Order creation error:', err);
+      updatePaymentStatusUI(`Payment successful but order creation failed: ${err.message}`, true);
+      paymentSection.style.display = 'none';
+      confirmationSection.style.display = 'block';
+      finalTotalSpan.textContent = formatCurrency(totalCents * 1.16);
+      return false;
+    }
+  }
+
+  async function checkPaymentStatus(checkoutID) {
+    try {
+      console.log('Checking payment status from backend for ID:', checkoutID);
+
+      // Always query our backend's internal status store with full URL
+      const response = await fetch(`http://localhost:5000/api/mpesa/status/${encodeURIComponent(checkoutID)}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        // If our backend returns an error or 404 (status not found),
+        // it means the payment is genuinely not yet known or failed to process internally.
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Backend payment status check failed:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorData.error || 'Unknown error from backend status check'
+        });
+        // Return a status that indicates an error or pending, so polling can continue or stop.
+        return {
+          success: false,
+          status: 'pending', // Treat as pending if not found
+          error: errorData.error || `Failed to get status from backend: ${response.statusText}`
+        };
+      }
+
+      const result = await response.json();
+      console.log('Backend internal payment status response:', result);
+
+      // The backend's checkPaymentStatus already returns { success, status, ... }
+      // We will now always return this result, and the polling loop will interpret it.
+      return result;
+      
+    } catch (error) {
+      console.error('Error in checkPaymentStatus:', {
+        error: error.message,
+        stack: error.stack
+      });
+      return { 
+        success: false, 
+        error: error.message,
+        status: 'error'
+      };
+    }
+  }
+
+  function startPaymentPolling(checkoutID) {
+    let attempts = 0;
+    const maxAttempts = 30; // 30 attempts * 3 seconds = 90 seconds total
+    let lastStatus = '';
+    let pollingInterval;
+    
+    // Disable the pay button during polling
+    payNowBtn.disabled = true;
+    
+    // Initial status
+    updatePaymentStatusUI('Waiting for payment confirmation...', false, true);
+    
+    const checkStatus = async () => {
+      try {
+        attempts++;
+        
+        if (attempts > maxAttempts) {
+          clearInterval(pollingInterval);
+          updatePaymentStatusUI('Payment timed out. Please check your M-Pesa messages and refresh the page.', true);
+          payNowBtn.disabled = false;
+          return;
+        }
+        
+        console.log(`Checking payment status (attempt ${attempts}/${maxAttempts})`);
+        const statusData = await checkPaymentStatus(checkoutID);
+        console.log('Payment status data:', statusData);
+        
+        // Handle completed payment
+        if (statusData.status === 'completed') {
+          clearInterval(pollingInterval);
+          isPaymentSuccessful = true;
+          updatePaymentStatusUI('Payment successful! Creating your order...', false, true);
+          
+          try {
+            // Extract M-Pesa receipt number and transaction date from statusData
+            const mpesaReceiptNumber = statusData.mpesaReceiptNumber || statusData.MpesaReceiptNumber || '';
+            const transactionDate = statusData.transactionDate || '';
+            
+            console.log('Creating order with details:', {
+              checkoutID,
+              mpesaReceiptNumber,
+              transactionDate
+            });
+            
+            await createOrder(checkoutID, mpesaReceiptNumber, transactionDate);
+            
+            // Show success message and navigate to confirmation
+            paymentSection.style.display = 'none';
+            confirmationSection.style.display = 'block';
+          } catch (error) {
+            console.error('Error creating order:', error);
+            updatePaymentStatusUI(
+              `Payment successful but failed to create order: ${error.message}. Please contact support.`, 
+              true
+            );
+            payNowBtn.disabled = false;
+          }
+          return;
+        }
+        
+        // Handle failed or cancelled payments
+        if (statusData.status === 'failed' || statusData.status === 'cancelled') {
+          clearInterval(pollingInterval);
+          const errorMsg = statusData.ResultDesc || statusData.error || `Payment ${statusData.status}. Please try again.`;
+          updatePaymentStatusUI(errorMsg, true);
+          payNowBtn.disabled = false;
+          return;
+        }
+        
+        // Handle pending status or unknown status
+        const currentStatus = statusData.ResultDesc || statusData.status || 'pending';
+        if (currentStatus !== lastStatus) {
+          lastStatus = currentStatus;
+          updatePaymentStatusUI(
+            currentStatus === 'pending' 
+              ? `Waiting for payment confirmation... (${attempts}/${maxAttempts})`
+              : `Payment status: ${currentStatus} (${attempts}/${maxAttempts})`,
+            false,
+            true
+          );
+        }
+      } catch (error) {
+        console.error('Error during payment polling:', error);
+        if (attempts >= maxAttempts) {
+          clearInterval(pollingInterval);
+          updatePaymentStatusUI('Error verifying payment. Please check your M-Pesa messages and refresh the page.', true);
+          payNowBtn.disabled = false;
+        } else {
+          // Show error but continue polling
+          updatePaymentStatusUI(
+            `Encountered an error. Retrying... (${attempts}/${maxAttempts})`,
+            true,
+            true
+          );
+        }
+      }
+      
+      try {
+        // Check our server for the payment status
+        const statusData = await checkPaymentStatus(checkoutID);
+        console.log('Payment status check:', statusData);
+        
+        // If we have a successful payment
+        if (statusData.status === 'completed' || statusData.status === 'success') {
+          clearInterval(pollingInterval);
+          isPaymentSuccessful = true;
+          updatePaymentStatusUI('Payment successful! Creating your order...', false, true);
+          
+          // Create the order
+          try {
+            await createOrder(checkoutID);
+            // Show success message and navigate to confirmation
+            paymentSection.style.display = 'none';
+            confirmationSection.style.display = 'block';
+          } catch (error) {
+            console.error('Error creating order:', error);
+            updatePaymentStatusUI('Payment successful but failed to create order. Please contact support.', true);
+            payNowBtn.disabled = false;
+          }
+          return;
+        }
+        
+        // If payment failed
+        if (statusData.status === 'failed' || statusData.status === 'cancelled') {
+          clearInterval(pollingInterval);
+          updatePaymentStatusUI(`Payment ${statusData.status}. Please try again.`, true);
+          payNowBtn.disabled = false;
+          return;
+        }
+        
+        // Update status message if it changed
+        const currentStatus = statusData.ResultDesc || statusData.status || 'pending';
+        if (currentStatus !== lastStatus) {
+          lastStatus = currentStatus;
+          updatePaymentStatusUI(
+            currentStatus === 'pending' 
+              ? `Waiting for payment confirmation... (${attempts}/${maxAttempts})`
+              : `Payment status: ${currentStatus}`,
+            false,
+            true
+          );
+        }
+        
+      } catch (error) {
+        console.error('Error during payment polling:', error);
+        updatePaymentStatusUI(
+          `Error checking payment status: ${error.message}. Retrying... (${attempts}/${maxAttempts})`,
+          true
+        );
+      }
+    };
+    
+    // Initial check
+    checkStatus();
+    
+    // Set up polling interval (every 3 seconds)
+    pollingInterval = setInterval(checkStatus, 3000);
+  }
+}); 
