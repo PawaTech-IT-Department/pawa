@@ -1,0 +1,13 @@
+You can now access your backend by visiting:
+
+```
+http://localhost:5000/
+```
+
+or use the API endpoints under:
+
+```
+http://localhost:5000/api/products
+```
+
+If you need to test your API, you can use tools like Postman, curl, or your frontend application.

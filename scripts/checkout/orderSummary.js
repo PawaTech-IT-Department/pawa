@@ -4,19 +4,20 @@ import {
   updateCartQuantity,
   addToCart,
   saveCartToLocalStorage,
-} from "../../data/cart.js"; // Ensure this path is correct
-import { getProduct } from "../../data/products.js"; // Ensure this path is correct
+} from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js"; // Use loadProducts instead of getProduct
 import { deliveryOptions } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import formatCurrency from "../utils/moneyFormatter.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
-export function renderOrderSummary() {
+export async function renderOrderSummary() {
+  const products = await loadProducts();
+
   function deliveryOptionsHTML() {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
       let deliveryDate = dayjs().add(deliveryOption.deliveryDays, "day");
-      // Skip weekends
       while (deliveryDate.day() === 0 || deliveryDate.day() === 6) {
         deliveryDate = deliveryDate.add(1, "day");
       }
@@ -33,7 +34,9 @@ export function renderOrderSummary() {
     let cartSummaryHTML = "";
     cart.forEach((cartItem) => {
       const productId = cartItem.productId;
-      const matchingProduct = getProduct(productId);
+      const matchingProduct = products.find((p) => p.id === productId);
+
+      if (!matchingProduct) return; // Skip if product not found
 
       cartSummaryHTML += `
     <div class="cart--product--card 
@@ -102,7 +105,6 @@ export function renderOrderSummary() {
       plusBtn.addEventListener("click", function (e) {
         e.preventDefault();
         addToCart(productId, 1);
-        // Find the updated cart item and update the quantity display
         const updatedCartItem = cart.find(
           (item) => item.productId === productId
         );
