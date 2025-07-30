@@ -466,3 +466,310 @@ button {
 .container {
   transition: all 2s ease-out;
 }
+
+/* Progress Bar Styles */
+.tracking-progress-bar {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 1.5rem 0;
+  justify-content: center;
+}
+.progress-step {
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  background: #eee;
+  color: #888;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.progress-step.active {
+  background: #2d8cff;
+  color: #fff;
+}
+.progress-arrow {
+  margin: 0 0.5rem;
+  color: #bbb;
+  font-size: 1.2rem;
+}
+
+/* Order Card Styles */
+.order-product-card, .order-summary-product, .tracking-product-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin: 1rem 0;
+  padding: 1rem;
+  gap: 1.5rem;
+}
+.order-product-img, .order-summary-product-img, .tracking-product-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f6f6f6;
+}
+.order-product-info, .order-summary-product-info, .tracking-product-details {
+  flex: 1;
+}
+.order-product-info h4, .tracking-product-details h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.order-product-info p, .order-summary-product-info span, .tracking-product-details p {
+  margin: 0.2rem 0;
+  font-size: 0.98rem;
+}
+.buy-again-btn, .track-package-btn {
+  margin-right: 0.7rem;
+  margin-top: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  border-radius: 2rem;
+  border: none;
+  background: #2d8cff;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.buy-again-btn:hover, .track-package-btn:hover {
+  background: #1a6ed8;
+}
+
+.order-summary-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin: 2rem 0;
+  padding: 1.5rem;
+}
+.order-summary-products {
+  margin-top: 1rem;
+}
+.order-summary-product {
+  margin-bottom: 0.7rem;
+}
+
+.tracking-section .container {
+  max-width: 600px;
+}
+.tracking-search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.view-all-orders-link, .back-to-shop-link {
+  display: inline-block;
+  margin: 1rem 0 1.5rem 0;
+  color: #2d8cff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.order-placed-section, .all-orders-section, .tracking-section {
+  background: #f5f8fa;
+  min-height: 100vh;
+  padding: 2rem 0 4rem 0;
+}
+
+.order-placed-title, .all-orders-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Order Tracking Modal Styles */
+.order-tracking-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(17, 24, 39, 0.5); /* var(--bg-dark) with opacity */
+  justify-content: center;
+  align-items: center;
+  transition: var(--transition-fast);
+}
+.order-tracking-modal[style*="block"] {
+  display: flex !important;
+}
+.order-tracking-modal-content {
+  background: var(--bg-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
+  max-width: 400px;
+  width: 90vw;
+  position: relative;
+  animation: fadeInModal 0.3s;
+}
+@keyframes fadeInModal {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.close-modal-btn:hover {
+  color: var(--primary-color);
+}
+.modal-order-details h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+.modal-order-details p {
+  margin-bottom: 0.5rem;
+}
+.modal-product-list {
+  margin: 1rem 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+.modal-product-list li {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+  background: var(--bg-soft);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+.modal-product-list .modal-delivery-date {
+  color: var(--text-muted);
+  font-size: 0.95em;
+  margin-top: 0.2em;
+}
+@media (max-width: 600px) {
+  .order-tracking-modal-content {
+    padding: 1rem;
+    max-width: 95vw;
+  }
+}
+
+/* styles for new order finalization flow */
+.order-summary-container {
+  background: var(--bg-soft);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+}
+.status-message {
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.mpesa-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
+
+.mpesa-prefix {
+  padding: 0.75rem;
+  background-color: var(--bg-soft);
+  border-right: 1px solid var(--border-color);
+}
+
+.mpesa-input-container .form-input {
+  border: none;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+/* Payment Status Styles */
+.payment-status {
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.payment-status i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.payment-status.success {
+  background-color: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.payment-status.success i {
+  color: #22c55e;
+}
+
+.payment-status.loading {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border-color: #bfdbfe;
+}
+
+.payment-status.loading i {
+  color: #3b82f6;
+}
+
+.payment-status.error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.payment-status.error i {
+  color: #ef4444;
+}
+
+/* Animation for the loading spinner */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fa-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .payment-status {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+  
+  .payment-status i {
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Orders - Neszi</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" defer src="/scripts/all-orders.js"></script>
+</head>
+<body>
+  <main-header></main-header>
+  <section class="all-orders-section">
+    <div class="container">
+      <h2 class="all-orders-title">Your Orders</h2>
+      <a href="/index.html" class="back-to-shop-link">&larr; Back to Shop</a>
+      <div class="all-orders-list js-all-orders-list"></div>
+    </div>
+  </section>
+  <!-- Order Tracking Modal -->
+  <div id="order-tracking-modal" class="order-tracking-modal" style="display:none;">
+    <div class="order-tracking-modal-content">
+      <span class="close-modal-btn">&times;</span>
+      <div class="modal-order-details"></div>
+    </div>
+  </div>
+  <main-footer></main-footer>
+</body>
+</html> 

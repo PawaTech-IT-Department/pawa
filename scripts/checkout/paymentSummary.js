@@ -1,64 +1,18 @@
-import { cart, calculateTotalCartQuantity } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { cartInstance, calculateTotalCartQuantity, emptyCart } from "../../data/cart.js";
+import { getProduct } from "../../data/products.js";
+import { addOrder } from "../../data/order.js";
 import formatCurrency from "../utils/moneyFormatter.js";
 
-// Cache for products to avoid multiple API calls
-let products = [];
-
-function getProduct(productId) {
-  const matchingProduct = products.find((product) => product.id === productId);
-  if (!matchingProduct) {
-    console.warn(`Product with ID ${productId} not found in cached products.`);
-    return null;
-  }
-  return matchingProduct;
-}
-
 export async function renderPaymentSummary() {
-  try {
-    // Load products if not already cached
-    if (products.length === 0) {
-      products = await loadProducts();
-      if (!products || products.length === 0) {
-        console.error("No products loaded from API.");
-        const cartContainer = document.querySelector(".cart--summary");
-        if (cartContainer) {
-          cartContainer.innerHTML =
-            '<p style="text-align: center; color: red;">No products available to display summary.</p>';
-        }
-        return;
-      }
-      // Sync with global products for consistency
-      window.products = products;
-    }
+  const cartContainer = document.querySelector(".cart--summary");
 
-    const cartContainer = document.querySelector(".cart--summary");
-    if (!cartContainer) {
-      console.warn("Cart summary element not found.");
-      return;
-    }
-
-    let subTotalCents = 0;
-    cart.forEach((cartItem) => {
-      const productId = cartItem.productId;
-      const matchingProduct = getProduct(productId);
-      if (matchingProduct) {
-        subTotalCents += matchingProduct.priceCents * cartItem.quantity;
-      } else {
-        console.warn(
-          `Skipping cart item with productId ${productId}: Product not found.`
-        );
-      }
-    });
-
-    const taxCent = (16 * subTotalCents) / 100;
-    const totalCents = subTotalCents + taxCent;
-
-    const paymentSummaryHTML = `
+  // If cart is empty, show $0.00 for all values
+  if (!cartInstance.cart || cartInstance.cart.length === 0) {
+    cartContainer.innerHTML = `
       <h3>Order Summary</h3>
       <div class="summary--item">
-        <span>Items (${calculateTotalCartQuantity()})</span>
-        <span>$${formatCurrency(subTotalCents)}</span>
+        <span>Items (0)</span>
+        <span>$0.00</span>
       </div>
       <div class="summary--item">
         <span>Shipping</span>
@@ -66,56 +20,94 @@ export async function renderPaymentSummary() {
       </div>
       <div class="summary--item">
         <span>Tax (16%)</span>
-        <span>$${formatCurrency(taxCent)}</span>
+        <span>$0.00</span>
       </div>
-      <!-- total -->
       <div class="summary--total">
         <span>Total</span>
-        <span>$${formatCurrency(totalCents)}</span>
+        <span>$0.00</span>
       </div>
-      <button class="btn btn--primary proceed-checkout-btn">
-        Proceed to Checkout
-      </button>
-      <button class="btn btn--secondary continue-shopping-btn">
-        Continue Shopping
-      </button>
       <p class="shipping--info">
         <i class="fas fa-truck"></i> Free shipping on orders over $100
       </p>
     `;
+    return;
+  }
 
-    cartContainer.innerHTML = paymentSummaryHTML;
+  let subTotalCents = 0;
+  // Fetch all products for cart items concurrently
+  const productPromises = cartInstance.cart.map(async (cartItem) => {
+    try {
+      const productId = cartItem.productId;
+      const matchingProduct = await getProduct(productId);
+      return { cartItem, matchingProduct };
+    } catch (error) {
+      return { cartItem, matchingProduct: null };
+    }
+  });
+  const productResults = await Promise.all(productPromises);
+  for (const { cartItem, matchingProduct } of productResults) {
+    if (matchingProduct) {
+      subTotalCents += matchingProduct.priceCents * cartItem.quantity;
+    }
+  }
+  const taxCent = (16 * subTotalCents) / 100;
+  const totalCents = subTotalCents + taxCent;
 
-    // Attach event listeners for buttons
-    const checkoutButton = document.querySelector(".proceed-checkout-btn");
-    if (checkoutButton) {
-      checkoutButton.addEventListener("click", () => {
-        console.log("Proceed to checkout clicked");
-        // Add checkout logic here (e.g., redirect to checkout page)
-      });
-    }
+  const paymentSummaryHTML = `
+    <h3>Order Summary</h3>
+    <div class="summary--item">
+      <span>Items (${calculateTotalCartQuantity()})</span>
+      <span>$${formatCurrency(subTotalCents)}</span>
+    </div>
+    <div class="summary--item">
+      <span>Shipping</span>
+      <span class="free--shipping">Free</span>
+    </div>
+    <div class="summary--item">
+      <span>Tax (16%)</span>
+      <span>$${formatCurrency(taxCent)}</span>
+    </div>
+    <!-- total -->
+    <div class="summary--total">
+      <span>Total</span>
+      <span>$${formatCurrency(totalCents)}</span>
+    </div>
+    <button class="btn btn--primary proceed-checkout-btn">
+      Proceed to Checkout
+    </button>
+    <button class="btn btn--secondary continue-shopping-btn">
+      Continue Shopping
+    </button>
+    <p class="shipping--info">
+      <i class="fas fa-truck"></i> Free shipping on orders over $100
+    </p>
+  `;
 
-    const continueShoppingButton = document.querySelector(
-      ".continue-shopping-btn"
-    );
-    if (continueShoppingButton) {
-      continueShoppingButton.addEventListener("click", () => {
-        console.log("Continue shopping clicked");
-        // Add navigation logic (e.g., redirect to products page)
-        window.location.href = "/products.html"; // Adjust URL as needed
-      });
-    }
-  } catch (error) {
-    console.error("Error rendering payment summary:", error);
-    const cartContainer = document.querySelector(".cart--summary");
-    if (cartContainer) {
-      cartContainer.innerHTML =
-        '<p style="text-align: center; color: red;">Error loading payment summary. Please try again later.</p>';
-    }
+  cartContainer.innerHTML = paymentSummaryHTML;
+
+  // Proceed to Checkout logic
+  const checkoutButton = document.querySelector(".proceed-checkout-btn");
+  if (checkoutButton) {
+    checkoutButton.addEventListener("click", () => {
+      if (!cartInstance.cart || cartInstance.cart.length === 0) {
+        alert("Your cart is empty."); // Or use a custom message box
+        return;
+      }
+      // Redirect to the new order finalization page
+      window.location.href = "/pages/orders.html";
+    });
+  }
+
+  const continueShoppingButton = document.querySelector(
+    ".continue-shopping-btn"
+  );
+  if (continueShoppingButton) {
+    continueShoppingButton.addEventListener("click", () => {
+      window.location.href = "/pages/shop.html";
+    });
   }
 }
 
-// Initialize on DOM load
 document.addEventListener("DOMContentLoaded", () => {
   renderPaymentSummary();
 });

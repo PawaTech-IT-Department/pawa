@@ -15,7 +15,10 @@ class Product {
     this.image = productDetails.image;
     this.name = productDetails.name;
     this.rating = productDetails.rating;
-    this.priceCents = productDetails.priceCents;
+    // Ensure priceCents is a number and handle potential string values
+    this.priceCents = typeof productDetails.priceCents === 'number' 
+      ? productDetails.priceCents 
+      : parseInt(productDetails.priceCents) || 0;
     this.keywords = productDetails.keywords;
   }
 
@@ -37,51 +40,47 @@ class Product {
   }
 
   getPrice(quantity = 1) {
-    return `$${formatCurrency(this.priceCents * quantity)}`;
+    // Ensure quantity is a number and priceCents is valid
+    const qty = typeof quantity === 'number' ? quantity : parseInt(quantity) || 1;
+    const price = this.priceCents || 0;
+    const totalCents = price * qty;
+    
+    try {
+      return `$${formatCurrency(totalCents)}`;
+    } catch (error) {
+      console.error('Error formatting price:', error);
+      return '$0.00';
+    }
   }
 }
 
-export async function loadProducts() {
-  try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const productsData = await response.json();
-    console.log("Raw API response:", productsData);
-
-    // Handle both array and object responses
-    const rawProducts = Array.isArray(productsData)
-      ? productsData
-      : productsData.products || [];
-
-    if (!rawProducts || rawProducts.length === 0) {
-      console.warn("No products found in API response");
-      return [];
-    }
-
-    // Transform and validate product data
-    const products = rawProducts.map((productDetails) => {
-      const validatedDetails = {
-        id: productDetails.id || crypto.randomUUID(),
-        image: productDetails.image || "default.jpg",
-        name: productDetails.name || "Unnamed Product",
-        rating: {
-          stars: productDetails.rating_stars || 0,
-          count: productDetails.rating_count || 0,
-        },
-        priceCents: Number(productDetails.pricecents) || 0,
-        keywords: Array.isArray(productDetails.keywords)
-          ? productDetails.keywords
-          : [],
-      };
-      return new Product(validatedDetails);
-    });
-
-    console.log("Transformed products:", products);
-    return products;
-  } catch (error) {
-    console.error("Failed to load products:", error);
-    return [];
-  }
+// Fetch all products from backend and map to Product instances
+export async function getProducts({ page = 1, limit = 100, sort = '', keywords = '' } = {}) {
+  let url = `${API_URL}?page=${page}&limit=${limit}`;
+  if (sort) url += `&sort=${encodeURIComponent(sort)}`;
+  if (keywords) url += `&keywords=${encodeURIComponent(keywords)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch products');
+  const { products } = await res.json();
+  // Convert rating fields and pricecents to camelCase
+  return products.map((p) => new Product({
+    ...p,
+    priceCents: p.pricecents, // <-- fix here
+    rating: { stars: p.rating_stars, count: p.rating_count },
+  }));
 }
+
+// Fetch a single product by ID
+export async function getProduct(productId) {
+  const res = await fetch(`${API_URL}/${productId}`);
+  if (!res.ok) throw new Error('Product not found');
+  const p = await res.json();
+  return new Product({
+    ...p,
+    priceCents: p.pricecents, // <-- fix here
+    rating: { stars: p.rating_stars, count: p.rating_count },
+  });
+}
+
+// Optionally, export Product class if needed elsewhere
+export { Product };
