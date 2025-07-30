@@ -27,12 +27,22 @@ body {
 .sidebar {
   width: 250px;
   height: 100vh;
-  background: var(--main-color);
+  background: rgb(107, 60, 161);
   position: fixed;
   left: 0;
   top: 0;
   padding: 30px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   color: #fff;
+}
+
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
 }
 
 .sidebar-brand {
@@ -63,7 +73,7 @@ body {
 
 .sidebar-menu ul li.active,
 .sidebar-menu ul li:hover {
-  background: #702f96;
+  background: #501075;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
 }
@@ -73,17 +83,31 @@ body {
   margin-right: 15px;
 }
 
+.topbar-dashboard {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.topbar-dashboard:hover {
+  text-decoration: underline;
+}
+
 .main-content {
   margin-left: 250px;
   padding: 20px;
 }
+.main-content main {
+  padding-top: 20px; /* or adjust based on actual header height */
+}
 
 header {
-  background: var(--white);
+  /* background-color: var(--header-bg, #fff); */
+  background-color: rgb(157, 102, 221);
   display: flex;
   justify-content: space-between;
   padding: 15px 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   align-items: center;
 }
 
@@ -98,6 +122,7 @@ header h1 {
   background: var(--secondary-color);
   padding: 8px 15px;
   border-radius: 30px;
+  gap: 8px;
 }
 
 .search-wrapper input {
@@ -333,12 +358,379 @@ body.dark-mode .card-single span {
   background: #d81b60;
 }
 
-.sidebar {
-  transition: transform 0.3s ease;
+.user-wrapper {
+  position: relative;
+  cursor: pointer;
 }
 
-.sidebar.hidden {
-  transform: translateX(-100%);
+.user-wrapper .dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  display: none;
+  z-index: 999;
+}
+
+.user-wrapper .dropdown ul {
+  padding: 10px;
+}
+
+.user-wrapper .dropdown ul li {
+  padding: 10px 20px;
+}
+
+.user-wrapper .dropdown ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.user-wrapper .dropdown ul li:hover {
+  background-color: var(--secondary-color);
+}
+/* logout styles */
+.logout-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+  color: var(--text-grey);
+}
+
+.logout-wrapper i {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: var(--main-color);
+}
+/* === PROFILE PAGE STYLES === */
+.profile-card {
+  background: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profile-card img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 26px;
+  color: #333;
+}
+
+.profile-info p {
+  margin: 8px 0;
+  color: var(--text-grey);
+}
+
+.profile-info p strong {
+  color: #444;
+}
+
+.edit-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: var(--main-color);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #6a42d5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+.stat-card h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+}
+
+.stat-card span {
+  color: var(--text-grey);
+}
+
+.stat-card i {
+  font-size: 32px;
+  color: var(--main-color);
+}
+
+/* === Dark Mode Compatibility for Profile === */
+body.dark-mode .profile-card,
+body.dark-mode .stat-card {
+  background: #2b2b3c;
+  color: #e0e0e0;
+}
+
+body.dark-mode .profile-info p,
+body.dark-mode .stat-card span {
+  color: #bbb;
+}
+
+body.dark-mode .edit-btn {
+  background-color: #4f36c9;
+}
+
+body.dark-mode .edit-btn:hover {
+  background-color: #3a2c99;
+}
+
+/* === PROFILE PAGE STYLES === */
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+}
+
+/* Section Wrapper */
+.section {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Profile Top Section */
+.profile-section {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.profile-left {
+  flex: 1;
+  text-align: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.profile-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.edit-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--main-color, #e91e63);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Stats Section */
+.stats-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 150px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.stat-card p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Activity Section */
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.activity-list span {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Tags Section */
+.tags-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* === SETTINGS PAGE STYLES === */
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 600px;
+  padding: 20px;
+}
+
+.settings-section {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.settings-section h4 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--main-color);
+}
+
+.settings-section label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  color: #444;
+  font-size: 15px;
+}
+
+.settings-section select,
+.settings-section input[type="text"] {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s;
+}
+
+.settings-section select:focus,
+.settings-section input[type="text"]:focus {
+  outline: none;
+  border-color: var(--main-color);
+}
+
+.settings-submit {
+  padding: 12px 20px;
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: fit-content;
+  margin-top: 10px;
+}
+
+.settings-submit:hover {
+  background-color: #6a42d5;
+}
+
+/* Dark Mode Compatibility */
+body.dark-mode .settings-section {
+  background: #2b2b3c;
+  color: #e0e0e0;
+}
+
+body.dark-mode .settings-section h4 {
+  color: #b78ff9;
+}
+
+body.dark-mode .settings-section input,
+body.dark-mode .settings-section select {
+  background: #3a3a4e;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode .settings-submit {
+  background-color: #4f36c9;
+}
+
+body.dark-mode .settings-submit:hover {
+  background-color: #3a2c99;
 }
 
 @media screen and (min-width: 769px) {

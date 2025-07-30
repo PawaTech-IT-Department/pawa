@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/styles/admin.css" />
+  </head>
+  <body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-content">
+      <div id="header-placeholder"></div>
+
+      <main class="settings-page">
+        <section class="settings-header">
+          <h2><i class="las la-cog"></i> Settings</h2>
+          <p>Manage your preferences and personalize your experience</p>
+        </section>
+
+        <form class="settings-form">
+          <!-- Notification Preferences -->
+          <div class="settings-card">
+            <h3><i class="las la-bell"></i> Notification Preferences</h3>
+            <label class="checkbox">
+              <input type="checkbox" checked />
+              <span>Email Notifications</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>Push Notifications</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>SMS Alerts</span>
+            </label>
+          </div>
+
+          <!-- Language -->
+          <div class="settings-card">
+            <h3><i class="las la-language"></i> Language</h3>
+            <select class="settings-select">
+              <option>English</option>
+              <option>Swahili</option>
+              <option>French</option>
+            </select>
+          </div>
+
+          <!-- Time Zone -->
+          <div class="settings-card">
+            <h3><i class="las la-clock"></i> Time Zone</h3>
+            <input
+              type="text"
+              class="settings-input"
+              placeholder="E.g. GMT+3"
+              value="GMT+3"
+            />
+          </div>
+
+          <!-- Account Security -->
+          <div class="settings-card">
+            <h3><i class="las la-user-lock"></i> Account Security</h3>
+            <button type="button" class="btn-link">Change Password</button>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>Enable Two-Factor Authentication (2FA)</span>
+            </label>
+          </div>
+
+          <!-- Appearance -->
+          <div class="settings-card">
+            <h3><i class="las la-adjust"></i> Appearance</h3>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>Enable Dark Mode</span>
+            </label>
+          </div>
+
+          <!-- Communication Preferences -->
+          <div class="settings-card">
+            <h3><i class="las la-envelope"></i> Communication</h3>
+            <label class="checkbox">
+              <input type="checkbox" checked />
+              <span>Subscribe to Newsletter</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>Receive Product Updates</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" />
+              <span>Marketing Offers</span>
+            </label>
+          </div>
+
+          <!-- Regional Settings -->
+          <div class="settings-card">
+            <h3><i class="las la-globe"></i> Regional Settings</h3>
+            <label for="date-format">Date Format</label>
+            <select class="settings-select" id="date-format">
+              <option>MM/DD/YYYY</option>
+              <option>DD/MM/YYYY</option>
+            </select>
+
+            <label for="currency">Currency</label>
+            <select class="settings-select" id="currency">
+              <option>USD</option>
+              <option>KES</option>
+              <option>EUR</option>
+            </select>
+          </div>
+
+          <!-- Save & Reset -->
+          <div class="settings-actions">
+            <button type="submit" class="save-btn">
+              <i class="las la-save"></i> Save Settings
+            </button>
+            <button type="reset" class="reset-btn">
+              <i class="las la-undo"></i> Reset to Defaults
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
+
+    <script src="../scripts/admin.js"></script>
+  </body>
+</html>

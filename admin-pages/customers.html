@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neszi Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/styles/admin.css" />
+  </head>
+  <body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-content">
+      <div id="header-placeholder"></div>
+
+      <main>
+        <div class="card">
+          <div class="card-header">
+            <h3>Customer List</h3>
+            <button>Add New</button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <td>Customer ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Phone</td>
+                    <td>Status</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#CU001</td>
+                    <td>Liam Hemingway</td>
+                    <td>liam@example.com</td>
+                    <td>+254712345678</td>
+                    <td><span class="status purple"></span> Active</td>
+                  </tr>
+                  <tr>
+                    <td>#CU002</td>
+                    <td>Elizabeth Keen</td>
+                    <td>elizabeth@example.com</td>
+                    <td>+254798765432</td>
+                    <td><span class="status pink"></span> Inactive</td>
+                  </tr>
+                  <tr>
+                    <td>#CU003</td>
+                    <td>Tom Keen</td>
+                    <td>tom@example.com</td>
+                    <td>+254700000001</td>
+                    <td><span class="status orange"></span> Pending</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+
+  <script src="../scripts/admin.js"></script>
+</html>
