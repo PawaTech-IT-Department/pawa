@@ -17,6 +17,24 @@
       <div id="header-placeholder"></div>
 
       <main>
+        <div
+          style="display: flex; justify-content: flex-end; margin-bottom: 20px"
+        >
+          <button
+            onclick="logout()"
+            style="
+              padding: 10px 20px;
+              background-color: crimson;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            Log Out
+          </button>
+        </div>
+
         <div class="cards">
           <div class="card-single">
             <div>
@@ -187,7 +205,22 @@
         </div>
       </main>
     </div>
+    <script>
+      function logout() {
+        // Clear the login state
+        localStorage.removeItem("loggedIn");
+        // Redirect to your log-out/login screen
+        window.location.href = "/admin-pages/log-out.html";
+      }
+
+      // Block access if user is not logged in
+      if (localStorage.getItem("loggedIn") !== "true") {
+        window.location.href = "/admin-pages/log-out.html";
+      }
+    </script>
+
+    <script src="/scripts/admin.js"></script>
   </body>
 
-  <script src="/scripts/admin.js"></script>
+  <!-- < src="/scripts/admin.js"></ -->
 </html>
