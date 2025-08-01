@@ -908,6 +908,79 @@ body.dark-mode .settings-submit:hover {
   background-color: #e60000;
 }
 
+/* ===== Modal Overlay for Edit ===== */
+#edit-product-modal.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#edit-product-modal .modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+#edit-product-modal h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.4rem;
+}
+
+#edit-product-modal .form-group {
+  margin-bottom: 15px;
+}
+
+#edit-product-modal .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+#edit-product-modal .form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#edit-product-modal .modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#edit-product-modal .modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+#edit-product-modal .modal-buttons button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+#edit-product-modal .modal-buttons #cancel-edit {
+  background-color: #9e9e9e;
+  color: white;
+}
+
 @media screen and (min-width: 769px) {
   .sidebar.hidden + .main-content {
     margin-left: 0;

@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Task List</h3>
-            <button>Add Task</button>
+            <button id="showAddTaskModal">Add Task</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -32,6 +32,7 @@
                     <td>Assigned To</td>
                     <td>Due Date</td>
                     <td>Status</td>
+                    <td>Action</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@
                     <td>Grace Njeri</td>
                     <td>2025-07-28</td>
                     <td><span class="status orange"></span> In Progress</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                   <tr>
                     <td>#TSK002</td>
@@ -48,17 +50,52 @@
                     <td>John Doe</td>
                     <td>2025-07-26</td>
                     <td><span class="status purple"></span> Completed</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                   <tr>
                     <td>#TSK003</td>
                     <td>Respond to customer inquiries</td>
-                    <td>Wangeci Cynthia</td>
+                    <td>Candence Sinclar</td>
                     <td>2025-07-25</td>
                     <td><span class="status pink"></span> Not Started</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        <!-- Add New Task Modal -->
+        <div class="modal-overlay" id="addTaskModal">
+          <div class="modal">
+            <h3>Add New Task</h3>
+            <form id="addTaskForm">
+              <div class="form-group">
+                <label for="taskDescription">Description:</label>
+                <input type="text" id="taskDescription" required />
+              </div>
+              <div class="form-group">
+                <label for="taskAssignee">Assigned To:</label>
+                <input type="text" id="taskAssignee" required />
+              </div>
+              <div class="form-group">
+                <label for="taskDueDate">Due Date:</label>
+                <input type="date" id="taskDueDate" required />
+              </div>
+              <div class="form-group">
+                <label for="taskStatus">Status:</label>
+                <select id="taskStatus">
+                  <option value="Not Started">Not Started</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit">Save</button>
+                <button type="button" id="cancelTaskModal">Cancel</button>
+              </div>
+            </form>
           </div>
         </div>
       </main>

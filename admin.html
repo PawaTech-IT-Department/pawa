@@ -79,7 +79,9 @@
             <div class="card">
               <div class="card-header">
                 <h3>Recent Orders</h3>
-                <button>
+                <button
+                  onclick="window.location.href='/admin-pages/orders.html'"
+                >
                   See all <span class="las la-arrow-right"></span>
                 </button>
               </div>
@@ -93,7 +95,7 @@
                         <td>Status</td>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="ordersList">
                       <tr>
                         <td>#NE01</td>
                         <td>Refurbished HP Laptop</td>
@@ -135,11 +137,13 @@
             <div class="card">
               <div class="card-header">
                 <h3>New Customers</h3>
-                <button>
+                <button
+                  onclick="window.location.href='/admin-pages/customers.html'"
+                >
                   See all <span class="las la-arrow-right"></span>
                 </button>
               </div>
-              <div class="card-body">
+              <div class="card-body" id="customersList">
                 <div class="customer">
                   <div class="info">
                     <img

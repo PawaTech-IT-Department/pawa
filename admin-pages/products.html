@@ -39,37 +39,88 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>HP EliteBook</td>
-                  <td>Laptops</td>
-                  <td>$800</td>
-                  <td>15</td>
-                  <td>
-                    <button>Edit</button>
-                    <button style="color: crimson">Delete</button>
-                  </td>
+                  <td class="product-name">HP EliteBook</td>
+                  <td class="product-category">Laptops</td>
+                  <td class="product-price">$800</td>
+                  <td class="product-stock">15</td>
+                  <td><button class="edit-btn">Edit</button></td>
+                  <td><button class="delete-btn">Delete</button></td>
                 </tr>
                 <tr>
-                  <td>Logitech Mouse</td>
-                  <td>Accessories</td>
-                  <td>$25</td>
-                  <td>87</td>
-                  <td>
-                    <button>Edit</button>
-                    <button style="color: crimson">Delete</button>
-                  </td>
+                  <td class="product-name">Logitech Mouse</td>
+                  <td class="product-category">Accessories</td>
+                  <td class="product-price">$25</td>
+                  <td class="product-stock">87</td>
+                  <td><button class="edit-btn">Edit</button></td>
+                  <td><button class="delete-btn">Delete</button></td>
                 </tr>
                 <tr>
-                  <td>Samsung Monitor</td>
-                  <td>Monitors</td>
-                  <td>$200</td>
-                  <td>42</td>
-                  <td>
-                    <button>Edit</button>
-                    <button style="color: crimson">Delete</button>
-                  </td>
+                  <td class="product-name">Samsung Monitor</td>
+                  <td class="product-category">Monitors</td>
+                  <td class="product-price">$200</td>
+                  <td class="product-stock">42</td>
+                  <td><button class="edit-btn">Edit</button></td>
+                  <td><button class="delete-btn">Delete</button></td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        <!-- Edit Product Modal -->
+        <div class="modal-overlay" id="edit-product-modal">
+          <div class="modal-content">
+            <h2>Edit Product</h2>
+            <form id="edit-product-form">
+              <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" id="edit-product-name" required />
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <input type="text" id="edit-product-category" required />
+              </div>
+              <div class="form-group">
+                <label>Price</label>
+                <input type="number" id="edit-product-price" required />
+              </div>
+              <div class="form-group">
+                <label>Stock</label>
+                <input type="number" id="edit-product-stock" required />
+              </div>
+              <div class="modal-buttons">
+                <button type="submit">Save Changes</button>
+                <button type="button" id="cancel-edit">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div class="modal-overlay" id="addProductModal">
+          <div class="modal">
+            <h3>Add New Product</h3>
+            <form id="addProductForm">
+              <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" required />
+              </div>
+              <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" required />
+              </div>
+              <div class="form-group">
+                <label for="price">Price ($):</label>
+                <input type="number" id="price" required />
+              </div>
+              <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" required />
+              </div>
+              <div class="form-actions">
+                <button type="submit">Add</button>
+                <button type="button" id="cancelAddProduct">Cancel</button>
+              </div>
+            </form>
           </div>
         </div>
       </main>

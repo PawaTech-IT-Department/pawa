@@ -15,62 +15,71 @@
     <div class="main-content">
       <div id="header-placeholder"></div>
       <main>
-        <div class="card-header">
-          <h3>Order Overview</h3>
-          <div>
-            <button>All</button>
-            <button style="background: var(--orange); color: white">
-              Pending
-            </button>
-            <button style="background: var(--pink); color: white">
-              Processing
-            </button>
-            <button style="background: var(--purple); color: white">
-              Shipped
-            </button>
+        <!-- Summary Cards -->
+        <div class="inventory-summary">
+          <div class="inventory-card purple-border">
+            Total Orders: <span id="total-orders">100</span>
+          </div>
+          <div class="inventory-card orange-border">
+            Pending: <span id="pending-count">20</span>
+          </div>
+          <div class="inventory-card pink-border">
+            Processing: <span id="processing-count">10</span>
+          </div>
+          <div class="inventory-card">
+            Shipped: <span id="shipped-count">40</span>
           </div>
         </div>
 
         <div class="card">
-          <div class="table-responsive">
-            <table>
-              <thead>
-                <tr>
-                  <td>Order ID</td>
-                  <td>Customer</td>
-                  <td>Total</td>
-                  <td>Status</td>
-                  <td>Date</td>
-                  <td>Actions</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>#ORD101</td>
-                  <td>James Smith</td>
-                  <td>$450</td>
-                  <td><span class="status orange"></span> Pending</td>
-                  <td>2025-07-30</td>
-                  <td><button>View</button></td>
-                </tr>
-                <tr>
-                  <td>#ORD102</td>
-                  <td>Anna White</td>
-                  <td>$1,100</td>
-                  <td><span class="status pink"></span> Processing</td>
-                  <td>2025-07-29</td>
-                  <td><button>View</button></td>
-                </tr>
-                <tr>
-                  <td>#ORD103</td>
-                  <td>Michael Johnson</td>
-                  <td>$760</td>
-                  <td><span class="status purple"></span> Shipped</td>
-                  <td>2025-07-28</td>
-                  <td><button>View</button></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card-header">
+            <h3>Order Overview</h3>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="orders-table">
+                <thead>
+                  <tr>
+                    <td>Order ID</td>
+                    <td>Customer</td>
+                    <td>Total</td>
+                    <td>Status</td>
+                    <td>Date</td>
+                    <td>Actions</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-status="Pending">
+                    <td>#ORD101</td>
+                    <td>James Smith</td>
+                    <td>$450</td>
+                    <td><span class="status orange"></span> Pending</td>
+                    <td>2025-07-30</td>
+
+                    <td><button class="delete-btn">Delete</button></td>
+                  </tr>
+                  <tr data-status="Processing">
+                    <td>#ORD102</td>
+                    <td>Anna White</td>
+                    <td>$1,100</td>
+                    <td><span class="status pink"></span> Processing</td>
+                    <td>2025-07-29</td>
+
+                    <td><button class="delete-btn">Delete</button></td>
+                  </tr>
+                  <tr data-status="Shipped">
+                    <td>#ORD103</td>
+                    <td>Michael Johnson</td>
+                    <td>$760</td>
+                    <td><span class="status purple"></span> Shipped</td>
+                    <td>2025-07-28</td>
+
+                    <td><button class="delete-btn">Delete</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </main>
