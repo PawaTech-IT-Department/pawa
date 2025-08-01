@@ -17,14 +17,38 @@
       <div id="header-placeholder"></div>
 
       <main>
+        <!-- Summary Cards -->
+        <div class="inventory-summary">
+          <div class="inventory-card purple-border">
+            Total Items: <span id="total-items">0</span>
+          </div>
+          <div class="inventory-card orange-border">
+            Low Stock: <span id="low-stock-count">0</span>
+          </div>
+          <div class="inventory-card pink-border">
+            Out of Stock: <span id="out-of-stock-count">0</span>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-header">
             <h3>Inventory List</h3>
             <button id="add-inventory-btn">Add New Item</button>
           </div>
+
+          <!-- Filter -->
+          <div class="filter-wrapper">
+            <select id="stock-filter">
+              <option value="all">All</option>
+              <option value="in">In Stock</option>
+              <option value="low">Low Stock</option>
+              <option value="out">Out of Stock</option>
+            </select>
+          </div>
+
           <div class="card-body">
             <div class="table-responsive">
-              <table>
+              <table id="inventory-table">
                 <thead>
                   <tr>
                     <td>Item ID</td>
@@ -34,8 +58,35 @@
                     <td>Status</td>
                   </tr>
                 </thead>
+                <<<<<<< HEAD
                 <tbody id="inventory-list">
                   <!-- Dynamic inventory rows -->
+                  =======
+                </tbody>
+
+                <tbody>
+                  <tr data-stock="23">
+                    <td>#IN001</td>
+                    <td>Refurbished HP Laptop</td>
+                    <td>Laptops</td>
+                    <td>23</td>
+                    <td><span class="status purple"></span> In Stock</td>
+                  </tr>
+                  <tr data-stock="5">
+                    <td>#IN002</td>
+                    <td>Canon All-in-One Printer</td>
+                    <td>Printers</td>
+                    <td>5</td>
+                    <td><span class="status orange"></span> Low Stock</td>
+                  </tr>
+                  <tr data-stock="0">
+                    <td>#IN003</td>
+                    <td>Epson Projector X500</td>
+                    <td>Projectors</td>
+                    <td>0</td>
+                    <td><span class="status pink"></span> Out of Stock</td>
+                  </tr>
+                  >>>>>>> 5d3b87672af3d0949193509eef4f52ea971776f8
                 </tbody>
               </table>
             </div>
@@ -43,8 +94,12 @@
         </div>
       </main>
     </div>
-  </body>
 
-  <script src="../scripts/admin.js"></script>
-  <script src="inventory.js"></script>
+    <<<<<<< HEAD
+    <script src="../scripts/admin.js"></script>
+    <script src="inventory.js"></script>
+    =======
+    <script src="../scripts/admin.js"></script>
+  </body>
+  >>>>>>> 5d3b87672af3d0949193509eef4f52ea971776f8
 </html>
