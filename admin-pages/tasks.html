@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Task List</h3>
-            <button>Add Task</button>
+            <button id="add-task-btn">Add Task</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -34,28 +34,8 @@
                     <td>Status</td>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>#TSK001</td>
-                    <td>Update product listings</td>
-                    <td>Grace Njeri</td>
-                    <td>2025-07-28</td>
-                    <td><span class="status orange"></span> In Progress</td>
-                  </tr>
-                  <tr>
-                    <td>#TSK002</td>
-                    <td>Verify stock levels</td>
-                    <td>John Doe</td>
-                    <td>2025-07-26</td>
-                    <td><span class="status purple"></span> Completed</td>
-                  </tr>
-                  <tr>
-                    <td>#TSK003</td>
-                    <td>Respond to customer inquiries</td>
-                    <td>Wangeci Cynthia</td>
-                    <td>2025-07-25</td>
-                    <td><span class="status pink"></span> Not Started</td>
-                  </tr>
+                <tbody id="tasks-list">
+                  <!-- Dynamic task rows -->
                 </tbody>
               </table>
             </div>
@@ -66,4 +46,5 @@
   </body>
 
   <script src="../scripts/admin.js"></script>
+  <script src="tasks.js"></script>
 </html>

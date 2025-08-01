@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Customer List</h3>
-            <button>Add New</button>
+            <button id="add-customer-btn">Add New</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -34,28 +34,8 @@
                     <td>Status</td>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>#CU001</td>
-                    <td>Liam Hemingway</td>
-                    <td>liam@example.com</td>
-                    <td>+254712345678</td>
-                    <td><span class="status purple"></span> Active</td>
-                  </tr>
-                  <tr>
-                    <td>#CU002</td>
-                    <td>Elizabeth Keen</td>
-                    <td>elizabeth@example.com</td>
-                    <td>+254798765432</td>
-                    <td><span class="status pink"></span> Inactive</td>
-                  </tr>
-                  <tr>
-                    <td>#CU003</td>
-                    <td>Tom Keen</td>
-                    <td>tom@example.com</td>
-                    <td>+254700000001</td>
-                    <td><span class="status orange"></span> Pending</td>
-                  </tr>
+                <tbody id="customers-list">
+                  <!-- Dynamic customer rows -->
                 </tbody>
               </table>
             </div>
@@ -66,4 +46,5 @@
   </body>
 
   <script src="../scripts/admin.js"></script>
+  <script src="customers.js"></script>
 </html>

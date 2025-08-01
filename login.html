@@ -260,43 +260,56 @@
         const rememberMe = document.getElementById("remember-me").checked;
 
         try {
-          // Show loading state
           const submitBtn = loginForm.querySelector('button[type="submit"]');
           const originalBtnText = submitBtn.innerHTML;
           submitBtn.disabled = true;
           submitBtn.innerHTML =
             '<i class="bx bx-loader-alt bx-spin"></i> Logging in...';
 
-          // Simulate API call (replace with actual fetch)
-          const response = await simulateLoginAPI(emailUsername, password);
+          // Try admin login first
+          let response = await fetch('/api/admins/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ emailUsername, password })
+          });
+          let data = await response.json();
 
-          if (response.success) {
-            // Store session
-            localStorage.setItem("authToken", response.token);
-            localStorage.setItem("user", JSON.stringify(response.user));
+          // If not admin, try user login
+          if (!data.success) {
+            response = await fetch('/api/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ emailUsername, password })
+            });
+            data = await response.json();
+          }
 
-            // Handle "Remember me"
+          if (data.success) {
+            localStorage.setItem("authToken", data.token || '');
+            localStorage.setItem("user", JSON.stringify(data.user));
             if (rememberMe) {
               localStorage.setItem("rememberMe", "true");
             } else {
-              sessionStorage.setItem("authToken", response.token);
+              sessionStorage.setItem("authToken", data.token || '');
             }
-
-            // Notify parent
             if (window !== window.top) {
               window.top.postMessage(
                 {
                   type: "auth_success",
-                  user: response.user,
-                  token: response.token,
+                  user: data.user,
+                  token: data.token || '',
                 },
                 "*"
               );
             } else {
-              window.location.href = "/account";
+              if (data.userType === 'admin') {
+                window.location.href = "/admin.html";
+              } else {
+                window.location.href = "/index.html";
+              }
             }
           } else {
-            throw new Error(response.message || "Login failed");
+            throw new Error(data.error || data.message || "Login failed");
           }
         } catch (error) {
           alert(error.message);
@@ -408,44 +421,55 @@
         }
 
         try {
-          // Show loading state
           const submitBtn = signupForm.querySelector('button[type="submit"]');
           const originalBtnText = submitBtn.innerHTML;
           submitBtn.disabled = true;
           submitBtn.innerHTML =
             '<i class="bx bx-loader-alt bx-spin"></i> Creating account...';
 
-          // Simulate API call (replace with actual fetch to your backend)
-          const response = await simulateSignupAPI(email, username, password);
+          // Try admin signup first
+          let response = await fetch('/api/admins/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, username, password })
+          });
+          let data = await response.json();
 
-          if (response.success) {
-            // Store user session (replace with your actual session handling)
-            localStorage.setItem("authToken", response.token);
-            localStorage.setItem("user", JSON.stringify(response.user));
+          // If not admin, try user signup
+          if (!data.success) {
+            response = await fetch('/api/users/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, username, password })
+            });
+            data = await response.json();
+          }
 
-            // Notify parent window (if in modal)
+          if (data.success) {
+            localStorage.setItem("authToken", data.token || '');
+            localStorage.setItem("user", JSON.stringify(data.user));
             if (window !== window.top) {
               window.top.postMessage(
                 {
                   type: "auth_success",
-                  user: response.user,
-                  token: response.token,
+                  user: data.user,
+                  token: data.token || '',
                 },
                 "*"
               );
             } else {
-              // Redirect to account page if not in modal
-              window.location.href = "/account";
+              if (data.userType === 'admin') {
+                window.location.href = "/admin.html";
+              } else {
+                window.location.href = "/index.html";
+              }
             }
-
-            // Show success message
             alert("Account created successfully! You're now logged in.");
           } else {
-            throw new Error(response.message || "Signup failed");
+            throw new Error(data.error || data.message || "Signup failed");
           }
         } catch (error) {
           alert(error.message);
-          // Reset button state
           const submitBtn = signupForm.querySelector('button[type="submit"]');
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalBtnText;

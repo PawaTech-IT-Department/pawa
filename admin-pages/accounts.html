@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Admin Accounts</h3>
-            <button>Create Account</button>
+            <button id="create-account-btn">Create Account</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -32,30 +32,11 @@
                     <td>Role</td>
                     <td>Email</td>
                     <td>Status</td>
+                    <td>Action</td>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>#AC001</td>
-                    <td>Wangeci Cynthia</td>
-                    <td>Super Admin</td>
-                    <td>wangeci@example.com</td>
-                    <td><span class="status purple"></span> Active</td>
-                  </tr>
-                  <tr>
-                    <td>#AC002</td>
-                    <td>John Doe</td>
-                    <td>Support Staff</td>
-                    <td>john@example.com</td>
-                    <td><span class="status pink"></span> Inactive</td>
-                  </tr>
-                  <tr>
-                    <td>#AC003</td>
-                    <td>Grace Njeri</td>
-                    <td>Inventory Manager</td>
-                    <td>grace@example.com</td>
-                    <td><span class="status orange"></span> Pending</td>
-                  </tr>
+                <tbody id="admins-list">
+                  <!-- Dynamic admin rows -->
                 </tbody>
               </table>
             </div>
@@ -66,4 +47,5 @@
   </body>
 
   <script src="../scripts/admin.js"></script>
+  <script src="accounts.js"></script>
 </html>

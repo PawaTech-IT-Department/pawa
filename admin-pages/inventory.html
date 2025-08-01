@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Inventory List</h3>
-            <button>Add New Item</button>
+            <button id="add-inventory-btn">Add New Item</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -34,28 +34,8 @@
                     <td>Status</td>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>#IN001</td>
-                    <td>Refurbished HP Laptop</td>
-                    <td>Laptops</td>
-                    <td>23</td>
-                    <td><span class="status purple"></span> In Stock</td>
-                  </tr>
-                  <tr>
-                    <td>#IN002</td>
-                    <td>Canon All-in-One Printer</td>
-                    <td>Printers</td>
-                    <td>5</td>
-                    <td><span class="status orange"></span> Low Stock</td>
-                  </tr>
-                  <tr>
-                    <td>#IN003</td>
-                    <td>Epson Projector X500</td>
-                    <td>Projectors</td>
-                    <td>0</td>
-                    <td><span class="status pink"></span> Out of Stock</td>
-                  </tr>
+                <tbody id="inventory-list">
+                  <!-- Dynamic inventory rows -->
                 </tbody>
               </table>
             </div>
@@ -66,4 +46,5 @@
   </body>
 
   <script src="../scripts/admin.js"></script>
+  <script src="inventory.js"></script>
 </html>
