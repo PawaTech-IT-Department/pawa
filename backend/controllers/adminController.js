@@ -34,12 +34,10 @@ const adminController = {
       }
       res.json({ message: "Admin privileges granted", admin: updated });
     } catch (err) {
-      res
-        .status(500)
-        .json({
-          error: "Failed to grant admin privileges",
-          details: err.message,
-        });
+      res.status(500).json({
+        error: "Failed to grant admin privileges",
+        details: err.message,
+      });
     }
   },
 
