@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Customer List</h3>
-            <button>Add New</button>
+            <button id="showAddModal">Add New</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -32,6 +32,7 @@
                     <td>Email</td>
                     <td>Phone</td>
                     <td>Status</td>
+                    <td>Action</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,7 @@
                     <td>liam@example.com</td>
                     <td>+254712345678</td>
                     <td><span class="status purple"></span> Active</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                   <tr>
                     <td>#CU002</td>
@@ -48,6 +50,7 @@
                     <td>elizabeth@example.com</td>
                     <td>+254798765432</td>
                     <td><span class="status pink"></span> Inactive</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                   <tr>
                     <td>#CU003</td>
@@ -55,10 +58,43 @@
                     <td>tom@example.com</td>
                     <td>+254700000001</td>
                     <td><span class="status orange"></span> Pending</td>
+                    <td><button class="delete-btn">Delete</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+        <!-- Add New Customer Modal -->
+        <div class="modal-overlay" id="addModal">
+          <div class="modal">
+            <h3>Add New Customer</h3>
+            <form id="addForm">
+              <div class="form-group">
+                <label for="productName">Customer Name:</label>
+                <input type="text" id="productName" required />
+              </div>
+              <div class="form-group">
+                <label for="categoryOrEmail">Email:</label>
+                <input type="email" id="categoryOrEmail" required />
+              </div>
+              <div class="form-group">
+                <label for="stockOrPhone">Phone:</label>
+                <input type="tel" id="stockOrPhone" required />
+              </div>
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit">Save</button>
+                <button type="button" id="cancelModal">Cancel</button>
+              </div>
+            </form>
           </div>
         </div>
       </main>
