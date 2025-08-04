@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === INVENTORY MODAL ===
+  // === INVENTORY MODAL ===//
   const showInventoryModalBtn = document.getElementById("showInventoryModal");
   const inventoryModal = document.getElementById("inventoryModal");
   const cancelInventoryModalBtn = document.getElementById(

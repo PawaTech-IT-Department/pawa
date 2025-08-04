@@ -26,7 +26,7 @@
           <div class="inventory-card pink-border">
             Processing: <span id="processing-count">0</span>
           </div>
-          <div class="inventory-card">
+          <div class="inventory-card green-border">
             Shipped: <span id="shipped-count">0</span>
           </div>
         </div>
@@ -34,6 +34,7 @@
         <div class="card">
           <div class="card-header">
             <h3>Order Overview</h3>
+            <button id="showAddOrderModal" class="add-btn">Add Order</button>
           </div>
 
           <div class="card-body">
@@ -55,6 +56,25 @@
               </table>
             </div>
           </div>
+        </div>
+        <!-- Modal Overlay -->
+        <div id="orderModal">
+          <form id="orderForm" class="modal-box">
+            <input type="text" id="orderId" placeholder="Order ID" />
+            <input type="text" id="customerName" placeholder="Customer Name" />
+            <input type="number" id="orderTotal" placeholder="Total Amount" />
+            <select id="orderStatus">
+              <option value="Pending">Pending</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+            </select>
+            <div class="modal-actions">
+              <button type="submit" class="btn">Save</button>
+              <button type="button" class="btn cancel" id="cancelOrderModal">
+                Cancel
+              </button>
+            </div>
+          </form>
         </div>
       </main>
     </div>

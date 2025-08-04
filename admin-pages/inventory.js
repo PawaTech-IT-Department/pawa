@@ -26,7 +26,15 @@ function renderInventories(inventories) {
       <td>${inv.product_id || "-"}</td>
       <td>${inv.category || "-"}</td>
       <td>${inv.quantity || 0}</td>
-      <td><span class="status ${inv.quantity > 10 ? "purple" : inv.quantity > 0 ? "orange" : "pink"}"></span> ${inv.quantity > 10 ? "In Stock" : inv.quantity > 0 ? "Low Stock" : "Out of Stock"}</td>
+      <td><span class="status ${
+        inv.quantity > 10 ? "purple" : inv.quantity > 0 ? "orange" : "pink"
+      }"></span> ${
+      inv.quantity > 10
+        ? "In Stock"
+        : inv.quantity > 0
+        ? "Low Stock"
+        : "Out of Stock"
+    }</td>
     `;
     tbody.appendChild(tr);
   });

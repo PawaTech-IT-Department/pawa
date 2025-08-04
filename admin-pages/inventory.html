@@ -22,6 +22,9 @@
           <div class="inventory-card purple-border">
             Total Items: <span id="total-items">0</span>
           </div>
+          <div class="inventory-card green-border">
+            In Stock: <span id="in-stock-count">0</span>
+          </div>
           <div class="inventory-card orange-border">
             Low Stock: <span id="low-stock-count">0</span>
           </div>
@@ -33,7 +36,9 @@
         <div class="card">
           <div class="card-header">
             <h3>Inventory List</h3>
-            <button>Add New Item</button>
+            <button id="showAddInventoryModal" class="btn">
+              Add Inventory
+            </button>
           </div>
 
           <!-- Filter -->
@@ -51,12 +56,12 @@
               <table id="inventory-table">
                 <thead>
                   <tr>
-                    <td>Item ID</td>
-                    <td>Product Name</td>
-                    <td>Category</td>
-                    <td>Stock</td>
-                    <td>Status</td>
-                    <td>Action</td>
+                    <th>Item ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody id="inventory-list">
@@ -66,39 +71,48 @@
             </div>
           </div>
         </div>
-
-        <!-- Add New Inventory Modal -->
-        <div class="modal-overlay" id="inventoryModal">
-          <div class="modal">
-            <h3>Add New Inventory Item</h3>
-            <form id="inventoryForm">
-              <div class="form-group">
-                <label for="itemId">Item ID:</label>
-                <input type="text" id="itemId" required readonly />
-              </div>
-              <div class="form-group">
-                <label for="productName">Product Name:</label>
-                <input type="text" id="productName" required />
-              </div>
-              <div class="form-group">
-                <label for="category">Category:</label>
-                <input type="text" id="category" required />
-              </div>
-              <div class="form-group">
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" required />
-              </div>
-              <div class="form-actions">
-                <button type="submit">Save</button>
-                <button type="button" id="cancelInventoryModal">Cancel</button>
-              </div>
-            </form>
-          </div>
-        </div>
       </main>
     </div>
 
+    <!-- Add Inventory Modal -->
+    <div id="addinventoryModal" class="modal-overlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Add New Inventory Item</h3>
+          <button class="close-button" data-close-button>&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <form id="add-inventory-form">
+            <div class="form-group">
+              <label for="itemId">Item ID</label>
+              <input type="text" id="itemId" required readonly />
+            </div>
+            <div class="form-group">
+              <label for="productName">Product Name</label>
+              <input type="text" id="productName" required />
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" id="category" required />
+            </div>
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" required />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn">Save</button>
+              <button type="button" class="btn cancel-btn" data-close-button>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <script src="../scripts/admin.js"></script>
-    <script src="inventory.js"></script>
+    <script src="/admin-pages/inventory.js"></script>
   </body>
 </html>

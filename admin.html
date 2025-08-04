@@ -38,7 +38,7 @@
         <div class="cards">
           <div class="card-single">
             <div>
-              <h1>54</h1>
+              <h1 id="total-customers">0</h1>
               <span>Customers</span>
             </div>
             <div>
@@ -47,7 +47,7 @@
           </div>
           <div class="card-single">
             <div>
-              <h1>35</h1>
+              <h1 id="total-products">0</h1>
               <span>Products</span>
             </div>
             <div>
@@ -56,7 +56,7 @@
           </div>
           <div class="card-single">
             <div>
-              <h1>124</h1>
+              <h1 id="total-orders">0</h1>
               <span>Orders</span>
             </div>
             <div>
@@ -65,7 +65,7 @@
           </div>
           <div class="card-single income-card">
             <div>
-              <h1>$6k</h1>
+              <h1 id="total-income">$0</h1>
               <span>Income</span>
             </div>
             <div>
@@ -96,36 +96,7 @@
                       </tr>
                     </thead>
                     <tbody id="ordersList">
-                      <tr>
-                        <td>#NE01</td>
-                        <td>Refurbished HP Laptop</td>
-                        <td><span class="status purple"></span> Shipped</td>
-                      </tr>
-                      <tr>
-                        <td>#NE02</td>
-                        <td>Epson Projector X500</td>
-                        <td><span class="status pink"></span> Processing</td>
-                      </tr>
-                      <tr>
-                        <td>#NE03</td>
-                        <td>Lenovo ThinkPad</td>
-                        <td><span class="status orange"></span> Pending</td>
-                      </tr>
-                      <tr>
-                        <td>#NE04</td>
-                        <td>Dell Ultrasharp Monitor</td>
-                        <td><span class="status purple"></span> Shipped</td>
-                      </tr>
-                      <tr>
-                        <td>#NE05</td>
-                        <td>Canon All-in-One Printer</td>
-                        <td><span class="status pink"></span> Processing</td>
-                      </tr>
-                      <tr>
-                        <td>#NE06</td>
-                        <td>Apple MacBook Air M1</td>
-                        <td><span class="status orange"></span> Pending</td>
-                      </tr>
+                      <!-- Dynamic orders will appear here -->
                     </tbody>
                   </table>
                 </div>
@@ -144,80 +115,20 @@
                 </button>
               </div>
               <div class="card-body" id="customersList">
-                <div class="customer">
-                  <div class="info">
-                    <img
-                      src="https://i.imgur.com/7vQ8d2b.png"
-                      width="40"
-                      height="40"
-                      alt=""
-                    />
-                    <div>
-                      <h4>Liam Hemingway</h4>
-                      <!-- <small>CEO Excerpt</small> -->
-                    </div>
-                  </div>
-                  <div class="contact">
-                    <span class="las la-user-circle"></span>
-                    <span class="las la-comment"></span>
-                    <span class="las la-phone"></span>
-                  </div>
-                </div>
-
-                <div class="customer">
-                  <div class="info">
-                    <img
-                      src="https://i.imgur.com/7vQ8d2b.png"
-                      width="40"
-                      height="40"
-                      alt=""
-                    />
-                    <div>
-                      <h4>Elizabeth Keen</h4>
-                      <!-- <small>CEO Excerpt</small> -->
-                    </div>
-                  </div>
-                  <div class="contact">
-                    <span class="las la-user-circle"></span>
-                    <span class="las la-comment"></span>
-                    <span class="las la-phone"></span>
-                  </div>
-                </div>
-
-                <div class="customer">
-                  <div class="info">
-                    <img
-                      src="https://i.imgur.com/7vQ8d2b.png"
-                      width="40"
-                      height="40"
-                      alt=""
-                    />
-                    <div>
-                      <h4>Tom Keen</h4>
-                      <!-- <small>CEO Excerpt</small> -->
-                    </div>
-                  </div>
-                  <div class="contact">
-                    <span class="las la-user-circle"></span>
-                    <span class="las la-comment"></span>
-                    <span class="las la-phone"></span>
-                  </div>
-                </div>
+                <!-- Dynamic customers will appear here -->
               </div>
             </div>
           </div>
         </div>
       </main>
     </div>
+
     <script>
       function logout() {
-        // Clear the login state
         localStorage.removeItem("loggedIn");
-        // Redirect to your log-out/login screen
         window.location.href = "/admin-pages/log-out.html";
       }
 
-      // Block access if user is not logged in
       if (localStorage.getItem("loggedIn") !== "true") {
         window.location.href = "/admin-pages/log-out.html";
       }
@@ -225,6 +136,4 @@
 
     <script src="/scripts/admin.js"></script>
   </body>
-
-  <!-- < src="/scripts/admin.js"></ -->
 </html>
