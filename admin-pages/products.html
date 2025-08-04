@@ -1,31 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Products</title>
-  <link rel="stylesheet" href="/styles/admin.css">
-</head>
-<body>
-  <h1>Products</h1>
-  <table id="products-table" border="1">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Products will be loaded here -->
-    </tbody>
-  </table>
-  <script src="/admin-pages/products.js"></script>
-</body>
-=======
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,7 +17,7 @@
       <main>
         <div class="card-header">
           <h3>Product Management</h3>
-          <button>Add Product</button>
+          <button id="showAddProductModal">Add Product</button>
         </div>
 
         <div class="search-wrapper" style="margin-bottom: 20px">
@@ -60,38 +34,16 @@
                   <td>Category</td>
                   <td>Price</td>
                   <td>Stock</td>
-                  <td>Actions</td>
+                  <td colspan="2">Actions</td>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td class="product-name">HP EliteBook</td>
-                  <td class="product-category">Laptops</td>
-                  <td class="product-price">$800</td>
-                  <td class="product-stock">15</td>
-                  <td><button class="edit-btn">Edit</button></td>
-                  <td><button class="delete-btn">Delete</button></td>
-                </tr>
-                <tr>
-                  <td class="product-name">Logitech Mouse</td>
-                  <td class="product-category">Accessories</td>
-                  <td class="product-price">$25</td>
-                  <td class="product-stock">87</td>
-                  <td><button class="edit-btn">Edit</button></td>
-                  <td><button class="delete-btn">Delete</button></td>
-                </tr>
-                <tr>
-                  <td class="product-name">Samsung Monitor</td>
-                  <td class="product-category">Monitors</td>
-                  <td class="product-price">$200</td>
-                  <td class="product-stock">42</td>
-                  <td><button class="edit-btn">Edit</button></td>
-                  <td><button class="delete-btn">Delete</button></td>
-                </tr>
+              <tbody id="products-table-body">
+                <!-- Dynamic product rows will be injected here -->
               </tbody>
             </table>
           </div>
         </div>
+
         <!-- Edit Product Modal -->
         <div class="modal-overlay" id="edit-product-modal">
           <div class="modal-content">
@@ -153,6 +105,6 @@
     </div>
 
     <script src="/scripts/admin.js"></script>
+    <script src="/admin-pages/products.js"></script>
   </body>
->>>>>>> 5d3b87672af3d0949193509eef4f52ea971776f8
 </html>
