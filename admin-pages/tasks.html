@@ -35,31 +35,8 @@
                     <td>Action</td>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>#TSK001</td>
-                    <td>Update product listings</td>
-                    <td>Grace Njeri</td>
-                    <td>2025-07-28</td>
-                    <td><span class="status orange"></span> In Progress</td>
-                    <td><button class="delete-btn">Delete</button></td>
-                  </tr>
-                  <tr>
-                    <td>#TSK002</td>
-                    <td>Verify stock levels</td>
-                    <td>John Doe</td>
-                    <td>2025-07-26</td>
-                    <td><span class="status purple"></span> Completed</td>
-                    <td><button class="delete-btn">Delete</button></td>
-                  </tr>
-                  <tr>
-                    <td>#TSK003</td>
-                    <td>Respond to customer inquiries</td>
-                    <td>Candence Sinclar</td>
-                    <td>2025-07-25</td>
-                    <td><span class="status pink"></span> Not Started</td>
-                    <td><button class="delete-btn">Delete</button></td>
-                  </tr>
+                <tbody id="tasks-list">
+                  <!-- Dynamic task rows -->
                 </tbody>
               </table>
             </div>
@@ -100,7 +77,8 @@
         </div>
       </main>
     </div>
-  </body>
 
-  <script src="../scripts/admin.js"></script>
+    <script src="../scripts/admin.js"></script>
+    <script src="tasks.js"></script>
+  </body>
 </html>

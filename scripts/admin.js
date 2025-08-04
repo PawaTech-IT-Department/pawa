@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sidebarPlaceholder.innerHTML = data;
 
         // === AUTO-HIGHLIGHT ACTIVE LINK BASED ON CURRENT PAGE ===
-        const currentPage = window.location.pathname.split("/").pop(); // e.g., 'customers.html'
+        const currentPage = window.location.pathname.split("/").pop();
         const sidebarLinks = document.querySelectorAll(".sidebar-menu a");
 
         sidebarLinks.forEach((link) => {
@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         headerPlaceholder.innerHTML = data;
 
-        // === INIT USER DROPDOWN AFTER HEADER LOAD ===
         const userMenuToggle = document.getElementById("userMenuToggle");
         const userDropdown = document.getElementById("userDropdown");
 
@@ -73,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
 
-        // === DROPDOWN LINK FUNCTIONALITY ===
         if (userDropdown) {
           const profileLink = userDropdown.querySelector(
             'a[href="#"]:nth-child(1)'
@@ -108,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
 
-        // === DARK MODE TOGGLE===
         const darkModeToggle = document.querySelector(".dark-mode-toggle");
         if (darkModeToggle) {
           darkModeToggle.addEventListener("click", () => {
@@ -125,10 +122,14 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // === Load saved theme mode on refresh ===
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
   }
+
+  // === DASHBOARD FUNCTIONALIZATION ===
+  updateDashboardCards();
+  updateRecentOrders();
+  updateNewCustomers();
 
   // === INVENTORY PAGE LOGIC ===
   if (window.location.pathname.includes("inventory.html")) {
@@ -145,11 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
     rows.forEach((row) => {
       const stock = parseInt(row.dataset.stock);
       total++;
-      if (stock === 0) {
-        out++;
-      } else if (stock < 6) {
-        low++;
-      }
+      if (stock === 0) out++;
+      else if (stock < 6) low++;
     });
 
     totalItems.textContent = total;
@@ -183,31 +181,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const inventoryForm = document.getElementById("inventoryForm");
 
   if (showInventoryModalBtn && inventoryModal && inventoryForm) {
-    // Show modal
     showInventoryModalBtn.addEventListener("click", () => {
       inventoryModal.style.display = "flex";
-
-      // Auto-generate ID
       const tbody = document.querySelector("#inventory-table tbody");
       const newId = `#IN${String(tbody.rows.length + 1).padStart(3, "0")}`;
       document.getElementById("itemId").value = newId;
       document.getElementById("itemId").readOnly = true;
     });
 
-    // Cancel modal
     cancelInventoryModalBtn.addEventListener("click", () => {
       inventoryModal.style.display = "none";
       inventoryForm.reset();
     });
 
-    // Dismiss modal when clicking outside
     window.addEventListener("click", (e) => {
       if (e.target === inventoryModal) {
         inventoryModal.style.display = "none";
       }
     });
 
-    // Add new item
     inventoryForm.addEventListener("submit", function (e) {
       e.preventDefault();
 
@@ -233,19 +225,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const newRow = document.createElement("tr");
       newRow.dataset.stock = stock;
       newRow.innerHTML = `
-      <td>${id}</td>
-      <td>${name}</td>
-      <td>${category}</td>
-      <td>${stock}</td>
-      <td><span class="status ${statusClass}"></span> ${status}</td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${category}</td>
+        <td>${stock}</td>
+        <td><span class="status ${statusClass}"></span> ${status}</td>
+        <td><button class="delete-btn">Delete</button></td>
+      `;
 
       const tbody = document.querySelector("#inventory-table tbody");
       tbody.appendChild(newRow);
-
       addDeleteFunctionality(newRow);
-
       inventoryForm.reset();
       inventoryModal.style.display = "none";
 
@@ -253,7 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === Update Summary Counters After Adding New Item ===
   function updateInventorySummary() {
     const rows = document.querySelectorAll("#inventory-table tbody tr");
     let total = 0,
@@ -272,7 +261,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("out-of-stock-count").textContent = out;
   }
 
-  // === SIDEBAR TOGGLE ===
   const menuToggle = document.querySelector(".menu-toggle");
   const sidebar = document.querySelector(".sidebar");
   const mainContent = document.querySelector(".main-content");
@@ -284,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === MODAL FUNCTIONALITY (CUSTOMERS PAGE) ===
+  // === CUSTOMER MODAL ===
   const addButton = document.querySelector(".card-header button");
   const modal = document.getElementById("addModal");
   const cancelModal = document.getElementById("cancelModal");
@@ -320,13 +308,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const newRow = document.createElement("tr");
       newRow.innerHTML = `
-      <td>${newId}</td>
-      <td>${name}</td>
-      <td>${email}</td>
-      <td>${phone}</td>
-      <td><span class="status ${statusClass}"></span> ${status}</td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
+        <td>${newId}</td>
+        <td>${name}</td>
+        <td>${email}</td>
+        <td>${phone}</td>
+        <td><span class="status ${statusClass}"></span> ${status}</td>
+        <td><button class="delete-btn">Delete</button></td>
+      `;
 
       tbody.appendChild(newRow);
       addDeleteFunctionality(newRow);
@@ -335,7 +323,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // === DELETE FUNCTIONALITY ===
   function addDeleteFunctionality(row) {
     const deleteBtn = row.querySelector(".delete-btn");
     if (deleteBtn) {
@@ -345,224 +332,113 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // === DELETE EXISTING CUSTOMERS ON LOAD ===
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       btn.closest("tr").remove();
     });
   });
+});
 
-  // === MODAL FUNCTIONALITY (TASKS PAGE) ===
-  const taskAddButton = document.getElementById("showAddTaskModal");
-  const taskModal = document.getElementById("addTaskModal");
-  const cancelTaskModal = document.getElementById("cancelTaskModal");
-  const taskForm = document.getElementById("addTaskForm");
+// === DASHBOARD CARDS ===
+async function updateDashboardCards() {
+  try {
+    const res = await fetch("/api/reports/summary");
+    const data = await res.json();
+    if (!res.ok)
+      throw new Error(data.error || "Failed to fetch dashboard data");
+    const cards = document.querySelectorAll(".card-single");
+    if (cards.length >= 4) {
+      cards[0].querySelector("h1").textContent = data.userCount;
+      cards[1].querySelector("h1").textContent = data.productCount;
+      cards[2].querySelector("h1").textContent = data.orderCount;
 
-  if (
-    taskAddButton &&
-    taskModal &&
-    cancelTaskModal &&
-    taskForm &&
-    window.location.pathname.includes("tasks.html")
-  ) {
-    const taskTbody = document.querySelector("table tbody");
-
-    taskAddButton.addEventListener("click", () => {
-      taskModal.style.display = "flex";
-    });
-
-    cancelTaskModal.addEventListener("click", () => {
-      taskModal.style.display = "none";
-      taskForm.reset();
-    });
-
-    taskForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const description = document.getElementById("taskDescription").value;
-      const assignee = document.getElementById("taskAssignee").value;
-      const dueDate = document.getElementById("taskDueDate").value;
-      const status = document.getElementById("taskStatus").value;
-
-      const statusClass =
-        {
-          "Not Started": "pink",
-          "In Progress": "orange",
-          Completed: "purple",
-        }[status] || "grey";
-
-      const newId = `#TSK${String(taskTbody.rows.length + 1).padStart(3, "0")}`;
-
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-      <td>${newId}</td>
-      <td>${description}</td>
-      <td>${assignee}</td>
-      <td>${dueDate}</td>
-      <td><span class="status ${statusClass}"></span> ${status}</td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
-
-      taskTbody.appendChild(newRow);
-      addDeleteFunctionality(newRow); // Reuse if you have this defined elsewhere
-
-      taskModal.style.display = "none";
-      taskForm.reset();
-    });
-  }
-
-  // ===== EDIT BUTTON FUNCTIONALITY =====
-  const editModal = document.getElementById("edit-product-modal");
-  const editForm = document.getElementById("edit-product-form");
-  const cancelEditBtn = document.getElementById("cancel-edit");
-
-  let currentEditingRow = null;
-
-  document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("edit-btn")) {
-      const row = e.target.closest("tr");
-      currentEditingRow = row;
-
-      // Populate form with current row data
-      document.getElementById("edit-product-name").value =
-        row.querySelector(".product-name").textContent;
-      document.getElementById("edit-product-category").value =
-        row.querySelector(".product-category").textContent;
-      document.getElementById("edit-product-price").value = row
-        .querySelector(".product-price")
-        .textContent.replace("$", "");
-      document.getElementById("edit-product-stock").value =
-        row.querySelector(".product-stock").textContent;
-
-      editModal.style.display = "flex";
+      let income = 0;
+      if (Array.isArray(data.orders)) {
+        income = data.orders.reduce(
+          (sum, o) => sum + (o.total_cost_cents || 0),
+          0
+        );
+      }
+      cards[3].querySelector("h1").textContent = `$${(
+        income / 100
+      ).toLocaleString()}`;
     }
-  });
-
-  cancelEditBtn.addEventListener("click", function () {
-    editModal.style.display = "none";
-    editForm.reset();
-    currentEditingRow = null;
-  });
-
-  editForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    if (!currentEditingRow) return;
-
-    currentEditingRow.querySelector(".product-name").textContent =
-      document.getElementById("edit-product-name").value;
-    currentEditingRow.querySelector(".product-category").textContent =
-      document.getElementById("edit-product-category").value;
-    currentEditingRow.querySelector(".product-price").textContent =
-      "$" + document.getElementById("edit-product-price").value;
-    currentEditingRow.querySelector(".product-stock").textContent =
-      document.getElementById("edit-product-stock").value;
-
-    editModal.style.display = "none";
-    editForm.reset();
-    currentEditingRow = null;
-  });
-
-  /// === ADD PRODUCT FUNCTIONALITY ===
-  const addProductBtn = document.querySelector(".card-header button");
-  const addProductModal = document.getElementById("addProductModal");
-  const cancelAddProductBtn = document.getElementById("cancelAddProduct");
-  const addProductForm = document.getElementById("addProductForm");
-
-  if (
-    addProductBtn &&
-    addProductModal &&
-    cancelAddProductBtn &&
-    addProductForm
-  ) {
-    addProductBtn.addEventListener("click", () => {
-      addProductModal.style.display = "flex";
-    });
-
-    cancelAddProductBtn.addEventListener("click", () => {
-      addProductModal.style.display = "none";
-      addProductForm.reset();
-    });
-
-    addProductForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById("productName").value;
-      const category = document.getElementById("category").value;
-      const price = document.getElementById("price").value;
-      const stock = document.getElementById("stock").value;
-
-      const tbody = document.querySelector("table tbody");
-      const newId = `#PR${String(tbody.rows.length + 1).padStart(3, "0")}`;
-
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-      <td class="product-name">${name}</td>
-      <td class="product-category">${category}</td>
-      <td class="product-price">$${price}</td>
-      <td class="product-stock">${stock}</td>
-      <td><button class="edit-btn">Edit</button></td>
-      <td><button class="delete-btn">Delete</button></td>
-    `;
-
-      tbody.appendChild(newRow);
-      addDeleteFunctionality(newRow);
-      addProductModal.style.display = "none";
-      addProductForm.reset();
-    });
+  } catch (err) {
+    console.error("Error updating dashboard cards:", err);
   }
+}
 
-  // === SEARCH FUNCTIONALITY (PRODUCTS PAGE) ===
-  const searchInput = document.querySelector(".search-wrapper input");
-
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase();
-      const rows = document.querySelectorAll("table tbody tr");
-
-      rows.forEach((row) => {
-        const productName =
-          row.querySelector(".product-name")?.textContent.toLowerCase() || "";
-        const category =
-          row.querySelector(".product-category")?.textContent.toLowerCase() ||
-          "";
-
-        if (productName.includes(query) || category.includes(query)) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
+// === RECENT ORDERS TABLE ===
+async function updateRecentOrders() {
+  try {
+    const res = await fetch("/api/orders?limit=6");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed to fetch orders");
+    const orders = data.orders || data;
+    const tbody = document.querySelector(".orders table tbody");
+    if (tbody) {
+      tbody.innerHTML = "";
+      orders.slice(0, 6).forEach((order) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${order._id || order.id || "-"}</td>
+          <td>${
+            order.order_items && order.order_items[0]
+              ? order.order_items[0].productName ||
+                order.order_items[0].product_id
+              : "-"
+          }</td>
+          <td><span class="status ${getOrderStatusClass(
+            order.status
+          )}"></span> ${order.status || "Pending"}</td>
+        `;
+        tbody.appendChild(tr);
       });
-    });
+    }
+  } catch (err) {
+    console.error("Error updating recent orders:", err);
   }
-});
-// === GLOBAL OBSERVER FOR HEADER SEARCH ===
-const observer = new MutationObserver(() => {
-  const searchInput = document.getElementById("dashboardSearch");
-  const orders = document.querySelectorAll("#ordersList tr");
-  const customers = document.querySelectorAll("#customersList .customer");
+}
 
-  if (!searchInput || orders.length === 0 || customers.length === 0) return;
+function getOrderStatusClass(status) {
+  if (!status) return "orange";
+  const s = status.toLowerCase();
+  if (s.includes("ship")) return "purple";
+  if (s.includes("process")) return "pink";
+  if (s.includes("pend")) return "orange";
+  return "orange";
+}
 
-  searchInput.addEventListener("input", function () {
-    const searchTerm = this.value.toLowerCase();
-
-    orders.forEach((row) => {
-      row.style.display = row.textContent.toLowerCase().includes(searchTerm)
-        ? ""
-        : "none";
-    });
-
-    customers.forEach((customer) => {
-      customer.style.display = customer.textContent
-        .toLowerCase()
-        .includes(searchTerm)
-        ? ""
-        : "none";
-    });
-  });
-
-  observer.disconnect();
-});
-
-observer.observe(document.body, { childList: true, subtree: true });
+// === NEW CUSTOMERS LIST ===
+async function updateNewCustomers() {
+  try {
+    const res = await fetch("/api/users?limit=3");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed to fetch users");
+    const users = data.users || data;
+    const container = document.querySelector(".customers .card-body");
+    if (container) {
+      container.innerHTML = "";
+      users.slice(0, 3).forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "customer";
+        div.innerHTML = `
+          <div class="info">
+            <img src="https://i.imgur.com/7vQ8d2b.png" width="40" height="40" alt="" />
+            <div>
+              <h4>${user.username || user.email || "User"}</h4>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="las la-user-circle"></span>
+            <span class="las la-comment"></span>
+            <span class="las la-phone"></span>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+  } catch (err) {
+    console.error("Error updating new customers:", err);
+  }
+}

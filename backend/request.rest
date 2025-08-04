@@ -1,0 +1,121 @@
+# For use with the "REST Client" VS Code extension
+# (humao.rest-client)
+
+#
+
+@baseUrl = http://localhost:5000/api
+
+###
+# ====================================================
+#  PRODUCT ROUTES
+# ====================================================
+
+
+GET {{baseUrl}}/products
+
+###
+# ====================================================
+#  USER AUTHENTICATION ROUTES
+# ====================================================
+
+###
+# @name Register New User
+POST {{baseUrl}}/users/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+# @name Login User
+# @prompt emailUsername
+# @prompt password
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "emailUsername": "{{emailUsername}}",
+  "password": "{{password}}"
+}
+
+###
+# @name Get User Profile (Protected)
+# Note: This request relies on the httpOnly cookie set during login.
+GET {{baseUrl}}/users/profile
+
+###
+# @name Logout User
+POST {{baseUrl}}/users/logout
+
+###
+GET {{baseUrl}}/mpesa 
+
+###
+# @name Contact Page
+GET {{baseUrl}}/tasks
+
+###
+# @name Get All 0rders
+GET {{baseUrl}}/orders
+
+###
+# @name Create Order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+###
+# @name Create Admin
+POST {{baseUrl}}/admins
+Content-Type: application/json
+
+{
+  "username": "adminuser",
+  "email": "admin@example.com",
+  "password": "adminpassword"
+}   
+
+### @name Login Admin
+# @prompt emailUsername
+# @prompt password
+POST {{baseUrl}}/admins/login
+Content-Type: application/json
+{
+  "emailUsername": "{{emailUsername}}",
+  "password": "{{password}}"
+}
+
+###
+# @name Get All Admins
+GET {{baseUrl}}/admins
+
+###
+# @name Get Admin Profile (Protected)
+# Note: This request relies on the httpOnly cookie set during login.
+GET {{baseUrl}}/admins/profile
+
+###
+# @name Logout Admin
+POST {{baseUrl}}/admins/logout
+
+###
+# @name Get All Users
+GET {{baseUrl}}/users  
+
+###
+# @name Get All Products
+GET {{baseUrl}}/products
+
+###
+# @name Get All Categories
+GET {{baseUrl}}/categories
+
+###
+# @name Get All Subcategories
+GET {{baseUrl}}/subcategories
+
+###
+# @name Get ALLInventories
+GET {{baseUrl}}/inventories
