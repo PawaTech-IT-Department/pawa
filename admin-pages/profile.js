@@ -2,7 +2,10 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   fetchProfile();
+  setupEditProfileHandler();
 });
+
+let currentProfile = null;
 
 async function fetchProfile() {
   // Simulate fetching profile from backend (replace with real API if available)
@@ -22,6 +25,7 @@ async function fetchProfile() {
     ],
     tags: ["UX Design", "Project Management", "Team Leadership"],
   };
+  currentProfile = profile;
   renderProfile(profile);
 }
 
@@ -50,5 +54,90 @@ function renderProfile(profile) {
   const tagsContainer = document.querySelector(".tags-container");
   if (tagsContainer) {
     tagsContainer.innerHTML = profile.tags.map(tag => `<span class="tag">${tag}</span>`).join("");
+  }
+}
+
+function setupEditProfileHandler() {
+  document.querySelector(".edit-button").addEventListener("click", function () {
+    showEditProfileModal();
+  });
+}
+
+function showEditProfileModal() {
+  // Create modal if not present
+  if (!document.getElementById("editProfileModal")) {
+    const modal = document.createElement("div");
+    modal.id = "editProfileModal";
+    modal.className = "modal-overlay";
+    modal.innerHTML = `
+      <div class="modal">
+        <h3>Edit Profile</h3>
+        <form id="editProfileForm">
+          <div class="form-group">
+            <label for="editProfileName">Name:</label>
+            <input type="text" id="editProfileName" required />
+          </div>
+          <div class="form-group">
+            <label for="editProfileEmail">Email:</label>
+            <input type="email" id="editProfileEmail" required />
+          </div>
+          <div class="form-group">
+            <label for="editProfilePhone">Phone:</label>
+            <input type="text" id="editProfilePhone" required />
+          </div>
+          <div class="form-group">
+            <label for="editProfileBio">Bio:</label>
+            <textarea id="editProfileBio" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Save</button>
+            <button type="button" id="cancelEditProfile">Cancel</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  // Fill form with current profile
+  document.getElementById("editProfileName").value = currentProfile.name;
+  document.getElementById("editProfileEmail").value = currentProfile.email;
+  document.getElementById("editProfilePhone").value = currentProfile.phone;
+  document.getElementById("editProfileBio").value = currentProfile.bio;
+  // Show modal
+  document.getElementById("editProfileModal").style.display = "block";
+  // Close modal
+  document.getElementById("cancelEditProfile").addEventListener("click", function () {
+    document.getElementById("editProfileModal").style.display = "none";
+    document.getElementById("editProfileForm").reset();
+  });
+  // Form submit
+  document.getElementById("editProfileForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    await saveProfile();
+  });
+}
+
+async function saveProfile() {
+  const name = document.getElementById("editProfileName").value;
+  const email = document.getElementById("editProfileEmail").value;
+  const phone = document.getElementById("editProfilePhone").value;
+  const bio = document.getElementById("editProfileBio").value;
+  const payload = { name, email, phone, bio };
+  try {
+    // Replace with real API call
+    // const res = await fetch("/api/profile", {
+    //   method: "PUT",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(payload)
+    // });
+    // const data = await res.json();
+    // if (!res.ok) throw new Error(data.error || "Failed to update profile");
+    // For demo, update local profile
+    currentProfile = { ...currentProfile, ...payload };
+    renderProfile(currentProfile);
+    document.getElementById("editProfileModal").style.display = "none";
+    document.getElementById("editProfileForm").reset();
+  } catch (err) {
+    alert("Error updating profile: " + err.message);
   }
 }

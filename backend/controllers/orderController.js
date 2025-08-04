@@ -152,6 +152,37 @@ const orderController = {
       res.status(500).json({ success: false, error: "Failed to delete order", details: err.message });
     }
   },
+
+  // Get orders for the authenticated user
+  getMyOrders: async (req, res) => {
+    try {
+      const userId = req.user?._id;
+      if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+      const orders = await Order.find({ user_id: userId }).sort({ createdAt: -1 }).populate('order_items.product_id');
+      const ordersWithProductDetails = await Promise.all(
+        orders.map(async (order) => {
+          const detailedItems = await Promise.all(
+            order.order_items.map(async (item) => {
+              const productDetails = await getProductDetails(item.product_id);
+              let productImage = productDetails?.image || null;
+              if (productImage && !productImage.startsWith('http')) {
+                productImage = `http://localhost:5000/img/${productImage}`;
+              }
+              return {
+                ...item.toObject(),
+                productName: productDetails?.name || 'Unknown Product',
+                productImage: productImage || 'https://img.icons8.com/?size=100&id=46720&format=png&color=000000',
+              };
+            })
+          );
+          return { ...order.toObject(), order_items: detailedItems };
+        })
+      );
+      res.json({ success: true, orders: ordersWithProductDetails });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to fetch user orders', details: err.message });
+    }
+  },
 };
 
 export default orderController;

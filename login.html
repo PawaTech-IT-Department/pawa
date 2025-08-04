@@ -266,31 +266,24 @@
           submitBtn.innerHTML =
             '<i class="bx bx-loader-alt bx-spin"></i> Logging in...';
 
-          // Try admin login first
-          let response = await fetch('/api/admins/login', {
+          // Only allow user/client login
+          let response = await fetch('/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ emailUsername, password })
           });
           let data = await response.json();
 
-          // If not admin, try user login
-          if (!data.success) {
-            response = await fetch('/api/users/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ emailUsername, password })
-            });
-            data = await response.json();
-          }
-
           if (data.success) {
-            localStorage.setItem("authToken", data.token || '');
-            localStorage.setItem("user", JSON.stringify(data.user));
+            // Store token in correct storage
             if (rememberMe) {
+              localStorage.setItem("authToken", data.token || '');
               localStorage.setItem("rememberMe", "true");
+              sessionStorage.removeItem("authToken");
             } else {
               sessionStorage.setItem("authToken", data.token || '');
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("rememberMe");
             }
             if (window !== window.top) {
               window.top.postMessage(
@@ -302,11 +295,7 @@
                 "*"
               );
             } else {
-              if (data.userType === 'admin') {
-                window.location.href = "/admin.html";
-              } else {
-                window.location.href = "/index.html";
-              }
+              window.location.href = "/index.html";
             }
           } else {
             throw new Error(data.error || data.message || "Login failed");
@@ -316,6 +305,15 @@
           const submitBtn = loginForm.querySelector('button[type="submit"]');
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalBtnText;
+        }
+      });
+
+      // Auto-login/redirect if token exists
+      window.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+        // Only redirect if NOT inside an iframe
+        if (token && window === window.top) {
+          window.location.href = "/index.html";
         }
       });
 

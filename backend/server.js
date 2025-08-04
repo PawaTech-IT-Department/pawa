@@ -8,6 +8,7 @@ import orderRoutes from "./routes/orders.js";
 import mpesaRoutes from "./routes/mpesa.js"; // Import the new M-Pesa routes
 import adminRoutes from "./routes/admins.js";
 import userRoutes from "./routes/users.js";
+import cartRoutes from "./routes/cart.js";
 import inventoryRoutes from "./routes/inventories.js";
 import taskRoutes from "./routes/tasks.js";
 import reportRoutes from "./routes/reports.js";
@@ -73,6 +74,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/mpesa", mpesaRoutes); // Use the new M-Pesa routes
 app.use("/api/admins", adminRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/cart", cartRoutes);
 app.use("/api/inventories", inventoryRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/reports", reportRoutes);

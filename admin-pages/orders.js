@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  orderForm.addEventListener("submit", function (e) {
+  orderForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const id = document.getElementById("orderId").value;
@@ -111,11 +111,32 @@ document.addEventListener("DOMContentLoaded", () => {
       status: status,
     };
 
-    currentOrders.push(newOrder);
-    renderOrder(newOrder);
-    updateSummaryCards();
-
-    orderForm.reset();
-    modal.classList.remove("active");
+    try {
+      // Get token if present
+      const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+      const headers = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers,
+        body: JSON.stringify(newOrder)
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        const text = await res.text();
+        console.error("Non-JSON response:", text);
+        throw new Error("Server error: " + text);
+      }
+      if (!res.ok) throw new Error(data.error || "Failed to add order");
+      currentOrders.push(data.order || newOrder);
+      renderOrder(data.order || newOrder);
+      updateSummaryCards();
+      orderForm.reset();
+      modal.classList.remove("active");
+    } catch (err) {
+      alert("Error adding order: " + err.message);
+    }
   });
 });

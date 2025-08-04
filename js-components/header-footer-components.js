@@ -27,11 +27,11 @@ class MainHeader extends HTMLElement {
           <img src="/img/icons/dark-mode.png" alt="darkmode" />
         </a>
         <div class="account-icon">
-  <a href="login.html" id="account-icon-link">
+  <a href="#" id="account-icon-link">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
       <circle cx="12" cy="7" r="4"></circle>
-    </svg>  Account
+    </svg>  <span id="account-label">Account</span>
   </a>
 </div>
       </div>
@@ -57,10 +57,27 @@ class MainHeader extends HTMLElement {
     links.forEach((link) => {
       const linkPath = link.getAttribute("href").replace(/^\/+/, "");
       const isActive =
-        (linkPath === "" && currentPath === "index.html") ||
+        (linkPath === "" && currentPath === "login.html") ||
         (linkPath !== "" && currentPath.endsWith(linkPath));
       link.classList.toggle("active", isActive);
     });
+
+    // Account icon click: always open login/signup
+    const accountLink = this.querySelector("#account-icon-link");
+    if (accountLink) {
+      accountLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        // Prefer modal if present, else redirect
+        const modal = document.getElementById("auth-modal");
+        const iframe = document.getElementById("auth-iframe");
+        if (modal && iframe) {
+          iframe.src = "/login.html";
+          modal.style.display = "block";
+        } else {
+          window.location.href = "/login.html";
+        }
+      });
+    }
   }
 }
 customElements.define("main-header", MainHeader);

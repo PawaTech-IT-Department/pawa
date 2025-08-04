@@ -12,11 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentEditRow = null;
 
   // === Fetch and populate products ===
-  fetch("/api/products")
-    .then((res) => res.json())
-    .then((products) => {
+  let products = [];
+  async function fetchProducts() {
+    try {
+      const res = await fetch("/api/products");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to fetch products");
+      products = data.products || data;
+      tableBody.innerHTML = "";
       products.forEach((product) => addProductRow(product));
-    });
+    } catch (err) {
+      alert("Error loading products: " + err.message);
+    }
+  }
+  fetchProducts();
 
   // === Show Add Modal ===
   showAddModalBtn.addEventListener("click", () => {
@@ -29,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // === Add New Product ===
-  addForm.addEventListener("submit", (e) => {
+  addForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = document.getElementById("productName").value;
     const category = document.getElementById("category").value;
@@ -42,11 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
       priceCents: parseFloat(price) * 100,
       stock,
     };
-
-    addProductRow(newProduct); // You can POST to server here
-
-    addModal.style.display = "none";
-    addForm.reset();
+    try {
+      const res = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to add product");
+      fetchProducts();
+      addModal.style.display = "none";
+      addForm.reset();
+    } catch (err) {
+      alert("Error adding product: " + err.message);
+    }
   });
 
   // === Add Product Row to Table ===
