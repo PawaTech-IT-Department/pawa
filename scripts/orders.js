@@ -244,14 +244,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       
       console.log('Order created successfully:', responseData);
       
-      // Show success message and redirect
-      updatePaymentStatusUI('Order placed successfully! Redirecting to your orders...');
+      // Show success message and show options modal
+      updatePaymentStatusUI('Order placed successfully!');
       cartInstance.emptyCart();
       
-      // Redirect to orders page after a short delay
-      setTimeout(() => {
-        window.location.href = '/pages/all-orders.html';
-      }, 2000);
+      // Show order confirmation modal with options
+      await showOrderConfirmationModal(responseData.order);
       
       return true;
     } catch (err) {
@@ -261,6 +259,142 @@ document.addEventListener('DOMContentLoaded', async () => {
       confirmationSection.style.display = 'block';
       finalTotalSpan.textContent = formatCurrency(totalCents * 1.16);
       return false;
+    }
+  }
+
+  // New function to show order confirmation modal
+  async function showOrderConfirmationModal(order) {
+    const result = await Swal.fire({
+      title: 'Order Placed Successfully!',
+      html: `
+        <div style="text-align: left; margin: 20px 0;">
+          <p><strong>Order ID:</strong> ${order.id}</p>
+          <p><strong>Total Amount:</strong> ${formatCurrency(order.total_cost_cents)}</p>
+          <p><strong>Delivery Address:</strong> ${order.delivery_address}</p>
+          <p><strong>Payment Method:</strong> ${order.payment_method || 'M-Pesa'}</p>
+          ${order.mpesa_receipt_number ? `<p><strong>M-Pesa Receipt:</strong> ${order.mpesa_receipt_number}</p>` : ''}
+        </div>
+      `,
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'View All Orders',
+      cancelButtonText: 'Save to My Device',
+      reverseButtons: true,
+      allowOutsideClick: false
+    });
+
+    if (result.isConfirmed) {
+      // User clicked "View All Orders"
+      window.location.href = '/pages/all-orders.html';
+    } else {
+      // User clicked "Save to My Device"
+      await showQRCodeModal(order);
+    }
+  }
+
+  // New function to show QR code modal
+  async function showQRCodeModal(order) {
+    try {
+      // Check if QRCode library is available
+      if (typeof QRCode === 'undefined') {
+        console.warn('QRCode library not available, waiting for it to load...');
+        
+        // Wait for QRCode to load (up to 5 seconds)
+        for (let i = 0; i < 50; i++) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          if (typeof QRCode !== 'undefined') {
+            console.log('QRCode library loaded after waiting');
+            break;
+          }
+        }
+        
+        // Final check
+        if (typeof QRCode === 'undefined') {
+          console.warn('QRCode library still not available after waiting');
+          await Swal.fire({
+            title: 'Order Saved',
+            text: 'Your order has been saved to your device, but QR code generation is not available.',
+            icon: 'success',
+            confirmButtonText: 'View All Orders'
+          });
+          window.location.href = '/pages/all-orders.html';
+          return;
+        }
+      }
+      
+      // Create QR code data
+      const qrData = {
+        orderId: order.id,
+        totalCost: order.total_cost_cents,
+        items: order.order_items || [],
+        deliveryAddress: order.delivery_address,
+        orderTime: order.order_time,
+        paymentMethod: order.payment_method || 'M-Pesa',
+        mpesaReceipt: order.mpesa_receipt_number || ''
+      };
+
+      // Save order to localStorage
+      const storageKey = `orderNeszi_${order.id}`;
+      localStorage.setItem(storageKey, JSON.stringify(order));
+
+      // Generate QR code
+      const qrCodeData = JSON.stringify(qrData);
+      
+      // Check if we're using the fallback implementation
+      let qrCodeImage;
+      if (QRCode === window.QRCodeFallback) {
+        // Use fallback implementation
+        qrCodeImage = await QRCode.generate(qrCodeData, { width: 200, height: 200 });
+      } else {
+        // Use real QRCode library
+        const canvas = document.createElement('canvas');
+        await QRCode.toCanvas(canvas, qrCodeData, {
+          width: 200,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
+        });
+        qrCodeImage = canvas.toDataURL();
+      }
+
+      await Swal.fire({
+        title: 'Order Saved to Your Device',
+        html: `
+          <div style="text-align: center; margin: 20px 0;">
+            <p>Your order has been saved locally with a QR code.</p>
+            <div style="margin: 20px 0;">
+              <img src="${qrCodeImage}" alt="QR Code" style="width: 200px; height: 200px; border: 1px solid #ddd; border-radius: 8px;" />
+            </div>
+            <p style="font-size: 0.9em; color: #666;">
+              <strong>Order ID:</strong> ${order.id}<br>
+              <strong>Total:</strong> ${formatCurrency(order.total_cost_cents)}
+            </p>
+            <p style="font-size: 0.8em; color: #888; margin-top: 10px;">
+              You can scan this QR code to view your order details anytime.
+            </p>
+          </div>
+        `,
+        icon: 'success',
+        confirmButtonText: 'View All Orders',
+        allowOutsideClick: false
+      });
+
+      // Redirect to all orders page
+      window.location.href = '/pages/all-orders.html';
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+      
+      // Fallback if QR generation fails
+      await Swal.fire({
+        title: 'Order Saved',
+        text: 'Your order has been saved to your device, but QR code generation failed.',
+        icon: 'success',
+        confirmButtonText: 'View All Orders'
+      });
+      
+      window.location.href = '/pages/all-orders.html';
     }
   }
 

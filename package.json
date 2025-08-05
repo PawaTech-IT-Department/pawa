@@ -1,9 +1,20 @@
 {
+  "name": "neszi-ecommerce",
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i ./styles/tailwind.css -o ./styles/tailwind.output.css --watch",
+    "build:css:prod": "tailwindcss -i ./styles/tailwind.css -o ./styles/tailwind.output.css --minify"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.4",
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "sweetalert2": "^11.22.2",
     "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11"
   }
 }

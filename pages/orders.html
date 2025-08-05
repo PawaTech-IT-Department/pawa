@@ -10,6 +10,197 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script>
+    // Fallback QR code implementation
+    window.QRCodeFallback = {
+      generate: function(text, options = {}) {
+        return new Promise((resolve, reject) => {
+          try {
+            // Simple fallback - create a text representation
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = options.width || 200;
+            canvas.height = options.height || 200;
+            
+            // Fill background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw border
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+            
+            // Draw text
+            ctx.fillStyle = '#000000';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            
+            const lines = text.match(/.{1,20}/g) || [text];
+            const lineHeight = 15;
+            const startY = canvas.height / 2 - (lines.length * lineHeight) / 2;
+            
+            lines.forEach((line, index) => {
+              ctx.fillText(line, canvas.width / 2, startY + index * lineHeight);
+            });
+            
+            resolve(canvas.toDataURL());
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
+    };
+    
+    // Check if QRCode library loaded properly
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        if (typeof QRCode === 'undefined') {
+          console.warn('QRCode library failed to load from CDN, trying alternative source...');
+          // Try alternative CDN
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js';
+          script.onload = function() {
+            console.log('QRCode library loaded from alternative CDN');
+          };
+          script.onerror = function() {
+            console.error('QRCode library failed to load from all CDN sources, using fallback');
+            // Use fallback implementation
+            window.QRCode = window.QRCodeFallback;
+          };
+          document.head.appendChild(script);
+        } else {
+          console.log('QRCode library loaded successfully');
+        }
+      }, 1000); // Wait a bit longer for CDN to load
+    });
+  </script>
+  <style>
+    /* =================================================================
+       GLOBAL STYLES & CSS VARIABLES
+    ================================================================== */
+    :root {
+        --primary-color: #6366f1;
+        --secondary-color: #8b5cf6;
+        --accent-color: #06b6d4;
+        --bg-light: #ffffff;
+        --bg-soft: #f9fafb;
+        --bg-dark: #111827;
+        --text-dark: #1f2937;
+        --text-light: #f9fafb;
+        --text-muted: #6b7280;
+        --border-color: #e5e7eb;
+        --border-radius: 8px;
+        --padding-normal: 20px;
+        --gutter-normal: 16px;
+        --font-serif: "Poppins", serif;
+        --font-sans: "Lora", sans-serif;
+        --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --transition-fast: all 0.4s ease-in-out;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--padding-normal);
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    a {
+        text-decoration: none;
+        color: var(--primary-color);
+        transition: var(--transition-fast);
+    }
+
+    a:hover {
+        color: var(--secondary-color);
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .section--title {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .section--subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 4rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* =================================================================
+       BUTTONS
+    ================================================================== */
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        border: 1px solid transparent;
+    }
+
+    .btn--primary {
+        background-color: var(--primary-color);
+        color: var(--text-light);
+    }
+
+    .btn--primary:hover {
+        background-color: #4f46e5;
+        color: var(--text-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .btn--secondary {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--border-color);
+    }
+
+    .btn--secondary:hover {
+        background-color: var(--bg-soft);
+        border-color: var(--primary-color);
+    }
+  </style>
   <script type="module" defer src="/scripts/orders.js"></script>
 </head>
 <body>

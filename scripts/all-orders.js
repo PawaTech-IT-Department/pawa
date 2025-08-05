@@ -30,6 +30,99 @@ function formatDeliveryDate(dateString) {
   });
 }
 
+// Mask M-Pesa receipt number
+function maskReceiptNumber(receiptNumber) {
+  if (!receiptNumber || receiptNumber.length < 3) return receiptNumber;
+  const firstTwo = receiptNumber.substring(0, 2);
+  const lastTwo = receiptNumber.substring(receiptNumber.length - 2);
+  const maskedLength = receiptNumber.length - 4;
+  const maskedPart = '*'.repeat(Math.max(0, maskedLength));
+  return `${firstTwo}${maskedPart}${lastTwo}`;
+}
+
+// Generate QR code from localStorage data
+async function generateQRCode(orderId) {
+  try {
+    // Check if QRCode library is available
+    if (typeof QRCode === 'undefined') {
+      console.warn('QRCode library not available, waiting for it to load...');
+      
+      // Wait for QRCode to load (up to 5 seconds)
+      for (let i = 0; i < 50; i++) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        if (typeof QRCode !== 'undefined') {
+          console.log('QRCode library loaded after waiting');
+          break;
+        }
+      }
+      
+      // Final check
+      if (typeof QRCode === 'undefined') {
+        console.warn('QRCode library still not available after waiting');
+        return null;
+      }
+    }
+    
+    const storageKey = `orderNeszi_${orderId}`;
+    const orderData = localStorage.getItem(storageKey);
+    
+    if (!orderData) {
+      return null;
+    }
+    
+    const order = JSON.parse(orderData);
+    const qrData = {
+      orderId: order.id,
+      totalCost: order.total_cost_cents,
+      items: order.order_items || [],
+      deliveryAddress: order.delivery_address,
+      orderTime: order.order_time,
+      paymentMethod: order.payment_method || 'M-Pesa',
+      mpesaReceipt: order.mpesa_receipt_number || ''
+    };
+    
+    const qrCodeData = JSON.stringify(qrData);
+    
+    // Check if we're using the fallback implementation
+    if (QRCode === window.QRCodeFallback) {
+      // Use fallback implementation
+      return await QRCode.generate(qrCodeData, { width: 75, height: 75 });
+    } else {
+      // Use real QRCode library
+      const canvas = document.createElement('canvas');
+      await QRCode.toCanvas(canvas, qrCodeData, {
+        width: 75,
+        height: 75,
+        margin: 1,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+      return canvas.toDataURL();
+    }
+  } catch (error) {
+    console.error('Error generating QR code:', error);
+    return null;
+  }
+}
+
+// Get delivery status based on order data
+function getDeliveryStatus(order) {
+  // Simple logic based on order time and estimated delivery
+  const orderTime = new Date(order.order_time);
+  const now = new Date();
+  const daysSinceOrder = (now - orderTime) / (1000 * 60 * 60 * 24);
+  
+  if (daysSinceOrder < 1) {
+    return { status: 'awaiting_dispatch', label: 'Awaiting Dispatch', active: 0 };
+  } else if (daysSinceOrder < 3) {
+    return { status: 'on_transport', label: 'On Transport', active: 1 };
+  } else {
+    return { status: 'delivered', label: 'Delivered', active: 2 };
+  }
+}
+
 // Fetch orders from the backend
 async function fetchOrders() {
   try {
@@ -125,12 +218,12 @@ async function renderAllOrders() {
             
             <div class="order-actions">
               <button class="btn btn--outline order-track-btn" data-order-id="${order.id}">
-                <i class="fas fa-box"></i> Track Package
+                <i class="fas fa-qrcode"></i> Track & Get QR
               </button>
               ${order.mpesa_receipt_number ? `
                 <div class="receipt-info">
                   <i class="fas fa-receipt"></i>
-                  <span>Receipt: ${order.mpesa_receipt_number}</span>
+                  <span>Receipt: ${maskReceiptNumber(order.mpesa_receipt_number)}</span>
                 </div>
               ` : ''}
             </div>
@@ -184,6 +277,19 @@ function setupEventListeners(orders) {
         });
         return;
       }
+      
+      // Get delivery status
+      const deliveryStatus = getDeliveryStatus(order);
+      
+      // Generate QR code
+      let qrCodeImage = null;
+      try {
+        qrCodeImage = await generateQRCode(orderId);
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        qrCodeImage = null;
+      }
+      
       // Build modal content
       let modalHTML = `
         <div class="order-tracking-header">
@@ -192,6 +298,7 @@ function setupEventListeners(orders) {
             ${order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1)}
           </div>
         </div>
+        
         <div class="order-details-grid">
           <div class="order-detail">
             <span class="detail-label">Order Date</span>
@@ -208,7 +315,7 @@ function setupEventListeners(orders) {
           ${order.mpesa_receipt_number ? `
             <div class="order-detail">
               <span class="detail-label">M-Pesa Receipt</span>
-              <span class="detail-value">${order.mpesa_receipt_number}</span>
+              <span class="detail-value receipt-number">${maskReceiptNumber(order.mpesa_receipt_number)}</span>
             </div>
           ` : ''}
           <div class="order-detail full-width">
@@ -216,6 +323,22 @@ function setupEventListeners(orders) {
             <span class="detail-value">${order.delivery_address || 'Not specified'}</span>
           </div>
         </div>
+        
+        <div class="delivery-status">
+          <div class="status-step ${deliveryStatus.active >= 0 ? 'completed' : ''}">
+            <i class="fas fa-box"></i>
+            <div>Awaiting Dispatch</div>
+          </div>
+          <div class="status-step ${deliveryStatus.active >= 1 ? 'completed' : (deliveryStatus.active === 0 ? 'active' : '')}">
+            <i class="fas fa-truck"></i>
+            <div>On Transport</div>
+          </div>
+          <div class="status-step ${deliveryStatus.active >= 2 ? 'completed' : (deliveryStatus.active === 1 ? 'active' : '')}">
+            <i class="fas fa-check-circle"></i>
+            <div>Delivered</div>
+          </div>
+        </div>
+        
         <h4 class="items-heading">Items in your order</h4>
         <div class="order-items-list">
           ${order.order_items.map(item => `
@@ -235,6 +358,7 @@ function setupEventListeners(orders) {
             </div>
           `).join('')}
         </div>
+        
         <div class="order-total-summary">
           <div class="total-row">
             <span>Subtotal</span>
@@ -250,6 +374,31 @@ function setupEventListeners(orders) {
           </div>
         </div>
       `;
+      
+      // Add QR code section if available
+      if (qrCodeImage) {
+        modalHTML += `
+          <div class="qr-code-container">
+            <h4>Order QR Code</h4>
+            <p>Scan this QR code to view your order details</p>
+            <img src="${qrCodeImage}" alt="QR Code" class="qr-code-canvas" />
+            <p style="font-size: 0.8em; color: #666; margin-top: 10px;">
+              Order ID: ${order.id}
+            </p>
+          </div>
+        `;
+      } else {
+        modalHTML += `
+          <div class="qr-code-container">
+            <h4>QR Code Not Available</h4>
+            <p>This order was not saved locally or QR code generation failed. QR codes are only available for orders saved to your device.</p>
+            <p style="font-size: 0.8em; color: #888; margin-top: 10px;">
+              <i class="fas fa-info-circle"></i> Try refreshing the page if the QR code library failed to load.
+            </p>
+          </div>
+        `;
+      }
+      
       modalContent.innerHTML = modalHTML;
       modal.style.display = "block";
     });

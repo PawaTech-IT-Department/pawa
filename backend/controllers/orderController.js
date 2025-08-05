@@ -257,18 +257,31 @@ const orderController = {
       if (error) throw error;
 
       const BASE_URL = process.env.BASE_URL || 'http://localhost:5000/';
+      // Ensure BASE_URL ends with a slash and handle ngrok URLs properly
+      let normalizedBaseUrl = BASE_URL;
+      if (!normalizedBaseUrl.endsWith('/')) {
+        normalizedBaseUrl = normalizedBaseUrl + '/';
+      }
+      
+      // For ngrok URLs, ensure we have the proper format
+      if (normalizedBaseUrl.includes('ngrok-free.app') && !normalizedBaseUrl.includes('https://')) {
+        normalizedBaseUrl = 'https://' + normalizedBaseUrl;
+      }
+      
+      console.log('Using BASE_URL for image URLs:', normalizedBaseUrl);
+      
       // Attach product details (name, image) to each order item
       const ordersWithProductDetails = await Promise.all((orders || []).map(async (order) => {
         const detailedItems = await Promise.all((order.order_items || []).map(async (item) => {
           const productDetails = await getProductDetails(item.product_id);
           let productImage = productDetails && productDetails.image ? productDetails.image : null;
           if (productImage) {
-            // If the image path is relative, prepend BASE_URL
+            // If the image path is relative, prepend normalized BASE_URL
             if (!productImage.startsWith('http://') && !productImage.startsWith('https://')) {
               if (productImage.startsWith('img/') || productImage.startsWith('images/')) {
-                productImage = BASE_URL + productImage;
+                productImage = normalizedBaseUrl + productImage;
               } else {
-                productImage = BASE_URL + 'img/' + productImage;
+                productImage = normalizedBaseUrl + 'img/' + productImage;
               }
             }
           } else {
