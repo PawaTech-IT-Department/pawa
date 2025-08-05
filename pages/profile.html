@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/styles/profile.css" />
+</head>
+<body>
+  <div class="profile-container">
+    <h2>User Profile</h2>
+    <div id="profile-section">
+      <form id="profileForm">
+        <label>Email: <input type="email" id="email" name="email" required disabled /></label><br />
+        <label>Username: <input type="text" id="username" name="username" required /></label><br />
+        <button type="submit">Update Profile</button>
+      </form>
+      <button id="showPasswordForm">Change Password</button>
+      <form id="passwordForm" style="display:none;">
+        <label>Current Password: <input type="password" id="currentPassword" required /></label><br />
+        <label>New Password: <input type="password" id="newPassword" required /></label><br />
+        <button type="submit">Change Password</button>
+      </form>
+    </div>
+    <hr />
+    <div id="orders-section">
+      <h3>My Orders</h3>
+      <ul id="ordersList"></ul>
+    </div>
+    <hr />
+    <div id="cart-section">
+      <h3>My Cart</h3>
+      <ul id="cartList"></ul>
+    </div>
+    <button id="backBtn">Back</button>
+    <button id="logoutBtn">Logout</button>
+  </div>
+  <script>
+    // Helper: get auth token
+    function getToken() {
+      return localStorage.getItem('authToken') || '';
+    }
+    // Helper: update header username
+    function updateHeaderUsername(username) {
+      const label = document.getElementById('account-label');
+      if (label) label.textContent = username;
+      // Also update in storage for reloads
+      let user = null;
+      try { user = JSON.parse(localStorage.getItem('user')) || {}; } catch {}
+      if (user) {
+        user.username = username;
+        localStorage.setItem('user', JSON.stringify(user));
+      }
+    }
+    // Redirect to login if not logged in
+    if (!getToken()) {
+      window.location.href = '/login.html';
+    }
+    // Fetch and display user profile from backend
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/users/profile', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          document.getElementById('email').value = data.user.email || '';
+          document.getElementById('username').value = data.user.username || '';
+          updateHeaderUsername(data.user.username || 'Account');
+        } else {
+          alert(data.error || 'Failed to load profile');
+        }
+      } catch (err) {
+        alert('Error loading profile: ' + err.message);
+      }
+    }
+    loadProfile();
+
+    // Profile update (PUT to backend)
+    document.getElementById('profileForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      try {
+        const res = await fetch('/api/users/profile', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+          },
+          body: JSON.stringify({ username })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Profile updated!');
+          updateHeaderUsername(username);
+          loadProfile();
+        } else {
+          alert(data.error || 'Update failed');
+        }
+      } catch (err) {
+        alert('Error updating profile: ' + err.message);
+      }
+    });
+
+    // Password change
+    document.getElementById('showPasswordForm').onclick = function() {
+      document.getElementById('passwordForm').style.display = 'block';
+    };
+    document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      try {
+        const res = await fetch('/api/users/change-password', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+          },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert('Password changed!');
+          document.getElementById('passwordForm').reset();
+          document.getElementById('passwordForm').style.display = 'none';
+        } else {
+          alert(data.error || 'Password change failed');
+        }
+      } catch (err) {
+        alert('Error changing password: ' + err.message);
+      }
+    });
+
+    // Orders (from backend)
+    async function loadOrders() {
+      try {
+        const res = await fetch('/api/orders/my', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const data = await res.json();
+        const ordersList = document.getElementById('ordersList');
+        ordersList.innerHTML = '';
+        if (data.orders && data.orders.length) {
+          data.orders.forEach(order => {
+            const li = document.createElement('li');
+            li.textContent = `Order #${order._id || order.id}: ${order.status} - ${(order.totalCents ? (order.totalCents/100).toFixed(2) : order.total || order.total_cost_cents || '')}`;
+            ordersList.appendChild(li);
+          });
+        } else {
+          ordersList.innerHTML = '<li>No orders found.</li>';
+        }
+      } catch (err) {
+        alert('Error loading orders: ' + err.message);
+      }
+    }
+    loadOrders();
+
+    // Cart (from backend)
+    async function loadCart() {
+      try {
+        const res = await fetch('/api/cart/my', {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        const data = await res.json();
+        const cartList = document.getElementById('cartList');
+        cartList.innerHTML = '';
+        if (data.cart && data.cart.items && data.cart.items.length) {
+          data.cart.items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.productName || item.name} x${item.quantity}`;
+            cartList.appendChild(li);
+          });
+        } else {
+          cartList.innerHTML = '<li>Your cart is empty.</li>';
+        }
+      } catch (err) {
+        alert('Error loading cart: ' + err.message);
+      }
+    }
+    loadCart();
+
+    // Back button
+    document.getElementById('backBtn').onclick = function() {
+      if (document.referrer && document.referrer !== window.location.href) {
+        window.history.back();
+      } else {
+        window.location.href = '/index.html';
+      }
+    };
+    // Logout
+    document.getElementById('logoutBtn').onclick = function() {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      // Optionally update header
+      const label = document.getElementById('account-label');
+      if (label) label.textContent = 'Account';
+      window.location.href = '/login.html';
+    };
+  </script>
+</body>
+</html>

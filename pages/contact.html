@@ -1,200 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - Neszi</title>
-  <link rel="stylesheet" href="/styles/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .bg-primary { background-color: #6366f1; }
-    .text-primary { color: #6366f1; }
-    .border-primary { border-color: #6366f1; }
-    .hover\:bg-primary:hover { background-color: #6366f1; }
-    .hover\:bg-primary\/90:hover { background-color: rgba(99, 102, 241, 0.9); }
-    .bg-secondary { background-color: #8b5cf6; }
-    .text-secondary { color: #8b5cf6; }
-    .bg-accent { background-color: #06b6d4; }
-    .text-accent { color: #06b6d4; }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-gray-50">
-  <main-header></main-header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Neszi</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .bg-primary {
+        background-color: #6366f1;
+      }
+      .text-primary {
+        color: #6366f1;
+      }
+      .border-primary {
+        border-color: #6366f1;
+      }
+      .hover\:bg-primary:hover {
+        background-color: #6366f1;
+      }
+      .hover\:bg-primary\/90:hover {
+        background-color: rgba(99, 102, 241, 0.9);
+      }
+      .bg-secondary {
+        background-color: #8b5cf6;
+      }
+      .text-secondary {
+        color: #8b5cf6;
+      }
+      .bg-accent {
+        background-color: #06b6d4;
+      }
+      .text-accent {
+        color: #06b6d4;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <main-header></main-header>
 
-  <!-- Main Content -->
-  <section class="py-16">
-    <div class="container mx-auto px-4 max-w-4xl">
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
-        <p class="text-lg text-gray-600">We're here to help! Get in touch with our support team.</p>
-      </div>
+    <!-- Main Content -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 max-w-4xl">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
+          <p class="text-lg text-gray-600">
+            We're here to help! Get in touch with our support team.
+          </p>
+        </div>
 
-      <div class="grid md:grid-cols-2 gap-8 mb-12">
-        <!-- Contact Information -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+          <!-- Contact Information -->
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+              Get in Touch
+            </h2>
+
+            <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium text-gray-900">Address</h3>
+                  <p class="text-gray-600">123 Tech Street, Nairobi, Kenya</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-phone text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium text-gray-900">Phone</h3>
+                  <p class="text-gray-600">+254 700 000 000</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-envelope text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium text-gray-900">Email</h3>
+                  <p class="text-gray-600">support@neszi.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-clock text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium text-gray-900">Business Hours</h3>
+                  <p class="text-gray-600">
+                    Monday - Friday: 8:00 AM - 6:00 PM<br />
+                    Saturday: 9:00 AM - 4:00 PM
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+              Send us a Message
+            </h2>
+
+            <form class="space-y-4">
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="subject"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Subject</label
+                >
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-700 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-primary text-white py-3 px-6 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
         <div class="bg-white rounded-lg shadow-md p-8">
-          <h2 class="text-2xl font-semibold text-gray-900 mb-6">Get in Touch</h2>
-          
-          <div class="space-y-6">
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <i class="fas fa-map-marker-alt text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 class="font-medium text-gray-900">Address</h3>
-                <p class="text-gray-600">123 Tech Street, Nairobi, Kenya</p>
-              </div>
+          <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+            Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-4">
+            <div class="border-b border-gray-200 pb-4">
+              <h3 class="font-medium text-gray-900 mb-2">
+                What payment methods do you accept?
+              </h3>
+              <p class="text-gray-600">
+                We accept M-Pesa mobile money payments and all major credit
+                cards.
+              </p>
             </div>
 
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <i class="fas fa-phone text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 class="font-medium text-gray-900">Phone</h3>
-                <p class="text-gray-600">+254 700 000 000</p>
-              </div>
+            <div class="border-b border-gray-200 pb-4">
+              <h3 class="font-medium text-gray-900 mb-2">
+                How long does delivery take?
+              </h3>
+              <p class="text-gray-600">
+                Standard delivery takes 3-5 business days within Nairobi and 5-7
+                days for other regions.
+              </p>
             </div>
 
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <i class="fas fa-envelope text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 class="font-medium text-gray-900">Email</h3>
-                <p class="text-gray-600">support@neszi.com</p>
-              </div>
+            <div class="border-b border-gray-200 pb-4">
+              <h3 class="font-medium text-gray-900 mb-2">
+                What is your return policy?
+              </h3>
+              <p class="text-gray-600">
+                We offer a 30-day return policy for all products in their
+                original condition.
+              </p>
             </div>
 
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0">
-                <i class="fas fa-clock text-primary text-xl"></i>
-              </div>
-              <div>
-                <h3 class="font-medium text-gray-900">Business Hours</h3>
-                <p class="text-gray-600">Monday - Friday: 8:00 AM - 6:00 PM<br>
-                Saturday: 9:00 AM - 4:00 PM</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Form -->
-        <div class="bg-white rounded-lg shadow-md p-8">
-          <h2 class="text-2xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
-          
-          <form class="space-y-4">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
-              <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-            </div>
-
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-            </div>
-
-            <div>
-              <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-              <input type="text" id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-            </div>
-
-            <div>
-              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-              <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
-            </div>
-
-            <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-              Send Message
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <!-- FAQ Section -->
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Frequently Asked Questions</h2>
-        
-        <div class="space-y-4">
-          <div class="border-b border-gray-200 pb-4">
-            <h3 class="font-medium text-gray-900 mb-2">What payment methods do you accept?</h3>
-            <p class="text-gray-600">We accept M-Pesa mobile money payments and all major credit cards.</p>
-          </div>
-
-          <div class="border-b border-gray-200 pb-4">
-            <h3 class="font-medium text-gray-900 mb-2">How long does delivery take?</h3>
-            <p class="text-gray-600">Standard delivery takes 3-5 business days within Nairobi and 5-7 days for other regions.</p>
-          </div>
-
-          <div class="border-b border-gray-200 pb-4">
-            <h3 class="font-medium text-gray-900 mb-2">What is your return policy?</h3>
-            <p class="text-gray-600">We offer a 30-day return policy for all products in their original condition.</p>
-          </div>
-
-          <div class="border-b border-gray-200 pb-4">
-            <h3 class="font-medium text-gray-900 mb-2">Do you ship internationally?</h3>
-            <p class="text-gray-600">Currently, we only ship within Kenya. International shipping will be available soon.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Floating Live Chat Button -->
-  <button id="liveChatBtn" class="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 z-50">
-    <i class="fas fa-comments text-xl"></i>
-  </button>
-
-  <!-- Chat Modal -->
-  <div id="chatModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-    <div class="flex items-center justify-center min-h-screen p-4">
-      <div class="bg-white rounded-lg shadow-xl w-full max-w-md h-96 flex flex-col">
-        <!-- Chat Header -->
-        <div class="bg-primary text-white p-4 rounded-t-lg flex justify-between items-center">
-          <div class="flex items-center space-x-3">
-            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-            <h3 class="font-semibold">Live Chat Support</h3>
-          </div>
-          <button id="closeChatBtn" class="text-white hover:text-gray-200 transition-colors">
-            <i class="fas fa-times text-xl"></i>
-          </button>
-        </div>
-
-        <!-- Chat Messages -->
-        <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-4">
-          <!-- Welcome Message -->
-          <div class="flex justify-start">
-            <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
-              <p class="text-sm text-gray-800">
-                👋 Hi! I'm your Neszi support assistant. How can I help you today?
+            <div class="border-b border-gray-200 pb-4">
+              <h3 class="font-medium text-gray-900 mb-2">
+                Do you ship internationally?
+              </h3>
+              <p class="text-gray-600">
+                Currently, we only ship within Kenya. International shipping
+                will be available soon.
               </p>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Chat Input -->
-        <div class="p-4 border-t border-gray-200">
-          <div class="flex space-x-2">
-            <input type="text" id="chatInput" placeholder="Type your message..." 
-                   class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-            <button id="sendMessageBtn" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
-              <i class="fas fa-paper-plane"></i>
+    <!-- Floating Live Chat Button -->
+    <button
+      id="liveChatBtn"
+      class="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 z-50"
+    >
+      <i class="fas fa-comments text-xl"></i>
+    </button>
+
+    <!-- Chat Modal -->
+    <div
+      id="chatModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
+    >
+      <div class="flex items-center justify-center min-h-screen p-4">
+        <div
+          class="bg-white rounded-lg shadow-xl w-full max-w-md h-96 flex flex-col"
+        >
+          <!-- Chat Header -->
+          <div
+            class="bg-primary text-white p-4 rounded-t-lg flex justify-between items-center"
+          >
+            <div class="flex items-center space-x-3">
+              <div
+                class="w-3 h-3 bg-green-400 rounded-full animate-pulse"
+              ></div>
+              <h3 class="font-semibold">Live Chat Support</h3>
+            </div>
+            <button
+              id="closeChatBtn"
+              class="text-white hover:text-gray-200 transition-colors"
+            >
+              <i class="fas fa-times text-xl"></i>
             </button>
+          </div>
+
+          <!-- Chat Messages -->
+          <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-4">
+            <!-- Welcome Message -->
+            <div class="flex justify-start">
+              <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
+                <p class="text-sm text-gray-800">
+                  👋 Hi! I'm your Neszi support assistant. How can I help you
+                  today?
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="p-4 border-t border-gray-200">
+            <div class="flex space-x-2">
+              <input
+                type="text"
+                id="chatInput"
+                placeholder="Type your message..."
+                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+              <button
+                id="sendMessageBtn"
+                class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <main-footer></main-footer>
+    <main-footer></main-footer>
 
-  <script>
-    // Gemini API Configuration
-    const GEMINI_API_KEY = 'AIzaSyCmudEgDJNfD6CuYwNH323Qh_lZlofV0b4';
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent';
+    <script>
+      // Gemini API Configuration
+      const GEMINI_API_KEY = "AIzaSyCmudEgDJNfD6CuYwNH323Qh_lZlofV0b4";
+      const GEMINI_API_URL =
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
 
-    // Chat System Prompt
-    const SYSTEM_PROMPT = `You are a helpful customer support assistant for Neszi, an e-commerce website in Kenya. 
+      // Chat System Prompt
+      const SYSTEM_PROMPT = `You are a helpful customer support assistant for Neszi, an e-commerce website in Kenya. 
 
 Key Information:
 - We sell tech products including laptops, monitors, accessories, and more
@@ -207,90 +324,105 @@ Key Information:
 
 Be friendly, helpful, and concise. If you don't know something specific, suggest contacting support.`;
 
-    // Chat functionality
-    class ChatBot {
-      constructor() {
-        this.messages = [];
-        this.isLoading = false;
-        this.init();
-      }
-
-      init() {
-        // Event listeners
-        document.getElementById('liveChatBtn').addEventListener('click', () => this.openChat());
-        document.getElementById('closeChatBtn').addEventListener('click', () => this.closeChat());
-        document.getElementById('sendMessageBtn').addEventListener('click', () => this.sendMessage());
-        document.getElementById('chatInput').addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') this.sendMessage();
-        });
-
-        // Close modal when clicking outside
-        document.getElementById('chatModal').addEventListener('click', (e) => {
-          if (e.target.id === 'chatModal') this.closeChat();
-        });
-      }
-
-      openChat() {
-        document.getElementById('chatModal').classList.remove('hidden');
-        document.getElementById('chatInput').focus();
-      }
-
-      closeChat() {
-        document.getElementById('chatModal').classList.add('hidden');
-      }
-
-      async sendMessage() {
-        const input = document.getElementById('chatInput');
-        const message = input.value.trim();
-        
-        if (!message || this.isLoading) return;
-
-        // Add user message to chat
-        this.addMessage(message, 'user');
-        input.value = '';
-
-        // Show loading indicator
-        this.showLoading();
-
-        try {
-          const response = await this.callGeminiAPI(message);
-          this.hideLoading();
-          this.addMessage(response, 'bot');
-        } catch (error) {
-          console.error('Error calling Gemini API:', error);
-          this.hideLoading();
-          this.addMessage('Sorry, I encountered an error. Please try again or contact support.', 'bot');
+      // Chat functionality
+      class ChatBot {
+        constructor() {
+          this.messages = [];
+          this.isLoading = false;
+          this.init();
         }
-      }
 
-      addMessage(text, sender) {
-        const messagesContainer = document.getElementById('chatMessages');
-        const messageDiv = document.createElement('div');
-        
-        messageDiv.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-        
-        const messageBubble = document.createElement('div');
-        messageBubble.className = `rounded-lg p-3 max-w-xs ${
-          sender === 'user' 
-            ? 'bg-primary text-white' 
-            : 'bg-gray-100 text-gray-800'
-        }`;
-        
-        messageBubble.innerHTML = `<p class="text-sm">${text}</p>`;
-        messageDiv.appendChild(messageBubble);
-        messagesContainer.appendChild(messageDiv);
-        
-        // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
+        init() {
+          // Event listeners
+          document
+            .getElementById("liveChatBtn")
+            .addEventListener("click", () => this.openChat());
+          document
+            .getElementById("closeChatBtn")
+            .addEventListener("click", () => this.closeChat());
+          document
+            .getElementById("sendMessageBtn")
+            .addEventListener("click", () => this.sendMessage());
+          document
+            .getElementById("chatInput")
+            .addEventListener("keypress", (e) => {
+              if (e.key === "Enter") this.sendMessage();
+            });
 
-      showLoading() {
-        this.isLoading = true;
-        const messagesContainer = document.getElementById('chatMessages');
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = 'loadingMessage';
-        loadingDiv.className = 'flex justify-start';
-        loadingDiv.innerHTML = `
+          // Close modal when clicking outside
+          document
+            .getElementById("chatModal")
+            .addEventListener("click", (e) => {
+              if (e.target.id === "chatModal") this.closeChat();
+            });
+        }
+
+        openChat() {
+          document.getElementById("chatModal").classList.remove("hidden");
+          document.getElementById("chatInput").focus();
+        }
+
+        closeChat() {
+          document.getElementById("chatModal").classList.add("hidden");
+        }
+
+        async sendMessage() {
+          const input = document.getElementById("chatInput");
+          const message = input.value.trim();
+
+          if (!message || this.isLoading) return;
+
+          // Add user message to chat
+          this.addMessage(message, "user");
+          input.value = "";
+
+          // Show loading indicator
+          this.showLoading();
+
+          try {
+            const response = await this.callGeminiAPI(message);
+            this.hideLoading();
+            this.addMessage(response, "bot");
+          } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            this.hideLoading();
+            this.addMessage(
+              "Sorry, I encountered an error. Please try again or contact support.",
+              "bot"
+            );
+          }
+        }
+
+        addMessage(text, sender) {
+          const messagesContainer = document.getElementById("chatMessages");
+          const messageDiv = document.createElement("div");
+
+          messageDiv.className = `flex ${
+            sender === "user" ? "justify-end" : "justify-start"
+          }`;
+
+          const messageBubble = document.createElement("div");
+          messageBubble.className = `rounded-lg p-3 max-w-xs ${
+            sender === "user"
+              ? "bg-primary text-white"
+              : "bg-gray-100 text-gray-800"
+          }`;
+
+          messageBubble.innerHTML = `<p class="text-sm">${text}</p>`;
+          messageDiv.appendChild(messageBubble);
+          messagesContainer.appendChild(messageDiv);
+
+          // Scroll to bottom
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        showLoading() {
+          this.isLoading = true;
+          const messagesContainer = document.getElementById("chatMessages");
+          const loadingDiv = document.createElement("div");
+          loadingDiv.id = "loadingMessage";
+          loadingDiv.className = "flex justify-start";
+          loadingDiv.innerHTML = `
           <div class="bg-gray-100 rounded-lg p-3">
             <div class="flex space-x-1">
               <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
@@ -299,59 +431,70 @@ Be friendly, helpful, and concise. If you don't know something specific, suggest
             </div>
           </div>
         `;
-        messagesContainer.appendChild(loadingDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
-
-      hideLoading() {
-        this.isLoading = false;
-        const loadingMessage = document.getElementById('loadingMessage');
-        if (loadingMessage) {
-          loadingMessage.remove();
+          messagesContainer.appendChild(loadingDiv);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
-      }
 
-      async callGeminiAPI(userMessage) {
-        const requestBody = {
-          contents: [{
-            parts: [{
-              text: `${SYSTEM_PROMPT}\n\nUser: ${userMessage}\n\nAssistant:`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-            topP: 0.8,
-            topK: 40
+        hideLoading() {
+          this.isLoading = false;
+          const loadingMessage = document.getElementById("loadingMessage");
+          if (loadingMessage) {
+            loadingMessage.remove();
           }
-        };
-
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody)
-        });
-
-        if (!response.ok) {
-          throw new Error(`API request failed: ${response.status}`);
         }
 
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-          return data.candidates[0].content.parts[0].text.trim();
-        } else {
-          throw new Error('Invalid response format from Gemini API');
+        async callGeminiAPI(userMessage) {
+          const requestBody = {
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `${SYSTEM_PROMPT}\n\nUser: ${userMessage}\n\nAssistant:`,
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 500,
+              topP: 0.8,
+              topK: 40,
+            },
+          };
+
+          const response = await fetch(
+            `${GEMINI_API_URL}?key=${GEMINI_API_KEY}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestBody),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (
+            data.candidates &&
+            data.candidates[0] &&
+            data.candidates[0].content
+          ) {
+            return data.candidates[0].content.parts[0].text.trim();
+          } else {
+            throw new Error("Invalid response format from Gemini API");
+          }
         }
       }
-    }
 
-    // Initialize chatbot when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      new ChatBot();
-    });
-  </script>
-</body>
+      // Initialize chatbot when page loads
+      document.addEventListener("DOMContentLoaded", () => {
+        new ChatBot();
+      });
+    </script>
+  </body>
 </html>

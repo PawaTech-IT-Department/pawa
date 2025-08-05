@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neszi Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/styles/admin.css" />
+  </head>
+  <body>
+    <div id="sidebar-placeholder"></div>
+
+    <div class="main-content">
+      <div id="header-placeholder"></div>
+
+      <main>
+        <div class="card">
+          <div class="card-header">
+            <h3>Customer List</h3>
+            <button id="add-customer-btn">Add New</button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <td>Customer ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Phone</td>
+                    <td>Status</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody id="customers-list">
+                  <!-- Dynamic customer rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add New Customer Modal -->
+        <div class="modal-overlay" id="addModal">
+          <div class="modal">
+            <h3>Add New Customer</h3>
+            <form id="addForm">
+              <div class="form-group">
+                <label for="productName">Customer Name:</label>
+                <input type="text" id="productName" required />
+              </div>
+              <div class="form-group">
+                <label for="categoryOrEmail">Email:</label>
+                <input type="email" id="categoryOrEmail" required />
+              </div>
+              <div class="form-group">
+                <label for="stockOrPhone">Phone:</label>
+                <input type="tel" id="stockOrPhone" required />
+              </div>
+              <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+              <div class="form-actions">
+                <button type="submit">Save</button>
+                <button type="button" id="cancelModal">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../scripts/admin.js"></script>
+    <script src="customers.js"></script>
+  </body>
+</html>
